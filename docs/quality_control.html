@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>cmp-data-governance - Quality Control</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">cmp-data-governance</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">
+ <span class="menu-text">Program Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./quality_control.html" aria-current="page">
+ <span class="menu-text">Quality Control</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#quality-control-tests" id="toc-quality-control-tests" class="nav-link active" data-scroll-target="#quality-control-tests">Quality Control Tests</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Quality Control</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><strong>DRAFT April 14, 2023</strong></p>
+<section id="quality-control-tests" class="level1">
+<h1>Quality Control Tests</h1>
+<p><strong>Although it is beyond the OOI scope to produce their own analysis-ready data products for the BGC sensors, OOI does undertake initial data processing as well as some basic QA/QC.</strong></p>
+<p>To ensure high-quality data products, the Centre for Marine Applied Research applies automated and “human in the loop” quality control (QC) processes to the Coastal Monitoring Program data.</p>
+<p>An automated QC test is an algorithm that evaluates each data record and assigns a flag to the record indicating the test results. These flags are typically reviewed by human experts, which is referred to as “human in the loop” QC. End users can then filter the data set for records that meet their quality criteria <span class="citation" data-cites="RN26831">(<a href="#ref-RN26831" role="doc-biblioref">UNESCO 2013</a>)</span>.</p>
+<p>Numerous QC tests and flagging schemes exist and have been applied to oceanographic data sets [e.g., Appendix A in <span class="citation" data-cites="RN26831">UNESCO (<a href="#ref-RN26831" role="doc-biblioref">2013</a>)</span>; OOI ref as example of different tests]. CMAR has adopted the well-known QARTOD tests and flagging scheme, which is applied by the U.S. Integrated Ocean Observing System (IOOS) and other ocean observing entities <span class="citation" data-cites="RN25921">(see Table 1 of <a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
+<p>QARTOD stands for the “Quality Assurance / Quality Control of Real-Time Oceanographic Data”. It is a project that grew from a 2003 grassroots effort to develop guidelines for high-quality oceanographic data. From 2012 to 2019, QARTOD developed 13 Quality Control manuals covering 14 ocean variables, plus additional supporting materials <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>. Each QC manual is subjected to three iterations of formal review by subject-matter experts, with the final round soliciting international reviews. Published manuals are updated as needed to reflect new technology, additional knowledge, or growth of the Project <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
+<p>The QARTOD flag scheme has 5 levels, as described in <a href="#tbl-qartod-flags">Table&nbsp;1</a>.</p>
+<div id="tbl-qartod-flags" class="anchored">
+<table class="table">
+<caption>Table&nbsp;1: QARTOD flag scheme <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>.</caption>
+<colgroup>
+<col style="width: 14%">
+<col style="width: 85%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Flag</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span style="color: #009200;">Pass - 1</span></td>
+<td><span style="color: #009200;">Data have passed critical real-time quality control tests and are deemed adequate for use as preliminary data.</span></td>
+</tr>
+<tr class="even">
+<td><span style="color: #c4c1a5;">Not evaluated - 2</span></td>
+<td><span style="color: #c4c1a5;">Data have not been QC-tested, or the information on quality is not available.</span></td>
+</tr>
+<tr class="odd">
+<td><span style="color: #EDA247;">Suspect or Of High Interest- 3</span></td>
+<td><span style="color: #EDA247;">Data are considered to be either suspect or of high interest to data providers and users. They are flagged suspect to draw further attention to them by operators.</span></td>
+</tr>
+<tr class="even">
+<td><span style="color: #DB4325;">Fail - 4</span></td>
+<td><span style="color: #DB4325;">Data are considered to have failed one or more critical real-time QC checks. If they are disseminated at all, it should be readily apparent that they are not of acceptable quality.</span></td>
+</tr>
+<tr class="odd">
+<td><span style="color: #5A5A5A;">Missing data - 9</span></td>
+<td><span style="color: #5A5A5A;">Data are missing; used as a placeholder.</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>QARTOD manuals define QC tests for the 14 variables. For each variable, the tests are grouped into three categories: Required, Strongly Recommended, and Suggested. The Required tests provide the minimum level of QC, and should be easy to implement. However, it is recognized that there are circumstances where these tests are not applicable <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>. Codable instructions are included with the description of each test to facilitate implementation of automated data checking <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
+<p>QARTOD manuals focus on QC of real-time data (e.g., minimal delay from when data are recorded to when they are ready for use; however, it is acknowledged that other data may benefit from QARTOD QC <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>. The CMAR Coastal Monitoring Program Water Quality Data is not processed in real-time. Instead, data is logged by individual sensors, and typically offloaded for processing every 6 - 12 months. Some QARTOD tests were therefore not applicable to this data, and it was necessary and / or advantageous to modify some of the tests to reflect the nature of the data processing. More detail on these changes is provided in the appropriate sections below.</p>
+<p>QC tests require thresholds that determine the results of the test. For example, records greater than the maximum value that can be recorded by a sensor should fail a simple maximum value test. Choosing appropriate thresholds for each test and variable is a key part of the QC effort. The operator (data provider) is responsible for selecting thresholds for QARTOD tests, and thresholds should be based on historical data when possible [<span class="citation" data-cites="RN25922">IOOS (<a href="#ref-RN25922" role="doc-biblioref">2020b</a>)</span>; <span class="citation" data-cites="RN15382">(<a href="#ref-RN15382" role="doc-biblioref"><strong>RN15382?</strong></a>)</span>; add ooi].</p>
+<p>This document describes the tests applied for each variable, and the methods for selecting the most appropriate thresholds. Where possible, these thresholds were determined from historical data, which provide a baseline of “normal” and “outlying” conditions. The historical data used here was the Coastal Monitoring Program Water Quality data sets submitted to the <a href="https://data.novascotia.ca/browse?q=coastal%20monitoring&amp;sortBy=relevance">Nova Scotia Open Data Portal</a> in December 2022. Preliminary quality control measures (e.g., obvious outliers and suspected biofouling removed) were applied to these datasets before submission. Additionally, freshwater and other outlier stations were excluded from the threshold analysis to provide a better representation of “normal” conditions.</p>
+<p>These thresholds should be re-evaluated and re-calculated if necessary in several years, when more data is available.</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-RN25921" class="csl-entry" role="doc-biblioentry">
+IOOS. 2020a. <span>“QARTOD - Prospects for Real-Time Quality Control Manuals, How to Create Them, and a Vision for Advanced Implementation.”</span> <a href="https://doi.org/10.25923/ysj8-5n28">https://doi.org/10.25923/ysj8-5n28</a>.
+</div>
+<div id="ref-RN25922" class="csl-entry" role="doc-biblioentry">
+———. 2020b. <span>“QARTOD Manual for Real-Time Oceanographic Data Quality Control Flags.”</span> <a href="https://cdn.ioos.noaa.gov/media/2020/07/QARTOD-Data-Flags-Manual_version1.2final.pdf">https://cdn.ioos.noaa.gov/media/2020/07/QARTOD-Data-Flags-Manual_version1.2final.pdf</a>.
+</div>
+<div id="ref-RN26831" class="csl-entry" role="doc-biblioentry">
+UNESCO. 2013. <span>“Recommendation for a Quality Flag Scheme for the Exchange of Oceanographic and Marine Meteorological Data.”</span>
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

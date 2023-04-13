@@ -7,8 +7,8 @@ website:
   navbar:
     left:
       - href: index.qmd
-        text: Home
-      - about.qmd
+        text: Program Overview
+      - quality_control.qmd
 
 format:
   html:
