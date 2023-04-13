@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>cmp-data-governance - Quality Control</title>
+<title>Data Governance - Quality Control Tests</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -90,7 +90,7 @@ div.csl-indent {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">cmp-data-governance</span>
+    <span class="navbar-title">Data Governance</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -104,7 +104,11 @@ div.csl-indent {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./quality_control.html" aria-current="page">
- <span class="menu-text">Quality Control</span></a>
+ <span class="menu-text">Quality Control Tests</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./temperature.html">
+ <span class="menu-text">Temperature</span></a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -117,20 +121,14 @@ div.csl-indent {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#quality-control-tests" id="toc-quality-control-tests" class="nav-link active" data-scroll-target="#quality-control-tests">Quality Control Tests</a></li>
-  </ul>
-</nav>
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quality Control</h1>
+<h1 class="title">Quality Control Tests</h1>
 </div>
 
 
@@ -146,8 +144,6 @@ div.csl-indent {
 </header>
 
 <p><strong>DRAFT April 14, 2023</strong></p>
-<section id="quality-control-tests" class="level1">
-<h1>Quality Control Tests</h1>
 <p><strong>Although it is beyond the OOI scope to produce their own analysis-ready data products for the BGC sensors, OOI does undertake initial data processing as well as some basic QA/QC.</strong></p>
 <p>To ensure high-quality data products, the Centre for Marine Applied Research applies automated and “human in the loop” quality control (QC) processes to the Coastal Monitoring Program data.</p>
 <p>An automated QC test is an algorithm that evaluates each data record and assigns a flag to the record indicating the test results. These flags are typically reviewed by human experts, which is referred to as “human in the loop” QC. End users can then filter the data set for records that meet their quality criteria <span class="citation" data-cites="RN26831">(<a href="#ref-RN26831" role="doc-biblioref">UNESCO 2013</a>)</span>.</p>
@@ -196,10 +192,10 @@ div.csl-indent {
 <p>QC tests require thresholds that determine the results of the test. For example, records greater than the maximum value that can be recorded by a sensor should fail a simple maximum value test. Choosing appropriate thresholds for each test and variable is a key part of the QC effort. The operator (data provider) is responsible for selecting thresholds for QARTOD tests, and thresholds should be based on historical data when possible [<span class="citation" data-cites="RN25922">IOOS (<a href="#ref-RN25922" role="doc-biblioref">2020b</a>)</span>; <span class="citation" data-cites="RN15382">(<a href="#ref-RN15382" role="doc-biblioref"><strong>RN15382?</strong></a>)</span>; add ooi].</p>
 <p>This document describes the tests applied for each variable, and the methods for selecting the most appropriate thresholds. Where possible, these thresholds were determined from historical data, which provide a baseline of “normal” and “outlying” conditions. The historical data used here was the Coastal Monitoring Program Water Quality data sets submitted to the <a href="https://data.novascotia.ca/browse?q=coastal%20monitoring&amp;sortBy=relevance">Nova Scotia Open Data Portal</a> in December 2022. Preliminary quality control measures (e.g., obvious outliers and suspected biofouling removed) were applied to these datasets before submission. Additionally, freshwater and other outlier stations were excluded from the threshold analysis to provide a better representation of “normal” conditions.</p>
 <p>These thresholds should be re-evaluated and re-calculated if necessary in several years, when more data is available.</p>
+<p><strong>add test table here</strong></p>
 
 
 
-</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-RN25921" class="csl-entry" role="doc-biblioentry">

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Governance - Coastal Monitoring Program</title>
+<title>Data Governance - Temperature</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -58,6 +58,14 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="site_libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -80,7 +88,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page">
+    <a class="nav-link" href="./index.html">
  <span class="menu-text">Program Overview</span></a>
   </li>  
   <li class="nav-item">
@@ -88,7 +96,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Quality Control Tests</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./temperature.html">
+    <a class="nav-link active" href="./temperature.html" aria-current="page">
  <span class="menu-text">Temperature</span></a>
   </li>  
 </ul>
@@ -102,14 +110,24 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#general-overview" id="toc-general-overview" class="nav-link active" data-scroll-target="#general-overview">General Overview</a></li>
+  <li><a href="#cmar-measurements" id="toc-cmar-measurements" class="nav-link" data-scroll-target="#cmar-measurements">CMAR Measurements</a>
+  <ul class="collapse">
+  <li><a href="#figure-2" id="toc-figure-2" class="nav-link" data-scroll-target="#figure-2">Figure 2</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Coastal Monitoring Program</h1>
+<h1 class="title">Temperature</h1>
 </div>
 
 
@@ -124,14 +142,26 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>CMAR’s Coastal Monitoring Program (CMP) is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia’s marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change.</p>
-<ul>
-<li>3 branches</li>
-<li>data access</li>
-<li>data governance</li>
-</ul>
+<section id="general-overview" class="level1">
+<h1>General Overview</h1>
+</section>
+<section id="cmar-measurements" class="level1">
+<h1>CMAR Measurements</h1>
+<section id="figure-2" class="level3">
+<h3 class="anchored" data-anchor-id="figure-2">Figure 2</h3>
+<div class="cell">
+<div id="fig-temp-n-obs" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-33f2a019165484b30b60" style="width:100%;height:650px;"></div>
+<script type="application/json" data-for="htmlwidget-33f2a019165484b30b60">{"x":{"data":[{"orientation":"v","width":[958015,274126,3525610,620003,279233,250326,4155300,660702,3200156,9804011,1532070,159059,29908,370789,266200],"base":[0.55,1.55,2.55,3.55,4.55,5.55,6.55,7.55,8.55,9.55,10.55,11.55,12.55,13.55,14.55],"x":[479007.5,137063,1762805,310001.5,139616.5,125163,2077650,330351,1600078,4902005.5,766035,79529.5,14954,185394.5,133100],"y":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999],"text":["n:  958015<br />county: Yarmouth","n:  274126<br />county: Victoria","n: 3525610<br />county: Shelburne","n:  620003<br />county: Richmond","n:  279233<br />county: Queens","n:  250326<br />county: Pictou","n: 4155300<br />county: Lunenburg","n:  660702<br />county: Inverness","n: 3200156<br />county: Halifax","n: 9804011<br />county: Guysborough","n: 1532070<br />county: Digby","n:  159059<br />county: Colchester","n:   29908<br />county: Cape Breton","n:  370789<br />county: Antigonish","n:  266200<br />county: Annapolis"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(89,89,89,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":23.3059360730594,"r":7.30593607305936,"b":37.2602739726027,"l":75.2511415525114},"plot_bgcolor":"rgba(255,255,255,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-490200.55,10294211.55],"tickmode":"array","ticktext":["0.0e+00","2.5e+06","5.0e+06","7.5e+06","1.0e+07"],"tickvals":[5.82076609134674e-11,2500000,5000000,7500000,10000000],"categoryorder":"array","categoryarray":["0.0e+00","2.5e+06","5.0e+06","7.5e+06","1.0e+07"],"nticks":null,"ticks":"outside","tickcolor":"rgba(179,179,179,1)","ticklen":3.65296803652968,"tickwidth":0.33208800332088,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(222,222,222,1)","gridwidth":0.33208800332088,"zeroline":false,"anchor":"y","title":{"text":"Number of Temperature Records","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,15.6],"tickmode":"array","ticktext":["Yarmouth","Victoria","Shelburne","Richmond","Queens","Pictou","Lunenburg","Inverness","Halifax","Guysborough","Digby","Colchester","Cape Breton","Antigonish","Annapolis"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"categoryorder":"array","categoryarray":["Yarmouth","Victoria","Shelburne","Richmond","Queens","Pictou","Lunenburg","Inverness","Halifax","Guysborough","Digby","Colchester","Cape Breton","Antigonish","Annapolis"],"nticks":null,"ticks":"outside","tickcolor":"rgba(179,179,179,1)","ticklen":3.65296803652968,"tickwidth":0.33208800332088,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(222,222,222,1)","gridwidth":0.33208800332088,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(179,179,179,1)","width":0.66417600664176,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"bfcc28c23810":{"x":{},"y":{},"type":"bar"}},"cur_data":"bfcc28c23810","visdat":{"bfcc28c23810":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: The number of temperatures observations in each county.</figcaption><p></p>
+</figure>
+</div>
+</div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

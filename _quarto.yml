@@ -3,12 +3,13 @@ project:
   output-dir: docs
 
 website:
-  title: "cmp-data-governance"
+  title: "Data Governance"
   navbar:
     left:
       - href: index.qmd
         text: Program Overview
       - quality_control.qmd
+      - temperature.qmd
 
 format:
   html:
