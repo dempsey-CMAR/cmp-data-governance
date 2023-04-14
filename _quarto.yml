@@ -6,11 +6,13 @@ website:
   title: "Data Governance"
   navbar:
     left:
-      - href: cmp_overview.qmd
+      - href: pages/cmp_overview.qmd
         text: Program Overview
-      - quality_control.qmd
-      - temperature.qmd
-
+      - pages/quality_control.qmd
+      - pages/temperature.qmd
+      - text: "Dissolved Oxygen"
+        menu:
+          - pages/do_overview.qmd
 format:
   html:
     theme: yeti
@@ -21,4 +23,4 @@ editor: source
 execute: 
   freeze: auto
   
-
+bibliography: references/cmp_threshold_references.bib

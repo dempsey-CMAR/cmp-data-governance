@@ -13,7 +13,7 @@ knitr::include_graphics(
 
 ```
 
-This website will provide information on CMAR's Coastal Monitoring Program and Data Governance initiatives.
+This website will provide technical information on CMAR's Coastal Monitoring Program and Data Governance initiatives.
 
 The content in under development and should be considered a **DRAFT**.
 
@@ -23,3 +23,5 @@ CMAR's Coastal Monitoring Program (CMP) is an ongoing data collection effort tha
 - 3 branches
 - data access
 - data governance
+- sensor strings
+- CMARverse

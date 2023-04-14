@@ -31,7 +31,7 @@ dt_options <- list(
 
 # summarized data 
 dat_summary <- read_csv(
-  here("data/summary_filtered_data.csv"), show_col_types = FALSE
+  here("pages/data/summary_filtered_data.csv"), show_col_types = FALSE
 ) %>% 
   filter(variable == "Temperature")
 
@@ -39,6 +39,8 @@ dat_summary <- read_csv(
 
 
 ## General Overview
+
+General overview of temperature and why it is important to monitor (to be parallel with DO section).
 
 ## CMAR Measurements
 

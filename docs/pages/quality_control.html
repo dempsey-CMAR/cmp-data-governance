@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Governance - Quality Control Tests</title>
+<title>Data Governance - Quality Control</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -42,22 +42,22 @@ div.csl-indent {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -79,7 +79,7 @@ div.csl-indent {
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -89,7 +89,7 @@ div.csl-indent {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Data Governance</span>
     </a>
   </div>
@@ -99,17 +99,28 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./cmp_overview.html">
+    <a class="nav-link" href="../pages/cmp_overview.html">
  <span class="menu-text">Program Overview</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./quality_control.html" aria-current="page">
- <span class="menu-text">Quality Control Tests</span></a>
+    <a class="nav-link active" href="../pages/quality_control.html" aria-current="page">
+ <span class="menu-text">Quality Control</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./temperature.html">
+    <a class="nav-link" href="../pages/temperature.html">
  <span class="menu-text">Temperature</span></a>
   </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dissolved-oxygen" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Dissolved Oxygen</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-dissolved-oxygen">    
+        <li>
+    <a class="dropdown-item" href="../pages/do_overview.html">
+ <span class="dropdown-text">Dissolved Oxygen Overview</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
@@ -121,14 +132,26 @@ div.csl-indent {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#quality-control-tests" id="toc-quality-control-tests" class="nav-link active" data-scroll-target="#quality-control-tests">Quality Control Tests</a></li>
+  <li><a href="#qartod" id="toc-qartod" class="nav-link" data-scroll-target="#qartod">QARTOD</a>
+  <ul class="collapse">
+  <li><a href="#flag-scheme" id="toc-flag-scheme" class="nav-link" data-scroll-target="#flag-scheme">Flag Scheme</a></li>
+  <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests">Tests</a></li>
+  <li><a href="#thresholds" id="toc-thresholds" class="nav-link" data-scroll-target="#thresholds">Thresholds</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quality Control Tests</h1>
+<h1 class="title">Quality Control</h1>
 </div>
 
 
@@ -143,13 +166,18 @@ div.csl-indent {
 
 </header>
 
-<p><strong>DRAFT April 14, 2023</strong></p>
-<p><strong>Although it is beyond the OOI scope to produce their own analysis-ready data products for the BGC sensors, OOI does undertake initial data processing as well as some basic QA/QC.</strong></p>
-<p>To ensure high-quality data products, the Centre for Marine Applied Research applies automated and “human in the loop” quality control (QC) processes to the Coastal Monitoring Program data.</p>
+<p>It is beyond the scope of the Coastal Monitoring Program to produce analysis-ready data products for all potential users. However, CMAR does apply some automated and “human in the loop” quality control (QC) processes to the data. Some users may wish to apply additional QC.</p>
+<section id="quality-control-tests" class="level2">
+<h2 class="anchored" data-anchor-id="quality-control-tests">Quality Control Tests</h2>
 <p>An automated QC test is an algorithm that evaluates each data record and assigns a flag to the record indicating the test results. These flags are typically reviewed by human experts, which is referred to as “human in the loop” QC. End users can then filter the data set for records that meet their quality criteria <span class="citation" data-cites="RN26831">(<a href="#ref-RN26831" role="doc-biblioref">UNESCO 2013</a>)</span>.</p>
-<p>Numerous QC tests and flagging schemes exist and have been applied to oceanographic data sets [e.g., Appendix A in <span class="citation" data-cites="RN26831">UNESCO (<a href="#ref-RN26831" role="doc-biblioref">2013</a>)</span>; OOI ref as example of different tests]. CMAR has adopted the well-known QARTOD tests and flagging scheme, which is applied by the U.S. Integrated Ocean Observing System (IOOS) and other ocean observing entities <span class="citation" data-cites="RN25921">(see Table 1 of <a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
+<p>Numerous QC flagging schemes and tests exist and have been applied to oceanographic data sets <span class="citation" data-cites="RN26831">(e.g., Appendix A in <a href="#ref-RN26831" role="doc-biblioref">UNESCO 2013</a>)</span>. CMAR has adopted the well-known QARTOD flags and tests, which are applied by the U.S. Integrated Ocean Observing System (IOOS) and other ocean observing entities <span class="citation" data-cites="RN25921">(see Table 1 of <a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
+</section>
+<section id="qartod" class="level2">
+<h2 class="anchored" data-anchor-id="qartod">QARTOD</h2>
 <p>QARTOD stands for the “Quality Assurance / Quality Control of Real-Time Oceanographic Data”. It is a project that grew from a 2003 grassroots effort to develop guidelines for high-quality oceanographic data. From 2012 to 2019, QARTOD developed 13 Quality Control manuals covering 14 ocean variables, plus additional supporting materials <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>. Each QC manual is subjected to three iterations of formal review by subject-matter experts, with the final round soliciting international reviews. Published manuals are updated as needed to reflect new technology, additional knowledge, or growth of the Project <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
-<p>The QARTOD flag scheme has 5 levels, as described in <a href="#tbl-qartod-flags">Table&nbsp;1</a>.</p>
+<section id="flag-scheme" class="level3">
+<h3 class="anchored" data-anchor-id="flag-scheme">Flag Scheme</h3>
+<p>The QARTOD flag scheme has 5 levels, as described in <a href="#tbl-qartod-flags">Table&nbsp;1</a>. More detail on how this flag scheme was developed is provided in <span class="citation" data-cites="RN26831">UNESCO (<a href="#ref-RN26831" role="doc-biblioref">2013</a>)</span>.</p>
 <div id="tbl-qartod-flags" class="anchored">
 <table class="table">
 <caption>Table&nbsp;1: QARTOD flag scheme <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>.</caption>
@@ -187,27 +215,125 @@ div.csl-indent {
 </tbody>
 </table>
 </div>
+</section>
+<section id="tests" class="level3">
+<h3 class="anchored" data-anchor-id="tests">Tests</h3>
 <p>QARTOD manuals define QC tests for the 14 variables. For each variable, the tests are grouped into three categories: Required, Strongly Recommended, and Suggested. The Required tests provide the minimum level of QC, and should be easy to implement. However, it is recognized that there are circumstances where these tests are not applicable <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>. Codable instructions are included with the description of each test to facilitate implementation of automated data checking <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
-<p>QARTOD manuals focus on QC of real-time data (e.g., minimal delay from when data are recorded to when they are ready for use; however, it is acknowledged that other data may benefit from QARTOD QC <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>. The CMAR Coastal Monitoring Program Water Quality Data is not processed in real-time. Instead, data is logged by individual sensors, and typically offloaded for processing every 6 - 12 months. Some QARTOD tests were therefore not applicable to this data, and it was necessary and / or advantageous to modify some of the tests to reflect the nature of the data processing. More detail on these changes is provided in the appropriate sections below.</p>
-<p>QC tests require thresholds that determine the results of the test. For example, records greater than the maximum value that can be recorded by a sensor should fail a simple maximum value test. Choosing appropriate thresholds for each test and variable is a key part of the QC effort. The operator (data provider) is responsible for selecting thresholds for QARTOD tests, and thresholds should be based on historical data when possible [<span class="citation" data-cites="RN25922">IOOS (<a href="#ref-RN25922" role="doc-biblioref">2020b</a>)</span>; <span class="citation" data-cites="RN15382">(<a href="#ref-RN15382" role="doc-biblioref"><strong>RN15382?</strong></a>)</span>; add ooi].</p>
-<p>This document describes the tests applied for each variable, and the methods for selecting the most appropriate thresholds. Where possible, these thresholds were determined from historical data, which provide a baseline of “normal” and “outlying” conditions. The historical data used here was the Coastal Monitoring Program Water Quality data sets submitted to the <a href="https://data.novascotia.ca/browse?q=coastal%20monitoring&amp;sortBy=relevance">Nova Scotia Open Data Portal</a> in December 2022. Preliminary quality control measures (e.g., obvious outliers and suspected biofouling removed) were applied to these datasets before submission. Additionally, freshwater and other outlier stations were excluded from the threshold analysis to provide a better representation of “normal” conditions.</p>
-<p>These thresholds should be re-evaluated and re-calculated if necessary in several years, when more data is available.</p>
-<p><strong>add test table here</strong></p>
+<div id="tbl-tests" class="anchored">
+<table class="table">
+<caption>Table&nbsp;2: QARTOD tests for temperature, salinity, and dissolved oxygen <span class="citation" data-cites="RN24432 RN26562">(<a href="#ref-RN24432" role="doc-biblioref">IOOS 2020c</a>, <a href="#ref-RN26562" role="doc-biblioref">2018</a>)</span>.</caption>
+<tbody>
+<tr class="odd">
+<td>Required</td>
+<td>Test 1</td>
+<td>Gap Test</td>
+</tr>
+<tr class="even">
+<td>Required</td>
+<td>Test 2</td>
+<td>Syntax Test</td>
+</tr>
+<tr class="odd">
+<td>Required</td>
+<td>Test 3</td>
+<td>Location Test</td>
+</tr>
+<tr class="even">
+<td>Required</td>
+<td>Test 4</td>
+<td>Gross Range Test</td>
+</tr>
+<tr class="odd">
+<td>Required</td>
+<td>Test 5</td>
+<td>Climatological Test</td>
+</tr>
+<tr class="even">
+<td>Strongly Recommended</td>
+<td>Test 6</td>
+<td>Spike Test</td>
+</tr>
+<tr class="odd">
+<td>Strongly Recommended</td>
+<td>Test 7</td>
+<td>Rate of Change Test</td>
+</tr>
+<tr class="even">
+<td>Strongly Recommended</td>
+<td>Test 8</td>
+<td>Flat Line Test</td>
+</tr>
+<tr class="odd">
+<td>Suggested</td>
+<td>Test 9</td>
+<td>Multi-Variate Test</td>
+</tr>
+<tr class="even">
+<td>Suggested</td>
+<td>Test 10</td>
+<td>Attenuated Signal Test</td>
+</tr>
+<tr class="odd">
+<td>Suggested</td>
+<td>Test 11</td>
+<td>Neighbor Test</td>
+</tr>
+<tr class="even">
+<td>Suggested<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></td>
+<td>Test 12</td>
+<td>TS Curve/Space Test</td>
+</tr>
+<tr class="odd">
+<td>Suggested<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></td>
+<td>Test 13</td>
+<td>Density Inversion Test</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>QARTOD manuals focus on QC of real-time data<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, although the manuals acknowledge that other data types may also benefit from these flags and tests <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>. The CMAR Coastal Monitoring Program data is not processed in real-time. Instead, data is logged and offloaded for processing every 6 - 12 months. Some QARTOD tests were therefore not applicable to this data, and it was necessary and / or advantageous to modify some tests to reflect the nature of the data and processing.</p>
+<p>For example, Test 1 and Test 2 are meant to identify gaps and syntax errors in real time so that the errors can be fixed and the record resume. They are therefore not applicable to the Coastal Monitoring Program data sets and were not implemented. Most of the remaining Required and Implemented tests were applied, but the Suggested tests are beyond the capacity of the current Data Governance team. These additional tests could be implemented in the future.</p>
+</section>
+<section id="thresholds" class="level3">
+<h3 class="anchored" data-anchor-id="thresholds">Thresholds</h3>
+<p>QC tests require thresholds that determine the results of the test. Choosing appropriate thresholds for each test and variable is a key part of the QC effort. The operator (data provider) is responsible for selecting thresholds for QARTOD tests, and thresholds should be based on historical data when possible <span class="citation" data-cites="RN25922 RN15382 RN26877">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>; <a href="#ref-RN15382" role="doc-biblioref">Taylor and Loescher 2013</a>; <a href="#ref-RN26877" role="doc-biblioref">OOI 2022</a>)</span>.</p>
 
 
+
+</section>
+</section>
 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-RN26562" class="csl-entry" role="doc-biblioentry">
+IOOS. 2018. <span>“QARTOD Manual for Real-Time Quality Control of Dissolved Oxygen Observations.”</span> <a href="https://ioos.noaa.gov/ioos-in-action/manual-real-time-quality-control-dissolved-oxygen-observations/">https://ioos.noaa.gov/ioos-in-action/manual-real-time-quality-control-dissolved-oxygen-observations/</a>.
+</div>
 <div id="ref-RN25921" class="csl-entry" role="doc-biblioentry">
-IOOS. 2020a. <span>“QARTOD - Prospects for Real-Time Quality Control Manuals, How to Create Them, and a Vision for Advanced Implementation.”</span> <a href="https://doi.org/10.25923/ysj8-5n28">https://doi.org/10.25923/ysj8-5n28</a>.
+———. 2020a. <span>“QARTOD - Prospects for Real-Time Quality Control Manuals, How to Create Them, and a Vision for Advanced Implementation.”</span> <a href="https://doi.org/10.25923/ysj8-5n28">https://doi.org/10.25923/ysj8-5n28</a>.
 </div>
 <div id="ref-RN25922" class="csl-entry" role="doc-biblioentry">
 ———. 2020b. <span>“QARTOD Manual for Real-Time Oceanographic Data Quality Control Flags.”</span> <a href="https://cdn.ioos.noaa.gov/media/2020/07/QARTOD-Data-Flags-Manual_version1.2final.pdf">https://cdn.ioos.noaa.gov/media/2020/07/QARTOD-Data-Flags-Manual_version1.2final.pdf</a>.
 </div>
+<div id="ref-RN24432" class="csl-entry" role="doc-biblioentry">
+———. 2020c. <span>“QARTOD Manual for Real-Time Quality Control of in-Situ Temperature and Salinity Data: A Guide to Quality Control and Quality Assurance for in-Situ Temperature and Salinity Observations.”</span> <a href="https://ioos.noaa.gov/ioos-in-action/temperature-salinity/">https://ioos.noaa.gov/ioos-in-action/temperature-salinity/</a>.
+</div>
+<div id="ref-RN26877" class="csl-entry" role="doc-biblioentry">
+OOI. 2022. <span>“OOI Biogeochemical Sensor Data: Best Practices &amp; User Guide.”</span> <a href="https://repository.oceanbestpractices.org/bitstream/handle/11329/2112/OOI%20Biogeochemical%20Sensor%20Data%20Best%20Practices%20and%20User%20Guide.pdf?sequence=1&amp;isAllowed=y">https://repository.oceanbestpractices.org/bitstream/handle/11329/2112/OOI%20Biogeochemical%20Sensor%20Data%20Best%20Practices%20and%20User%20Guide.pdf?sequence=1&amp;isAllowed=y</a>.
+</div>
+<div id="ref-RN15382" class="csl-entry" role="doc-biblioentry">
+Taylor, J. R., and H. L. Loescher. 2013. <span>“Automated Quality Control Methods for Sensor Data: A Novel Observatory Approach.”</span> Journal Article. <em>Biogeosciences</em> 10 (7): 4957–71. <a href="https://doi.org/10.5194/bg-10-4957-2013">https://doi.org/10.5194/bg-10-4957-2013</a>.
+</div>
 <div id="ref-RN26831" class="csl-entry" role="doc-biblioentry">
 UNESCO. 2013. <span>“Recommendation for a Quality Flag Scheme for the Exchange of Oceanographic and Marine Meteorological Data.”</span>
 </div>
-</div></section></div></main> <!-- /main -->
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>For temperature and salinity only; not Suggested for dissolved oxygen<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>For temperature and salinity only; not Suggested for dissolved oxygen<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>e.g., minimal delay from when data are recorded to when they are ready for use<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
