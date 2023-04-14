@@ -6,16 +6,19 @@ website:
   title: "Data Governance"
   navbar:
     left:
-      - href: index.qmd
+      - href: cmp_overview.qmd
         text: Program Overview
       - quality_control.qmd
       - temperature.qmd
 
 format:
   html:
-    theme: cosmo
+    theme: yeti
     css: styles.css
     toc: true
 
 editor: source
+execute: 
+  freeze: auto
+  
 

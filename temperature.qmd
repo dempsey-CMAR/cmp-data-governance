@@ -38,9 +38,9 @@ dat_summary <- read_csv(
 ```
 
 
-# General Overview
+## General Overview
 
-# CMAR Measurements
+## CMAR Measurements
 
 
 ### Figure 2

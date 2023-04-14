@@ -1,0 +1,25 @@
+---
+title: "Coastal Monitoring Program"
+---
+
+```{r}
+#| echo: false
+#| fig-align: center
+#| fig-cap: Image by <a href="https://pixabay.com/users/josethestoryteller-5100055/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2408062">Jose R. Cabello</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2408062">Pixabay</a>
+
+knitr::include_graphics(
+  "figures/under-construction.png"
+)
+
+```
+
+This website will provide information on CMAR's Coastal Monitoring Program and Data Governance initiatives.
+
+The content in under development and should be considered a **DRAFT**.
+
+
+CMAR's Coastal Monitoring Program (CMP) is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia's marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change. 
+
+- 3 branches
+- data access
+- data governance

@@ -1,9 +1,0 @@
----
-title: "Coastal Monitoring Program"
----
-
-CMAR's Coastal Monitoring Program (CMP) is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia's marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change. 
-
-- 3 branches
-- data access
-- data governance
