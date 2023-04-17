@@ -9,11 +9,14 @@ website:
       - href: pages/cmp_overview.qmd
         text: Program Overview
       - pages/quality_control.qmd
-      - pages/temperature.qmd
       - text: "Dissolved Oxygen"
         menu:
           - pages/do_overview.qmd
           - pages/do_measurements.qmd
+      - text: "Temperature"
+        menu:
+          - pages/temp_overview.qmd
+          - pages/temp_measurements.qmd
 format:
   html:
     theme: yeti
