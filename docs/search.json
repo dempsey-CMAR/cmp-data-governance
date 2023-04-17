@@ -4,21 +4,21 @@
     "href": "pages/cmp_overview.html",
     "title": "Coastal Monitoring Program",
     "section": "",
-    "text": "Image by Jose R. Cabello from Pixabay\n\n\n\n\nThis website will provide technical information on CMAR’s Coastal Monitoring Program and Data Governance initiatives.\nThe content in under development and should be considered a DRAFT.\nCMAR’s Coastal Monitoring Program (CMP) is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia’s marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change.\n\n3 branches\ndata access\ndata governance\nsensor strings\nCMARverse"
+    "text": "Image by Jose R. Cabello from Pixabay\n\n\n\n\nThis website will provide technical information on CMAR’s Coastal Monitoring Program and Data Governance initiatives.\nThe content in under development and should be considered a DRAFT.\nCMAR’s Coastal Monitoring Program (CMP) is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia’s marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change.\nContent to include:\n\n3 branches\ndata access\ndata governance\nsensor strings\nCMARverse\nsensors used (see DMP)\ndata processing\ndata management plan"
   },
   {
     "objectID": "pages/do_measurements.html",
     "href": "pages/do_measurements.html",
     "title": "CMAR Measurements",
     "section": "",
-    "text": "CMAR has collected dissolved oxygen data from 63 stations in 13 counties (Figure 1).\n\n\n\n\n\nFigure 1: Approximate location of stations with dissolved oxygen data. At most stations, dissolved oxygen is measured in units of percent saturation. For several stations in Halifax and Lunenburg counties, dissolved oxygen is now recorded in units of concentration."
+    "text": "CMAR has collected dissolved oxygen data from 63 stations in 13 counties (Figure 1).\n\n\n\n\n\nFigure 1: Approximate location of stations with dissolved oxygen data. At most stations, dissolved oxygen is measured in units of percent saturation. For several stations in Halifax and Lunenburg counties, dissolved oxygen is now recorded in units of concentration.\n\n\n\n\n\n\nA large proportion of these records are from Guysborough County (23.37 %) and Shelburne County (20.58 %), while a small proportion are from Antigonish (0.53 %) and Pictou (1.1 %) Counties (Figure 2).\n\n\n\n\n\nFigure 2: The number of dissolved oxygen observations in each county."
   },
   {
-    "objectID": "pages/do_measurements.html#measurement-depth",
-    "href": "pages/do_measurements.html#measurement-depth",
+    "objectID": "pages/do_measurements.html#depth",
+    "href": "pages/do_measurements.html#depth",
     "title": "CMAR Measurements",
-    "section": "Measurement Depth",
-    "text": "Measurement Depth\nThere is typically one DO sensor on each sensor string, usually attached 5 m below the surface (Figure 2). This choice of depth reflects the original Coastal Monitoring Program objective, which was to provide data to inform aquaculture site selection1. As the Program and mandate expands, DO sensors continue to be deployed at this depth for consistency and longevity of the time series.\nDissolved oxygen has also been measured at other depths for specific research projects, particularly in Whycocomagh Basin, Inverness County (link to Inverness report) (Figure 2).\n\n\n\n\n\nFigure 2: Number of dissolved oxygen observations at each depth (rounded to nearest whole number). Note that only depths with measurements are shown."
+    "section": "Depth",
+    "text": "Depth\nThere is typically one DO sensor on each sensor string, usually attached 5 m below the surface (Figure 3). This choice of depth reflects the original Coastal Monitoring Program objective, which was to provide data to inform aquaculture site selection1. As the Program and mandate expands, DO sensors continue to be deployed at this depth for consistency and longevity of the time series.\nDissolved oxygen has also been measured at other depths for specific research projects, particularly in Whycocomagh Basin, Inverness County (link to Inverness report) (Figure 3).\n\n\n\n\n\nFigure 3: Number of dissolved oxygen observations at each depth (rounded to nearest whole number). Note that only depths with measurements are shown."
   },
   {
     "objectID": "pages/do_measurements.html#sensors",
@@ -74,7 +74,7 @@
     "href": "pages/do_thresholds.html",
     "title": "Thresholds",
     "section": "",
-    "text": "A large proportion of these records are from Guysborough (25 %) and Shelburne (22 %) counties, while a small proportion are from Pictou (0.78 %) and Antigonish (0.58 %) (?@fig-do-n-obs-sat). Five counties have only one station with DO data (?@fig-do-station-locations). For most counties, there are fewer “good” records in the spring and summer months, when conditions are conducive to biofouling[^6], and several counties have no data for at least one month (?@fig-do-n-obs-county-month)."
+    "text": "For most counties, there are fewer “good” records in the spring and summer months, when conditions are conducive to biofouling1, and several counties have no data for at least one month (?@fig-do-n-obs-county-month).\nFive counties have only one station with DO data (?@fig-do-station-locations).\n\n\n\n\nFootnotes\n\n\ne.g. more daylight↩︎"
   },
   {
     "objectID": "pages/quality_control.html",
@@ -98,18 +98,25 @@
     "text": "QARTOD\nQARTOD stands for the “Quality Assurance / Quality Control of Real-Time Oceanographic Data”. It is a project that grew from a 2003 grassroots effort to develop guidelines for high-quality oceanographic data. From 2012 to 2019, QARTOD developed 13 Quality Control manuals covering 14 ocean variables, plus additional supporting materials (IOOS 2020a). Each QC manual is subjected to three iterations of formal review by subject-matter experts, with the final round soliciting international reviews. Published manuals are updated as needed to reflect new technology, additional knowledge, or growth of the Project (IOOS 2020a).\n\nFlag Scheme\nThe QARTOD flag scheme has 5 levels, as described in Table 1. More detail on how this flag scheme was developed is provided in UNESCO (2013).\n\n\nTable 1: QARTOD flag scheme (IOOS 2020b).\n\n\n\n\n\n\nFlag\nDescription\n\n\n\n\nPass - 1\nData have passed critical real-time quality control tests and are deemed adequate for use as preliminary data.\n\n\nNot evaluated - 2\nData have not been QC-tested, or the information on quality is not available.\n\n\nSuspect or Of High Interest- 3\nData are considered to be either suspect or of high interest to data providers and users. They are flagged suspect to draw further attention to them by operators.\n\n\nFail - 4\nData are considered to have failed one or more critical real-time QC checks. If they are disseminated at all, it should be readily apparent that they are not of acceptable quality.\n\n\nMissing data - 9\nData are missing; used as a placeholder.\n\n\n\n\n\n\nTests\nQARTOD manuals define QC tests for the 14 variables. For each variable, the tests are grouped into three categories: Required, Strongly Recommended, and Suggested. The Required tests provide the minimum level of QC, and should be easy to implement. However, it is recognized that there are circumstances where these tests are not applicable (IOOS 2020b). Codable instructions are included with the description of each test to facilitate implementation of automated data checking (IOOS 2020a).\n\n\nTable 2: QARTOD tests for temperature, salinity, and dissolved oxygen (IOOS 2020c, 2018).\n\n\nRequired\nTest 1\nGap Test\n\n\nRequired\nTest 2\nSyntax Test\n\n\nRequired\nTest 3\nLocation Test\n\n\nRequired\nTest 4\nGross Range Test\n\n\nRequired\nTest 5\nClimatological Test\n\n\nStrongly Recommended\nTest 6\nSpike Test\n\n\nStrongly Recommended\nTest 7\nRate of Change Test\n\n\nStrongly Recommended\nTest 8\nFlat Line Test\n\n\nSuggested\nTest 9\nMulti-Variate Test\n\n\nSuggested\nTest 10\nAttenuated Signal Test\n\n\nSuggested\nTest 11\nNeighbor Test\n\n\nSuggested1\nTest 12\nTS Curve/Space Test\n\n\nSuggested2\nTest 13\nDensity Inversion Test\n\n\n\n\nQARTOD manuals focus on QC of real-time data3, although the manuals acknowledge that other data types may also benefit from these flags and tests (IOOS 2020b). The CMAR Coastal Monitoring Program data is not processed in real-time. Instead, data is logged and offloaded for processing every 6 - 12 months. Some QARTOD tests were therefore not applicable to this data, and it was necessary and / or advantageous to modify some tests to reflect the nature of the data and processing.\nFor example, Test 1 and Test 2 are meant to identify gaps and syntax errors in real time so that the errors can be fixed and the record resume. They are therefore not applicable to the Coastal Monitoring Program data sets and were not implemented. Most of the remaining Required and Implemented tests were applied, but the Suggested tests are beyond the capacity of the current Data Governance team. These additional tests could be implemented in the future.\n\n\nThresholds\nQC tests require thresholds that determine the results of the test. Choosing appropriate thresholds for each test and variable is a key part of the QC effort. The operator (data provider) is responsible for selecting thresholds for QARTOD tests, and thresholds should be based on historical data when possible (IOOS 2020b; Taylor and Loescher 2013; OOI 2022)."
   },
   {
-    "objectID": "pages/temperature.html",
-    "href": "pages/temperature.html",
-    "title": "Temperature",
+    "objectID": "pages/temp_measurements.html",
+    "href": "pages/temp_measurements.html",
+    "title": "CMAR Measurements",
     "section": "",
-    "text": "General overview of temperature and why it is important to monitor (to be parallel with DO section)."
+    "text": "CMAR has collected temperature data from 126 stations in 15 counties (Figure 1).\n\n\n\n\n\nFigure 1: Approximate location of stations with temperature data.\n\n\n\n\n\n\nA large proportion of these records are from Guysborough County (37.24 %), while a small proportion are from Cape Breton (0.11 %) and Colchester (0.6 %) Counties (Figure 2).\n\n\n\n\n\nFigure 2: The number of dissolved oxygen observations in each county."
   },
   {
-    "objectID": "pages/temperature.html#cmar-measurements",
-    "href": "pages/temperature.html#cmar-measurements",
-    "title": "Temperature",
-    "section": "CMAR Measurements",
-    "text": "CMAR Measurements\n\nFigure 2\n\n\n\n\n\nFigure 1: The number of temperatures observations in each county."
+    "objectID": "pages/temp_measurements.html#depth",
+    "href": "pages/temp_measurements.html#depth",
+    "title": "CMAR Measurements",
+    "section": "Depth",
+    "text": "Depth\nThe placement of the temperature sensors depends on the depth of the water at each station. Typically, sensors are fastened 2, 5, 10, 15, and 20 m below the surface at low tide. At deeper stations, additional sensors are added every 5 - 10 m. At shallow stations, sensors maybe be attached nearer to the surface (Figure 3).\nSensors may be placed at other depths for technical reasons or specific research projects (e.g., investigation of the oxycline in Whycocomagh Basin).\n\n\n\n\n\nFigure 3: Number of temperature records at each depth (rounded to nearest whole number). Note that only depths with measurements are shown."
+  },
+  {
+    "objectID": "pages/temp_measurements.html#sensors",
+    "href": "pages/temp_measurements.html#sensors",
+    "title": "CMAR Measurements",
+    "section": "Sensors",
+    "text": "Sensors\nCMAR uses several types of sensors to measure temperature (Table 1):\n\n\n\n\n\n\n\n\nSome of these sensors also measure other variables including dissolved oxygen, salinity, depth, and acoustic detections.\nThe Vemco VR2AR is typically the deepest sensor, anchored about 0.5 m above the sea floor. It has an acoustic release that is triggered to retrieve the sensor string. Deployments without VR2AR sensors are usually accessible from the surface, but some are retrieved by dragging or divers."
   },
   {
     "objectID": "pages/thresholds.html",
@@ -117,5 +124,12 @@
     "title": "Thresholds Analysis",
     "section": "",
     "text": "This document describes the tests applied for each variable, and the methods for selecting the most appropriate thresholds. Where possible, these thresholds were determined from historical data, which provide a baseline of “normal” and “outlying” conditions. The historical data used here was the Coastal Monitoring Program Water Quality data sets submitted to the Nova Scotia Open Data Portal in December 2022. Preliminary quality control measures (e.g., obvious outliers and suspected biofouling removed) were applied to these datasets before submission. Additionally, freshwater and other outlier stations were excluded from the threshold analysis to provide a better representation of “normal” conditions.\nThese thresholds should be re-evaluated and re-calculated if necessary in several years, when more data is available."
+  },
+  {
+    "objectID": "pages/temp_overview.html",
+    "href": "pages/temp_overview.html",
+    "title": "Overview",
+    "section": "",
+    "text": "Image by Jose R. Cabello from Pixabay"
   }
 ]

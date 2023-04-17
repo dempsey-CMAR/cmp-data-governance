@@ -87,10 +87,6 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="../pages/quality_control.html">
  <span class="menu-text">Quality Control</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../pages/temperature.html">
- <span class="menu-text">Temperature</span></a>
-  </li>  
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dissolved-oxygen" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Dissolved Oxygen</span>
@@ -102,6 +98,21 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="../pages/do_measurements.html">
+ <span class="dropdown-text">CMAR Measurements</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-temperature" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Temperature</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-temperature">    
+        <li>
+    <a class="dropdown-item" href="../pages/temp_overview.html">
+ <span class="dropdown-text">Overview</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/temp_measurements.html">
  <span class="dropdown-text">CMAR Measurements</span></a>
   </li>  
     </ul>
@@ -139,11 +150,18 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>A large proportion of these records are from Guysborough (25 %) and Shelburne (22 %) counties, while a small proportion are from Pictou (0.78 %) and Antigonish (0.58 %) (<strong>?@fig-do-n-obs-sat</strong>). Five counties have only one station with DO data (<strong>?@fig-do-station-locations</strong>). For most counties, there are fewer “good” records in the spring and summer months, when conditions are conducive to biofouling[^6], and several counties have no data for at least one month (<strong>?@fig-do-n-obs-county-month</strong>).</p>
+<p>For most counties, there are fewer “good” records in the spring and summer months, when conditions are conducive to biofouling<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, and several counties have no data for at least one month (<strong>?@fig-do-n-obs-county-month</strong>).</p>
+<p>Five counties have only one station with DO data (<strong>?@fig-do-station-locations</strong>).</p>
 
 
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>e.g.&nbsp;more daylight<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
