@@ -1,0 +1,190 @@
+---
+title: "CMAR Measurements"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
+
+library(dplyr)
+library(DT)
+library(here)
+library(ggplot2)
+library(leaflet)
+library(lubridate)
+library(plotly)
+library(quarto)
+library(RColorBrewer)
+library(readr)
+library(tidyr)
+
+theme_set(theme_light())
+
+dt_options <- list(
+      dom = 'ft',
+      paging = FALSE,
+      searching = TRUE,
+      scrollY = "550px",
+      pageLength = 500,
+      columnDefs = list(list(className = 'dt-center', targets = "_all"))
+)
+ 
+# all observations
+dat <- read_csv(
+  here("pages/data/summary.csv"), show_col_types = FALSE
+) %>%
+  filter(variable == "Temperature")
+
+# station locations
+st_locations <- read_csv(
+  here("pages/data/Station_Locations_2022-12-06.csv"), show_col_types = FALSE
+) %>%
+  mutate(
+    STATION = case_when(
+      STATION == "Sandy Cove St. Mary's" ~ "Sandy Cove St. Marys",
+      STATION == "Larry's River" ~ "Larrys River",
+      TRUE ~ STATION),
+    popup = paste("County: ", COUNTY, "</br>", "Station: ", STATION) 
+  )
+
+sensors <- read_csv(here("pages/data/temp_sensors.csv"), show_col_types = FALSE)
+
+```
+
+## Locations
+
+CMAR has collected temperature data from `r length(na.omit(unique(dat$station)))` stations in `r length(na.omit(unique(dat$county)))` counties (@fig-temp-station-locations). 
+
+```{r, fig-temp-station-units}
+#| label: fig-temp-station-locations
+#| fig-height: 7
+#| fig-cap: Approximate location of stations with temperature data. 
+
+# set up colour palette - need to interpolate with colorRampPalette
+n_col = length(unique(st_locations$COUNTY))
+getpal = colorRampPalette(brewer.pal(8, "Dark2"))
+pal <- colorFactor(getpal(n_col), domain = unique(st_locations$COUNTY))
+alpha <- 0.65
+size <- 6
+
+# interactive map
+leaflet(st_locations) %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  addCircleMarkers(
+    lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
+    color = ~pal(COUNTY),
+    fillColor =  ~pal(COUNTY),
+    popup = ~popup,
+    fillOpacity = alpha,
+    radius = size
+  ) %>%
+  addLegend(
+    "bottomright", pal = pal, values = ~COUNTY,
+    title = "County",
+    opacity = alpha
+  )
+```
+
+```{r}
+
+n_county_obs <- dat %>% 
+  filter(group == "county") %>% 
+  group_by(county) %>%  
+  summarise(n = sum(n)) %>% 
+  mutate(n_percent = round(100 * n / sum(n), digits = 2)) %>% 
+  arrange(desc(n_percent))
+```
+
+A large proportion of these records are from `r n_county_obs[1, "county"]$county` County
+(`r n_county_obs[1, "n_percent"]$n_percent` %), while a small proportion are from `r n_county_obs[nrow(n_county_obs), "county"]$county` (`r n_county_obs[nrow(n_county_obs), "n_percent"]$n_percent` %) and `r n_county_obs[nrow(n_county_obs)-1, "county"]$county` (`r n_county_obs[nrow(n_county_obs)-1, "n_percent"]$n_percent` %) Counties (@fig-do-n-obs-sat). 
+
+```{r}
+#| label: fig-do-n-obs-sat
+#| fig-height: 8
+#| fig-cap: The number of dissolved oxygen observations in each county. 
+
+p <- dat %>%
+  filter(group == "county") %>% 
+  ggplot(aes(n, county)) +
+  geom_col(
+    col = 1, fill = "#AE1759FF",
+    position = position_dodge2(preserve = "single", reverse = TRUE, padding = 0)
+  ) +
+  geom_vline(xintercept = 0) +
+  scale_x_continuous(
+    "Number of Temperature Records", expand = expansion(mult = c(0, 0.1))
+  ) +
+  scale_y_discrete(name = "", limits = rev) +
+  theme(text = element_text(size = 14))
+
+ggplotly(p)
+
+```
+
+## Depth
+
+The placement of the temperature sensors depends on the depth of the water at each station. Typically, sensors are fastened 2, 5, 10, 15, and 20 m below the surface at low tide. At deeper stations, additional sensors are added every 5 - 10 m. At shallow stations, sensors maybe be attached nearer to the surface (@fig-temp-n-obs-depth).
+
+Sensors may be placed at other depths for technical reasons or specific research projects (e.g., investigation of the oxycline in Whycocomagh Basin).
+
+```{r}
+#| label: fig-temp-n-obs-depth
+#| fig-height: 10
+#| fig-cap: Number of temperature records at each depth (rounded to nearest whole number). Note that only depths with measurements are shown.
+
+p <- dat %>%
+  filter(group == "all_depth") %>%
+  group_by(depth) %>%
+  summarise(n = sum(n)) %>%
+  ggplot(aes(n, factor(depth), fill = factor(depth),
+             text = paste("n: ", n, "\n", "depth: ", depth, "m"))
+  ) +
+  geom_col(
+    position = position_dodge2(preserve = "single", reverse = TRUE, padding = 0)
+  ) +
+  geom_vline(xintercept = 0) +
+  scale_x_continuous("Number of Temperature Records", expand = expansion(mult = c(0, 0.1))) +
+  scale_y_discrete(name = "Sensor Depth Below Surface at Low Tide (m)", limits = rev) +
+  theme(
+    legend.position = "none",
+    text = element_text(size = 12)
+  )
+
+ggplotly(p, tooltip = "text")
+
+```
+
+## Sensors
+
+CMAR uses several types of sensors to measure temperature (Table 1):  
+
+```{r}
+sensors %>%
+  mutate(
+    `Sensor (link to manual)` = 
+      paste0('<a  target=_blank href=', Manual, '>', `Sensor Type`,'</a>')
+  ) %>% 
+  select(`Sensor (link to manual)`, Manufacturer, `Variable(s) Measured`) %>%
+  datatable(
+    options = list(
+      dom = 'ft',
+      searching = FALSE,
+      paging = FALSE,
+      pageLength = 500,
+      columnDefs = list(list(className = 'dt-center', targets = "_all"))
+    ), 
+    rownames = FALSE, escape = FALSE,
+    caption = "Table 1: Temperature sensors used in CMAR's Coastal Monitoring Program."
+  )
+```
+
+<br>
+
+Some of these sensors also measure other variables including dissolved oxygen, salinity, depth, and acoustic detections.
+
+The Vemco VR2AR is typically the deepest sensor, anchored about 0.5 m above the sea floor. It has an acoustic release that is triggered to retrieve the sensor string. Deployments without VR2AR sensors are usually accessible from the surface, but some are retrieved by dragging or divers.
+
+
+
+

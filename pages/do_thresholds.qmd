@@ -2,4 +2,8 @@
 title: "Thresholds"
 ---
 
-A large proportion of these records are from Guysborough (25 %) and Shelburne (22 %) counties, while a small proportion are from Pictou (0.78 %) and Antigonish (0.58 %) (@fig-do-n-obs-sat). Five counties have only one station with DO data (@fig-do-station-locations). For most counties, there are fewer "good" records in the spring and summer months, when conditions are conducive to biofouling[^6], and several counties have no data for at least one month (@fig-do-n-obs-county-month).
+For most counties, there are fewer "good" records in the spring and summer months, when conditions are conducive to biofouling[^6], and several counties have no data for at least one month (@fig-do-n-obs-county-month).
+
+[^6]: e.g. more daylight
+
+Five counties have only one station with DO data (@fig-do-station-locations). 
