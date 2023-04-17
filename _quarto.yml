@@ -13,6 +13,7 @@ website:
       - text: "Dissolved Oxygen"
         menu:
           - pages/do_overview.qmd
+          - pages/do_measurements.qmd
 format:
   html:
     theme: yeti

@@ -7,6 +7,34 @@
     "text": "Image by Jose R. Cabello from Pixabay\n\n\n\n\nThis website will provide technical information on CMAR’s Coastal Monitoring Program and Data Governance initiatives.\nThe content in under development and should be considered a DRAFT.\nCMAR’s Coastal Monitoring Program (CMP) is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia’s marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change.\n\n3 branches\ndata access\ndata governance\nsensor strings\nCMARverse"
   },
   {
+    "objectID": "pages/do_measurements.html",
+    "href": "pages/do_measurements.html",
+    "title": "CMAR Measurements",
+    "section": "",
+    "text": "CMAR has collected dissolved oxygen data from 63 stations in 13 counties (Figure 1).\n\n\n\n\n\nFigure 1: Approximate location of stations with dissolved oxygen data. At most stations, dissolved oxygen is measured in units of percent saturation. For several stations in Halifax and Lunenburg counties, dissolved oxygen is now recorded in units of concentration."
+  },
+  {
+    "objectID": "pages/do_measurements.html#measurement-depth",
+    "href": "pages/do_measurements.html#measurement-depth",
+    "title": "CMAR Measurements",
+    "section": "Measurement Depth",
+    "text": "Measurement Depth\nThere is typically one DO sensor on each sensor string, usually attached 5 m below the surface (Figure 2). This choice of depth reflects the original Coastal Monitoring Program objective, which was to provide data to inform aquaculture site selection1. As the Program and mandate expands, DO sensors continue to be deployed at this depth for consistency and longevity of the time series.\nDissolved oxygen has also been measured at other depths for specific research projects, particularly in Whycocomagh Basin, Inverness County (link to Inverness report) (Figure 2).\n\n\n\n\n\nFigure 2: Number of dissolved oxygen observations at each depth (rounded to nearest whole number). Note that only depths with measurements are shown."
+  },
+  {
+    "objectID": "pages/do_measurements.html#sensors",
+    "href": "pages/do_measurements.html#sensors",
+    "title": "CMAR Measurements",
+    "section": "Sensors",
+    "text": "Sensors\nCMAR uses two types of sensors to measure DO: the aquaMeasure DOT (InnovaSea 2021) and Onset HOBO U26 (Onset 2012).\n\naquaMeasure DOT\nCMAR has a large inventory of DOTs (71 in April 2023), which are used for most deployments with DO. The DOT measures temperature and partial pressure of oxygen, providing DO values in units of percent saturation. Partial pressure values are not affected by salinity (Bittig et al. 2018), and so no correction factor is required for these measurements. For CMAR deployments, each DOT is programmed to measure and internally log at 10 minute intervals. CMAR typically retrieves sensors after ~1 year for data offload, cleaning, and calibration/validation.\n\nInnovaSea water vapour cal does not include salinity (assumes 0)\n\n\n\nHOBO U26\nCMAR supplemented their DO sensor inventory with 13 HOBO U26 sensors in 2021, and purchased an additional 10 in January 2023. The HOBO U26 measures concentration, and provides DO vales in units of mg / L. For CMAR deployments, each HOBO U26 is programmed to recorded temperature and dissolved oxygen every 10 minutes. These sensors have a sensor cap that needs to be replaced every 6 months. They are deployed in St. Margaret’s Bay and Mahone Bay rather than more remote locations so that they can be serviced twice a year with minimal travel requirements (Figure 1).\nThe HOBO U26 sensor does not account for salinity, so the measurements should be adjusted based on a salinity correction factor before analysis. The HOBOware software can apply this salinity correction if salinity conditions are provided. HOBOware can also convert measured concentration values to percent saturation if salinity and pressure conditions are provided. The CMAR R package docalcs provides functions for those calculations; however, CMAR does not have consistent salinity or pressure measurements, and so the uncorrected data are provided."
+  },
+  {
+    "objectID": "pages/do_measurements.html#biofouling",
+    "href": "pages/do_measurements.html#biofouling",
+    "title": "CMAR Measurements",
+    "section": "Biofouling",
+    "text": "Biofouling\nThe DOT and HOBO U26 do not have any anti-fouling mechanisms, and so measurements can be susceptible to biofouling. Ideally, sensors would be cleaned every 2 - 4 weeks to remove fouling, but this is not feasible due to logistical and financial constraints. Significant effort was made to identify and flag possible biofouling signals, although this is challenging for the reasons noted here."
+  },
+  {
     "objectID": "pages/do_overview.html",
     "href": "pages/do_overview.html",
     "title": "Overview",
@@ -40,6 +68,13 @@
     "title": "Overview",
     "section": "Other Challenges",
     "text": "Other Challenges\nQuality control of DO data can also be challenging and time consuming. There is a broad range of “reasonable” DO values, depending on the location, depth, season, oceanographic conditions, etc. Rapid and extreme variability may reflect the natural processes that are of interest to the monitoring program, including phytoplankton blooms, storms, and upwelling. However, this signal could also be a result of biofouling. To identify the most likely driver, further investigation is required. For example, the timing of the variability with respect to sensor deployment, time of year, and co-located variables could provide insight into the reliability of the measurements. It is also difficult to detect and quantify sensor drift over time for a single deployment. Consecutive deployments at the same station can highlight drift (IOOS 2018)."
+  },
+  {
+    "objectID": "pages/do_thresholds.html",
+    "href": "pages/do_thresholds.html",
+    "title": "Thresholds",
+    "section": "",
+    "text": "A large proportion of these records are from Guysborough (25 %) and Shelburne (22 %) counties, while a small proportion are from Pictou (0.78 %) and Antigonish (0.58 %) (?@fig-do-n-obs-sat). Five counties have only one station with DO data (?@fig-do-station-locations). For most counties, there are fewer “good” records in the spring and summer months, when conditions are conducive to biofouling[^6], and several counties have no data for at least one month (?@fig-do-n-obs-county-month)."
   },
   {
     "objectID": "pages/quality_control.html",
