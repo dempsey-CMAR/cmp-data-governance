@@ -8,16 +8,13 @@ editor_options:
 knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
 
 library(dplyr)
-library(DT)
 library(here)
 library(ggplot2)
 library(leaflet)
-library(lubridate)
 library(plotly)
-library(quarto)
 library(RColorBrewer)
 library(readr)
-library(tidyr)
+library(summaryplots)
 
 theme_set(theme_light())
 
@@ -81,7 +78,7 @@ leaflet(st_locations) %>%
     data = filter(st_locations, do_units == "percent saturation"),
     lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
     color = ~pal(COUNTY),
-    fillColor =  ~pal(COUNTY),
+    fillColor = ~pal(COUNTY),
     popup = ~popup,
     fillOpacity = alpha,
     radius = size,
@@ -127,19 +124,8 @@ A large proportion of these records are from `r n_county_obs[1, "county"]$county
 #| fig-cap: The number of dissolved oxygen observations in each county. 
 
 p <- dat %>%
-  filter(group == "county") %>% 
-  ggplot(aes(n, county, fill = units)) +
-  geom_col(
-    col = 1,
-    position = position_dodge2(preserve = "single", reverse = TRUE, padding = 0)
-  ) +
-  geom_vline(xintercept = 0) +
-  scale_fill_manual("Units", values = c("#F6B48EFF", "#AE1759FF")) +
-  scale_x_continuous(
-    "Number of Dissolved Oxygen Records", expand = expansion(mult = c(0, 0.1))
-  ) +
-  scale_y_discrete(name = "", limits = rev) +
-  theme(text = element_text(size = 14))
+  filter(group == "county") %>%
+  plot_n_obs_county()
 
 ggplotly(p)
 
@@ -162,19 +148,8 @@ p <- dat %>%
   filter(group == "all_depth") %>%
   group_by(depth) %>%
   summarise(n = sum(n)) %>%
-  ggplot(aes(n, factor(depth), fill = factor(depth),
-             text = paste("n: ", n, "\n", "depth: ", depth, "m"))
-  ) +
-  geom_col(
-    position = position_dodge2(preserve = "single", reverse = TRUE, padding = 0)
-  ) +
-  geom_vline(xintercept = 0) +
-  scale_x_continuous("Number of Dissolved Oxygen Observations", expand = expansion(mult = c(0, 0.1))) +
-  scale_y_discrete(name = "Sensor Depth Below Surface at Low Tide (m)", limits = rev) +
-  theme(legend.position = "none",
-        text = element_text(size = 14)
-  )
-
+  plot_n_obs_depth()
+  
 ggplotly(p, tooltip = "text")
 
 ```

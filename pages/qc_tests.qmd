@@ -49,4 +49,10 @@ The $avg_{season}$ was calculated as the average of all observations for a given
 
 Note that OOI used a more complex method (harmonic analysis, as described [here](https://github.com/oceanobservatories/qc-lookup)) to estimate $avg_{season}$ to account for spurious values. This was beyond the current scope of the CMAR Coastal Monitoring Program, but could be applied in future iterations of this threshold analysis.
 
+- **depending on variable, grouped by county or not. Didn't group by depth**
 
+## Spike Test             
+
+## Rate of Change Test    
+
+## Flat Line Test   

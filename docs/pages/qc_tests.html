@@ -165,6 +165,9 @@ div.csl-indent {
   <ul>
   <li><a href="#gross-range-test" id="toc-gross-range-test" class="nav-link active" data-scroll-target="#gross-range-test">Gross Range Test</a></li>
   <li><a href="#climatological-test" id="toc-climatological-test" class="nav-link" data-scroll-target="#climatological-test">Climatological Test</a></li>
+  <li><a href="#spike-test" id="toc-spike-test" class="nav-link" data-scroll-target="#spike-test">Spike Test</a></li>
+  <li><a href="#rate-of-change-test" id="toc-rate-of-change-test" class="nav-link" data-scroll-target="#rate-of-change-test">Rate of Change Test</a></li>
+  <li><a href="#flat-line-test" id="toc-flat-line-test" class="nav-link" data-scroll-target="#flat-line-test">Flat Line Test</a></li>
   </ul>
 </nav>
     </div>
@@ -224,12 +227,24 @@ season_{max} = avg_{season} + 3 * stdev_{season}
 \tag{4}\]</span></span></p>
 <p>The <span class="math inline">\(avg_{season}\)</span> was calculated as the average of all observations for a given month, and <span class="math inline">\(stdev_{season}\)</span> was the associated standard deviation.</p>
 <p>Note that OOI used a more complex method (harmonic analysis, as described <a href="https://github.com/oceanobservatories/qc-lookup">here</a>) to estimate <span class="math inline">\(avg_{season}\)</span> to account for spurious values. This was beyond the current scope of the CMAR Coastal Monitoring Program, but could be applied in future iterations of this threshold analysis.</p>
+<ul>
+<li><strong>depending on variable, grouped by county or not. Didn’t group by depth</strong></li>
+</ul>
+</section>
+<section id="spike-test" class="level2">
+<h2 class="anchored" data-anchor-id="spike-test">Spike Test</h2>
+</section>
+<section id="rate-of-change-test" class="level2">
+<h2 class="anchored" data-anchor-id="rate-of-change-test">Rate of Change Test</h2>
+</section>
+<section id="flat-line-test" class="level2">
+
 
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Flat Line Test</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-RN26562" class="csl-entry" role="doc-biblioentry">
 IOOS. 2018. <span>“QARTOD Manual for Real-Time Quality Control of Dissolved Oxygen Observations.”</span> <a href="https://ioos.noaa.gov/ioos-in-action/manual-real-time-quality-control-dissolved-oxygen-observations/">https://ioos.noaa.gov/ioos-in-action/manual-real-time-quality-control-dissolved-oxygen-observations/</a>.
 </div>

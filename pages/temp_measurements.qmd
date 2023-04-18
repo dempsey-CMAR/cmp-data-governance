@@ -12,12 +12,13 @@ library(DT)
 library(here)
 library(ggplot2)
 library(leaflet)
-library(lubridate)
 library(plotly)
-library(quarto)
 library(RColorBrewer)
 library(readr)
+library(stringr)
+library(summaryplots)
 library(tidyr)
+
 
 theme_set(theme_light())
 
@@ -48,7 +49,7 @@ st_locations <- read_csv(
     popup = paste("County: ", COUNTY, "</br>", "Station: ", STATION) 
   )
 
-sensors <- read_csv(here("pages/data/temp_sensors.csv"), show_col_types = FALSE)
+sensors <- read_csv(here("pages/data/sensors.csv"), show_col_types = FALSE)
 
 ```
 
@@ -106,17 +107,7 @@ A large proportion of these records are from `r n_county_obs[1, "county"]$county
 
 p <- dat %>%
   filter(group == "county") %>% 
-  ggplot(aes(n, county)) +
-  geom_col(
-    col = 1, fill = "#AE1759FF",
-    position = position_dodge2(preserve = "single", reverse = TRUE, padding = 0)
-  ) +
-  geom_vline(xintercept = 0) +
-  scale_x_continuous(
-    "Number of Temperature Records", expand = expansion(mult = c(0, 0.1))
-  ) +
-  scale_y_discrete(name = "", limits = rev) +
-  theme(text = element_text(size = 14))
+  plot_n_obs_county()
 
 ggplotly(p)
 
@@ -137,19 +128,7 @@ p <- dat %>%
   filter(group == "all_depth") %>%
   group_by(depth) %>%
   summarise(n = sum(n)) %>%
-  ggplot(aes(n, factor(depth), fill = factor(depth),
-             text = paste("n: ", n, "\n", "depth: ", depth, "m"))
-  ) +
-  geom_col(
-    position = position_dodge2(preserve = "single", reverse = TRUE, padding = 0)
-  ) +
-  geom_vline(xintercept = 0) +
-  scale_x_continuous("Number of Temperature Records", expand = expansion(mult = c(0, 0.1))) +
-  scale_y_discrete(name = "Sensor Depth Below Surface at Low Tide (m)", limits = rev) +
-  theme(
-    legend.position = "none",
-    text = element_text(size = 12)
-  )
+  plot_n_obs_depth(text_size = 12)
 
 ggplotly(p, tooltip = "text")
 
@@ -161,11 +140,27 @@ CMAR uses several types of sensors to measure temperature (Table 1):
 
 ```{r}
 sensors %>%
+  select(-c(sensor_type, sensor_min, sensor_max)) %>% 
   mutate(
-    `Sensor (link to manual)` = 
-      paste0('<a  target=_blank href=', Manual, '>', `Sensor Type`,'</a>')
+    variable = case_when(
+      str_detect(variable, "temp") ~ "Temperature",
+      str_detect(variable, "dissolved") ~ "Dissolved Oxygen",
+      str_detect(variable, "salinity") ~ "Salinity",
+      str_detect(variable, "depth") ~ "Pressure (sensor depth)"
+    )
   ) %>% 
-  select(`Sensor (link to manual)`, Manufacturer, `Variable(s) Measured`) %>%
+  pivot_wider(names_from = "variable", values_from = "variable") %>% 
+  mutate(
+    `Variable(s) Measured` = paste(
+      Temperature, `Dissolved Oxygen`, Salinity, `Pressure (sensor depth)`,
+      sep = ", "
+    ),
+    `Variable(s) Measured` = str_remove_all(`Variable(s) Measured`, "NA,|, NA"),
+    `Sensor (link to manual)` = 
+      paste0('<a  target=_blank href=', url, '>', sensor_model,'</a>')
+  ) %>% 
+  select(`Sensor (link to manual)`, Manufacturer = manufacturer, `Variable(s) Measured`) %>%
+  arrange(Manufacturer) %>% 
   datatable(
     options = list(
       dom = 'ft',
@@ -175,7 +170,7 @@ sensors %>%
       columnDefs = list(list(className = 'dt-center', targets = "_all"))
     ), 
     rownames = FALSE, escape = FALSE,
-    caption = "Table 1: Temperature sensors used in CMAR's Coastal Monitoring Program."
+    caption = "Table 1: Temperature sensors used in CMAR's Coastal Monitoring Program. Note that some aquaMeasure DOT, aquaMeausure SAL, and Vemco units do not measure pressure."
   )
 ```
 

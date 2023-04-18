@@ -102,7 +102,7 @@
     "href": "pages/qc_tests.html#climatological-test",
     "title": "QC Tests",
     "section": "Climatological Test",
-    "text": "Climatological Test\nThe Climatological Test is a variation of the Gross Range Test that accounts for seasonal variability. There is no Fail flag associated with this test for temperature, salinity, or dissolved oxygen due to the dynamic nature of these variables (IOOS 2020, 2018). Observations that are seasonal outliers were assigned the flag Suspect/Of Interest.\nThese thresholds are named \\(season_{min}\\) and \\(season_{max}\\). The seasonal time period (e.g., monthly, seasonally, other) and associated thresholds are defined by the data provider. Following the OOI Biogeochemical Sensor Data: Best Practices & User Guide, seasons were defined based on the calendar month, and the thresholds were based on historical data. The monthly thresholds were defined similar to the Gross Range Test:\n\\[\nseason_{min} = avg_{season} - 3 * stdev_{season}  \n\\tag{3}\\]\n\\[\nseason_{max} = avg_{season} + 3 * stdev_{season}  \n\\tag{4}\\]\nThe \\(avg_{season}\\) was calculated as the average of all observations for a given month, and \\(stdev_{season}\\) was the associated standard deviation.\nNote that OOI used a more complex method (harmonic analysis, as described here) to estimate \\(avg_{season}\\) to account for spurious values. This was beyond the current scope of the CMAR Coastal Monitoring Program, but could be applied in future iterations of this threshold analysis."
+    "text": "Climatological Test\nThe Climatological Test is a variation of the Gross Range Test that accounts for seasonal variability. There is no Fail flag associated with this test for temperature, salinity, or dissolved oxygen due to the dynamic nature of these variables (IOOS 2020, 2018). Observations that are seasonal outliers were assigned the flag Suspect/Of Interest.\nThese thresholds are named \\(season_{min}\\) and \\(season_{max}\\). The seasonal time period (e.g., monthly, seasonally, other) and associated thresholds are defined by the data provider. Following the OOI Biogeochemical Sensor Data: Best Practices & User Guide, seasons were defined based on the calendar month, and the thresholds were based on historical data. The monthly thresholds were defined similar to the Gross Range Test:\n\\[\nseason_{min} = avg_{season} - 3 * stdev_{season}  \n\\tag{3}\\]\n\\[\nseason_{max} = avg_{season} + 3 * stdev_{season}  \n\\tag{4}\\]\nThe \\(avg_{season}\\) was calculated as the average of all observations for a given month, and \\(stdev_{season}\\) was the associated standard deviation.\nNote that OOI used a more complex method (harmonic analysis, as described here) to estimate \\(avg_{season}\\) to account for spurious values. This was beyond the current scope of the CMAR Coastal Monitoring Program, but could be applied in future iterations of this threshold analysis.\n\ndepending on variable, grouped by county or not. Didn’t group by depth"
   },
   {
     "objectID": "pages/temp_measurements.html",
@@ -123,7 +123,7 @@
     "href": "pages/temp_measurements.html#sensors",
     "title": "CMAR Measurements",
     "section": "Sensors",
-    "text": "Sensors\nCMAR uses several types of sensors to measure temperature (Table 1):\n\n\n\n\n\n\n\n\nSome of these sensors also measure other variables including dissolved oxygen, salinity, depth, and acoustic detections.\nThe Vemco VR2AR is typically the deepest sensor, anchored about 0.5 m above the sea floor. It has an acoustic release that is triggered to retrieve the sensor string. Deployments without VR2AR sensors are usually accessible from the surface, but some are retrieved by dragging or divers."
+    "text": "Sensors\nCMAR uses several types of sensors to measure temperature (Table 1):\n\n\n\n\n\n\n\nNot all am do depth \nSome of these sensors also measure other variables including dissolved oxygen, salinity, depth, and acoustic detections.\nThe Vemco VR2AR is typically the deepest sensor, anchored about 0.5 m above the sea floor. It has an acoustic release that is triggered to retrieve the sensor string. Deployments without VR2AR sensors are usually accessible from the surface, but some are retrieved by dragging or divers."
   },
   {
     "objectID": "pages/temp_overview.html",
@@ -138,5 +138,47 @@
     "title": "Thresholds Analysis",
     "section": "",
     "text": "This document describes the tests applied for each variable, and the methods for selecting the most appropriate thresholds. Where possible, these thresholds were determined from historical data, which provide a baseline of “normal” and “outlying” conditions. The historical data used here was the Coastal Monitoring Program Water Quality data sets submitted to the Nova Scotia Open Data Portal in December 2022. Preliminary quality control measures (e.g., obvious outliers and suspected biofouling removed) were applied to these datasets before submission. Additionally, freshwater and other outlier stations were excluded from the threshold analysis to provide a better representation of “normal” conditions.\nThese thresholds should be re-evaluated and re-calculated if necessary in several years, when more data is available."
+  },
+  {
+    "objectID": "pages/qc_tests.html#spike-test",
+    "href": "pages/qc_tests.html#spike-test",
+    "title": "QC Tests",
+    "section": "Spike Test",
+    "text": "Spike Test"
+  },
+  {
+    "objectID": "pages/qc_tests.html#rate-of-change-test",
+    "href": "pages/qc_tests.html#rate-of-change-test",
+    "title": "QC Tests",
+    "section": "Rate of Change Test",
+    "text": "Rate of Change Test"
+  },
+  {
+    "objectID": "pages/temp_overview.html#units",
+    "href": "pages/temp_overview.html#units",
+    "title": "Overview",
+    "section": "Units",
+    "text": "Units\n\ndegrees C"
+  },
+  {
+    "objectID": "pages/temp_thresholds.html",
+    "href": "pages/temp_thresholds.html",
+    "title": "Thresholds",
+    "section": "",
+    "text": "Most QC test thresholds for temperature were based on historical Coastal Monitoring Program data. Preliminary quality control was applied to this data1, leaving observations from 122 stations in 15 counties (Figure 1)."
+  },
+  {
+    "objectID": "pages/temp_thresholds.html#gross-range-test",
+    "href": "pages/temp_thresholds.html#gross-range-test",
+    "title": "Thresholds",
+    "section": "Gross Range Test",
+    "text": "Gross Range Test\n\nSensor Max / Min\nThe sensor thresholds were determined based on the associated manual (Table 3)."
+  },
+  {
+    "objectID": "pages/temp_thresholds.html#user-thresholds",
+    "href": "pages/temp_thresholds.html#user-thresholds",
+    "title": "Thresholds",
+    "section": "User Thresholds",
+    "text": "User Thresholds\nUser thresholds were calculated separately for each county based on expected and observed spatial differences in temperature (?@fig-temp-sd).\n\n\n\n\n\nFigure 2: ?(caption)\n\n\n\nMost counties have substantially different number of observations for different seasons, which can skew the average. To give each month equal weight regardless of the number of observations collected, the user thresholds were based on the monthly climatology2 (figure).\nAll temperature observations were first grouped by calendar month, and the average temperature for each month was calculated. The \\(avg_{Temp}\\) was the average of these monthly averages, and \\(stdev_{Temp}\\) was the standard deviation of the monthly averages (Equation 1, Equation 2). With this approach, the mean for a given month will be weighted towards years with more observations than other years for that month. This is not expected to have a substantial influence on the calculated thresholds, but future iterations of this exercise could further standardize the data to account for this.\n\\[\navg_{temp} = sum(avg_{Jan} + avg_{Feb} + ... avg_{Dec}) / 12\n\\tag{1}\\]\n\\[\nstdev_{temp} = sd(avg_{Jan}, avg_{Feb}, ... avg_{Dec})\n\\tag{2}\\]\n\n\n\n\n\n\n\nThe quality3 of these user thresholds may vary by county, depending on the number and distribution (in space and time) of observations. For example, there are relatively few observations for some counties compared to others (?@fig-temp-n-obs). Cape Breton has the fewest observations at ~30,000 over 3 years and two stations, while Guysborough has the most at nearly 1 million over 7 years and 35 stations (Figure 1). For consistency, the counties with fewer observations were not pooled with counties with more observations, although this may be a future task. Otherwise, the user thresholds for counties with less data should be re-evaluated when more observations are collected.\nCalculating thresholds at the county scale provides relatively coarse threshold values. Ideally, these would be resolved by depth and a smaller spatial scale (e.g., waterbody or station). However, calculating thresholds for each county and depth provides its own challenges. For example, the data become very patchy when grouped by county, depth, and month (e.g., 169 month-county-depth combinations with 0 observations). Additionally, the same depth can represent a different part of the water column for different stations. For example, at the Barren Island station in Guysborough county, the 15 m sensor is near the bottom. In contrast, 15 m is in the top 20 % of the water column at Tickle Island, also in Guysborough county. Finally, aggregating thresholds by county and depth would result in 141 user-defined temperature thresholds, which is more than the 2.5 person Data Governance team can reasonably manage.\nBecause depth was not accounted for, it is expected that observations from very shallow sensors (e.g., <= 2 m) will be assigned the Suspect/Of Interest flag, despite appearing reasonable in the context of the deployment. In this case, the flag should be interpreted as “Of Interest”, for highlighting a relatively warm observation.\nThe \\(user_{min}\\) threshold is typically << 0 degrees Celsius (Table 3), and is therefore not expected to flag any observations. For most counties (all except Annapolis, Queens, Shelburne, and Digby), the user_min is less than the sensor_min for the aquameasure and vr2ar sensors. In this case, any observations less than the sensor_min would fail the gross range test (i.e., the user_min would be ignored). It may be useful for other users to apply their own user_min threshold to the data to highlight cold observations that are Suspect/Of Interest. For example, those interested in salmonid aquaculture may wish to flag observations at or near the superchill threshold (user_min = -0.7 degree C)."
   }
 ]

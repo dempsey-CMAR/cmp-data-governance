@@ -1,0 +1,198 @@
+---
+title: "Thresholds"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
+
+library(dplyr)
+library(DT)
+library(here)
+library(ggplot2)
+library(leaflet)
+library(lubridate)
+library(plotly)
+library(RColorBrewer)
+library(readr)
+library(summaryplots)
+
+
+theme_set(theme_light())
+
+dt_options <- list(
+      dom = 'ft',
+      paging = FALSE,
+      searching = TRUE,
+      scrollY = "550px",
+      pageLength = 500,
+      columnDefs = list(list(className = 'dt-center', targets = "_all"))
+)
+
+# summarized data 
+dat_filt <- read_csv(
+  here("pages/data/summary_filtered_data.csv"), show_col_types = FALSE
+) %>% 
+  filter(variable == "Temperature")
+
+# gross range thresholds (sensors)
+gr_thresholds <- read_csv(
+  here("pages/data/sensors.csv"), show_col_types = FALSE
+)
+
+# station locations
+st_locations <- read_csv(
+  here("pages/data/Station_Locations_2022-12-06.csv"), show_col_types = FALSE
+)
+```
+
+
+
+Most QC test thresholds for temperature were based on historical Coastal Monitoring Program data. Preliminary quality control was applied to this data[^1], leaving observations from `r length(na.omit(unique(dat_filt$station)))` stations in `r length(na.omit(unique(dat_filt$county)))` counties (@fig-temp-station-locations). 
+
+[^1]: e.g., obvious outliers and freshwater stations were omitted
+
+
+### Figure 1
+```{r}
+#| label: fig-temp-station-locations
+#| fig-height: 7
+#| fig-cap: Approximate location of stations with temperature data used to inform QC test thresholds. Marker size is proportional to the number of temperature observations within the county.
+
+# set up colour palette - need to interpolate with colorRampPalette
+n_col = length(unique(st_locations$COUNTY))
+getpal = colorRampPalette(brewer.pal(8, "Dark2"))
+pal <- colorFactor(getpal(n_col), domain = unique(st_locations$COUNTY))
+
+# join the station locations dataset with the number of obs from each station
+st_locations <- st_locations %>% 
+  rename(county = COUNTY, station = STATION) %>% 
+  inner_join(
+    dat_filt %>% 
+      filter(group == "all_station", variable == "Temperature") %>% 
+      select(county, station, n),
+    by = c("county", "station") 
+  ) %>% 
+  group_by(county) %>% 
+  mutate(
+    n_tot = sum(n),
+    n_prop = round(n / sum(n), digits = 2),
+    popup = paste(county, station, n_prop, sep = "</br>")
+  ) 
+
+# interactive map
+leaflet(st_locations) %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  addCircleMarkers(
+    lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
+    radius = ~n_prop * 25,
+    color = ~pal(county),
+    fillColor =  ~pal(county),
+    popup = ~popup,
+    fillOpacity = 0.5
+  )
+```
+
+## Gross Range Test
+
+### Sensor Max / Min 
+
+The sensor thresholds were determined based on the associated manual (Table 3).
+
+```{r}
+gr_thresholds %>% 
+  filter(variable == "temperature_degree_c") %>%
+  mutate(
+    `Sensor Type (link to manual)` = 
+      paste0('<a  target=_blank href=', url, '>', sensor_type,'</a>')
+  ) %>% 
+  select(`Sensor Type (link to manual)`, sensor_min, sensor_max ) %>%
+  distinct() %>% 
+  datatable(
+    dt_options <- list(
+      dom = 'ft',
+      searching = FALSE,
+      paging = FALSE,
+      pageLength = 500,
+      columnDefs = list(list(className = 'dt-center', targets = "_all"))
+    ), 
+    rownames = FALSE, escape = FALSE,
+    caption = "Table 3: Temperature gross range thresholds as determined by sensor specifications."
+  )
+```
+
+## User Thresholds
+
+User thresholds were calculated separately for each county based on expected and observed spatial differences in temperature (@fig-temp-sd).
+
+```{r}
+#| label: fig-temp-mean-sd
+
+p <- dat_filt %>% 
+  filter(group == "county") %>% 
+  plot_mean_sd_county()
+
+ggplotly(p)
+
+```
+
+
+
+
+Most counties have substantially different number of observations for different seasons, which can skew the average. To give each month equal weight regardless of the number of observations collected, the user thresholds were based on the monthly climatology[^2] (figure).
+
+[^2]: it was assumed that the different number of days per month was negligible
+
+All temperature observations were first grouped by calendar month, and the average temperature for each month was calculated. The $avg_{Temp}$ was the average of these monthly averages, and $stdev_{Temp}$ was the standard deviation of the monthly averages (@eq-temp-avg, @eq-temp-stdev). With this approach, the mean for a given month will be weighted towards years with more observations than other years for that month. This is not expected to have a substantial influence on the calculated thresholds, but future iterations of this exercise could further standardize the data to account for this.
+
+$$
+avg_{temp} = sum(avg_{Jan} + avg_{Feb} + ... avg_{Dec}) / 12
+$$ {#eq-temp-avg}
+
+$$
+stdev_{temp} = sd(avg_{Jan}, avg_{Feb}, ... avg_{Dec})
+$$ {#eq-temp-stdev}
+
+```{r}
+# calculate thresholds based on the climatology
+user_thresh <- dat_filt %>% 
+  filter(group == "county_month") %>% 
+  rename(mean_month = mean) %>% 
+  group_by(county) %>%
+  summarise(
+    mean = round(mean(mean_month), digits = 3),
+    stdev = round(sd(mean_month), digits = 3)
+  ) %>% 
+  mutate(
+    qc_test = "grossrange",
+    variable = "temperature_degree_c",
+    user_min = mean - 3 * stdev, 
+    user_max = mean + 3 * stdev
+  ) 
+
+user_thresh %>% 
+  select(county, mean, stdev, user_min, user_max) %>% 
+  datatable(
+    dt_options <- list(
+      dom = 'ft',
+      searching = FALSE,
+      paging = FALSE,
+      pageLength = 500,
+      columnDefs = list(list(className = 'dt-center', targets = "_all"))
+    ), 
+    rownames = FALSE,
+    caption = "Table 4: Temperature statistics and user thresholds for the Gross Range Test."
+  )
+```
+
+The quality[^1] of these user thresholds may vary by county, depending on the number and distribution (in space and time) of observations. For example, there are relatively few observations for some counties compared to others (@fig-temp-n-obs). Cape Breton has the fewest observations at ~30,000 over 3 years and two stations, while Guysborough has the most at nearly 1 million over 7 years and 35 stations (@fig-temp-station-locations). For consistency, the counties with fewer observations were not pooled with counties with more observations, although this may be a future task. Otherwise, the user thresholds for counties with less data should be re-evaluated when more observations are collected.
+
+[^1]: e.g., how representative the thresholds are of "normal" conditions through the water column and county
+
+Calculating thresholds at the county scale provides relatively coarse threshold values. Ideally, these would be resolved by depth and a smaller spatial scale (e.g., waterbody or station). However, calculating thresholds for each county and depth provides its own challenges. For example, the data become very patchy when grouped by county, depth, and month (e.g., 169 month-county-depth combinations with 0 observations). Additionally, the same depth can represent a different part of the water column for different stations. For example, at the Barren Island station in Guysborough county, the 15 m sensor is near the bottom. In contrast, 15 m is in the top 20 % of the water column at Tickle Island, also in Guysborough county. Finally, aggregating thresholds by county and depth would result in 141 user-defined temperature thresholds, which is more than the 2.5 person Data Governance team can reasonably manage.
+
+Because depth was not accounted for, it is expected that observations from very shallow sensors (e.g., <= 2 m) will be assigned the [Suspect/Of Interest]{style="color: #EDA247;"} flag, despite appearing reasonable in the context of the deployment. In this case, the flag should be interpreted as ["Of Interest"]{style="color: #EDA247;"}, for highlighting a relatively warm observation.
+
+The $user_{min}$ threshold is typically << 0 degrees Celsius (Table 3), and is therefore not expected to flag any observations. For most counties (all except Annapolis, Queens, Shelburne, and Digby), the user_min is less than the sensor_min for the aquameasure and vr2ar sensors. In this case, any observations less than the sensor_min would [fail]{style="color: #DB4325;"} the gross range test (i.e., the user_min would be ignored). It may be useful for other users to apply their own user_min threshold to the data to highlight cold observations that are [Suspect/Of Interest]{style="color: #EDA247;"}. For example, those interested in salmonid aquaculture may wish to flag observations at or near the superchill threshold (user_min = -0.7 degree C).
+
