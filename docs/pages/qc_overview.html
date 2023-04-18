@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Governance - Quality Control</title>
+<title>Data Governance - Overview</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -102,10 +102,21 @@ div.csl-indent {
     <a class="nav-link" href="../pages/cmp_overview.html">
  <span class="menu-text">Program Overview</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link active" href="../pages/quality_control.html" aria-current="page">
- <span class="menu-text">Quality Control</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-quality-control" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Quality Control</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-quality-control">    
+        <li>
+    <a class="dropdown-item" href="../pages/qc_overview.html">
+ <span class="dropdown-text">Overview</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/qc_tests.html">
+ <span class="dropdown-text">QC Tests</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-dissolved-oxygen" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Dissolved Oxygen</span>
@@ -151,12 +162,15 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quality-control-tests" id="toc-quality-control-tests" class="nav-link active" data-scroll-target="#quality-control-tests">Quality Control Tests</a></li>
+  <li><a href="#quality-control" id="toc-quality-control" class="nav-link active" data-scroll-target="#quality-control">Quality Control</a>
+  <ul class="collapse">
+  <li><a href="#quality-control-tests" id="toc-quality-control-tests" class="nav-link" data-scroll-target="#quality-control-tests">Quality Control Tests</a></li>
   <li><a href="#qartod" id="toc-qartod" class="nav-link" data-scroll-target="#qartod">QARTOD</a>
   <ul class="collapse">
   <li><a href="#flag-scheme" id="toc-flag-scheme" class="nav-link" data-scroll-target="#flag-scheme">Flag Scheme</a></li>
   <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests">Tests</a></li>
   <li><a href="#thresholds" id="toc-thresholds" class="nav-link" data-scroll-target="#thresholds">Thresholds</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -166,7 +180,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Quality Control</h1>
+<h1 class="title">Overview</h1>
 </div>
 
 
@@ -181,6 +195,8 @@ div.csl-indent {
 
 </header>
 
+<section id="quality-control" class="level1">
+<h1>Quality Control</h1>
 <p>It is beyond the scope of the Coastal Monitoring Program to produce analysis-ready data products for all potential users. However, CMAR does apply some automated and “human in the loop” quality control (QC) processes to the data. Some users may wish to apply additional QC.</p>
 <section id="quality-control-tests" class="level2">
 <h2 class="anchored" data-anchor-id="quality-control-tests">Quality Control Tests</h2>
@@ -315,6 +331,7 @@ div.csl-indent {
 
 
 
+</section>
 </section>
 </section>
 

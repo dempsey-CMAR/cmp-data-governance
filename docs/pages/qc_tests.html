@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Governance - Coastal Monitoring Program</title>
+<title>Data Governance - QC Tests</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,25 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
 }
 </style>
 
@@ -59,6 +78,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -80,7 +100,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="../pages/cmp_overview.html" aria-current="page">
+    <a class="nav-link" href="../pages/cmp_overview.html">
  <span class="menu-text">Program Overview</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -139,14 +159,21 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#gross-range-test" id="toc-gross-range-test" class="nav-link active" data-scroll-target="#gross-range-test">Gross Range Test</a></li>
+  <li><a href="#climatological-test" id="toc-climatological-test" class="nav-link" data-scroll-target="#climatological-test">Climatological Test</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Coastal Monitoring Program</h1>
+<h1 class="title">QC Tests</h1>
 </div>
 
 
@@ -161,34 +188,55 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/under-construction.png" class="img-fluid figure-img" width="960"></p>
-<p></p><figcaption class="figure-caption">Image by <a href="https://pixabay.com/users/josethestoryteller-5100055/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2408062">Jose R. Cabello</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2408062">Pixabay</a></figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>This website will provide technical information on CMAR’s Coastal Monitoring Program and Data Governance initiatives.</p>
-<p>The content in under development and should be considered a <strong>DRAFT</strong>.</p>
-<p>CMAR’s Coastal Monitoring Program (CMP) is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia’s marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change.</p>
-<p>Content to include:</p>
+<p>Intro blurb about test</p>
 <ul>
-<li>3 branches</li>
-<li>data access</li>
-<li>data governance</li>
-<li>sensor strings</li>
-<li>CMARverse</li>
-<li>sensors used (see DMP)</li>
-<li>data processing</li>
-<li>data management plan</li>
+<li>From QARTOD manuals</li>
+<li>Provide codeable instructions</li>
+<li>Data providers must determine thresholds</li>
+<li>Include table here of ones that we are actually using?</li>
 </ul>
+<section id="gross-range-test" class="level2">
+<h2 class="anchored" data-anchor-id="gross-range-test">Gross Range Test</h2>
+<p>The Gross Range Test aims to flag observations that fall outside of the sensor measurement range (flagged <span style="color: #DB4325;">Fail</span>) and observations that are statistical outliers (flagged <span style="color: #EDA247;">Suspect/Of Interest</span>).</p>
+<p>Thresholds for <span style="color: #DB4325;">failed</span> observations are named <span class="math inline">\(sensor_{min}\)</span> and <span class="math inline">\(sesnor_{max}\)</span>, and are determined by the sensor specifications. CMAR named assigned these thresholds for each variable and sensor based on information in the associated manuals.</p>
+<p>Thresholds for <span style="color: #EDA247;">suspect/of interest</span> observations are named <span class="math inline">\(user_{min}\)</span>$ and $<span class="math inline">\(user_{max}\)</span>, and are defined by the data provider. CMAR assigned these thresholds based on historical Coastal Monitoring Program data.</p>
+<p>Following the <a href="https://docs.google.com/document/d/19pS5V1hsKAcSaGjwfmyrmZRIJFMXNAc4B0Uo9Akvmd4/edit#heading=h.u87btnaapb66">OOI Biogeochemical Sensor Data: Best Practices &amp; User Guide</a>, <strong>these thresholds were calculated from historical data as the mean +/- three standard deviations</strong> (<a href="#eq-user-min">Equation&nbsp;1</a>, <a href="#eq-user-max">Equation&nbsp;2</a>):</p>
+<p><span id="eq-user-min"><span class="math display">\[
+user_{min} = avg_{var} - 3 * stdev_{var}  
+\tag{1}\]</span></span></p>
+<p><span id="eq-user-max"><span class="math display">\[
+user_{max} = avg_{var} + 3 * stdev_{var}
+\tag{2}\]</span></span></p>
+<p>where <span class="math inline">\(avg_{var}\)</span> is average of the variable of interest, and <span class="math inline">\(stdev_{var}\)</span> is the standard deviation of the variable of interest.</p>
+<ul>
+<li><strong>depending on variable, grouped by county or not. Didn’t group by depth</strong></li>
+</ul>
+</section>
+<section id="climatological-test" class="level2">
+<h2 class="anchored" data-anchor-id="climatological-test">Climatological Test</h2>
+<p>The Climatological Test is a variation of the Gross Range Test that accounts for seasonal variability. There is no <span style="color: #DB4325;">Fail</span> flag associated with this test for temperature, salinity, or dissolved oxygen due to the dynamic nature of these variables <span class="citation" data-cites="RN24432 RN26562">(<a href="#ref-RN24432" role="doc-biblioref">IOOS 2020</a>, <a href="#ref-RN26562" role="doc-biblioref">2018</a>)</span>. Observations that are seasonal outliers were assigned the flag <span style="color: #EDA247;">Suspect/Of Interest</span>.</p>
+<p>These thresholds are named <span class="math inline">\(season_{min}\)</span> and <span class="math inline">\(season_{max}\)</span>. The seasonal time period (e.g., monthly, seasonally, other) and associated thresholds are defined by the data provider. Following the <a href="https://docs.google.com/document/d/19pS5V1hsKAcSaGjwfmyrmZRIJFMXNAc4B0Uo9Akvmd4/edit#heading=h.u87btnaapb66">OOI Biogeochemical Sensor Data: Best Practices &amp; User Guide</a>, seasons were defined based on the calendar month, and the thresholds were based on historical data. The monthly thresholds were defined similar to the Gross Range Test:</p>
+<p><span id="eq-season-min"><span class="math display">\[
+season_{min} = avg_{season} - 3 * stdev_{season}  
+\tag{3}\]</span></span></p>
+<p><span id="eq-season-max"><span class="math display">\[
+season_{max} = avg_{season} + 3 * stdev_{season}  
+\tag{4}\]</span></span></p>
+<p>The <span class="math inline">\(avg_{season}\)</span> was calculated as the average of all observations for a given month, and <span class="math inline">\(stdev_{season}\)</span> was the associated standard deviation.</p>
+<p>Note that OOI used a more complex method (harmonic analysis, as described <a href="https://github.com/oceanobservatories/qc-lookup">here</a>) to estimate <span class="math inline">\(avg_{season}\)</span> to account for spurious values. This was beyond the current scope of the CMAR Coastal Monitoring Program, but could be applied in future iterations of this threshold analysis.</p>
 
 
 
-</main> <!-- /main -->
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-RN26562" class="csl-entry" role="doc-biblioentry">
+IOOS. 2018. <span>“QARTOD Manual for Real-Time Quality Control of Dissolved Oxygen Observations.”</span> <a href="https://ioos.noaa.gov/ioos-in-action/manual-real-time-quality-control-dissolved-oxygen-observations/">https://ioos.noaa.gov/ioos-in-action/manual-real-time-quality-control-dissolved-oxygen-observations/</a>.
+</div>
+<div id="ref-RN24432" class="csl-entry" role="doc-biblioentry">
+———. 2020. <span>“QARTOD Manual for Real-Time Quality Control of in-Situ Temperature and Salinity Data: A Guide to Quality Control and Quality Assurance for in-Situ Temperature and Salinity Observations.”</span> <a href="https://ioos.noaa.gov/ioos-in-action/temperature-salinity/">https://ioos.noaa.gov/ioos-in-action/temperature-salinity/</a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

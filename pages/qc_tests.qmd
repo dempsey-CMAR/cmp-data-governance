@@ -1,0 +1,52 @@
+---
+title: "QC Tests"
+---
+
+Intro blurb about test
+
+- From QARTOD manuals
+- Provide codeable instructions
+- Data providers must determine thresholds
+- Include table here of ones that we are actually using?
+
+## Gross Range Test
+
+The Gross Range Test aims to flag observations that fall outside of the sensor measurement range (flagged [Fail]{style="color: #DB4325;"}) and observations that are statistical outliers (flagged [Suspect/Of Interest]{style="color: #EDA247;"}).
+
+Thresholds for [failed]{style="color: #DB4325;"} observations are named $sensor_{min}$ and $sesnor_{max}$, and are determined by the sensor specifications. CMAR named assigned these thresholds for each variable and sensor based on information in the associated manuals.
+
+Thresholds for [suspect/of interest]{style="color: #EDA247;"} observations are named $user_{min}$$ and $$user_{max}$, and are defined by the data provider. CMAR assigned these thresholds based on historical Coastal Monitoring Program data.
+
+Following the [OOI Biogeochemical Sensor Data: Best Practices & User Guide](https://docs.google.com/document/d/19pS5V1hsKAcSaGjwfmyrmZRIJFMXNAc4B0Uo9Akvmd4/edit#heading=h.u87btnaapb66), **these thresholds were calculated from historical data as the mean +/- three standard deviations** (@eq-user-min, @eq-user-max):
+
+$$
+user_{min} = avg_{var} - 3 * stdev_{var}  
+$$ {#eq-user-min}
+
+$$
+user_{max} = avg_{var} + 3 * stdev_{var}
+$$ {#eq-user-max}
+
+where $avg_{var}$ is average of the variable of interest, and $stdev_{var}$ is the standard deviation of the variable of interest.
+
+- **depending on variable, grouped by county or not. Didn't group by depth**
+
+## Climatological Test
+
+The Climatological Test is a variation of the Gross Range Test that accounts for seasonal variability. There is no [Fail]{style="color: #DB4325;"} flag associated with this test for temperature, salinity, or dissolved oxygen due to the dynamic nature of these variables [@RN24432;@RN26562]. Observations that are seasonal outliers were assigned the flag [Suspect/Of Interest]{style="color: #EDA247;"}.
+
+These thresholds are named $season_{min}$ and $season_{max}$. The seasonal time period (e.g., monthly, seasonally, other) and associated thresholds are defined by the data provider. Following the [OOI Biogeochemical Sensor Data: Best Practices & User Guide](https://docs.google.com/document/d/19pS5V1hsKAcSaGjwfmyrmZRIJFMXNAc4B0Uo9Akvmd4/edit#heading=h.u87btnaapb66), seasons were defined based on the calendar month, and the thresholds were based on historical data. The monthly thresholds were defined similar to the Gross Range Test:
+
+$$
+season_{min} = avg_{season} - 3 * stdev_{season}  
+$$ {#eq-season-min}
+
+$$
+season_{max} = avg_{season} + 3 * stdev_{season}  
+$$ {#eq-season-max}
+
+The $avg_{season}$ was calculated as the average of all observations for a given month, and $stdev_{season}$ was the associated standard deviation. 
+
+Note that OOI used a more complex method (harmonic analysis, as described [here](https://github.com/oceanobservatories/qc-lookup)) to estimate $avg_{season}$ to account for spurious values. This was beyond the current scope of the CMAR Coastal Monitoring Program, but could be applied in future iterations of this threshold analysis.
+
+

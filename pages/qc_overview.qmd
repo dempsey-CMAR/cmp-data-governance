@@ -1,7 +1,8 @@
 ---
-title: "Quality Control"
+title: "Overview"
 ---
 
+# Quality Control
 It is beyond the scope of the Coastal Monitoring Program to produce analysis-ready data products for all potential users. However, CMAR does apply some automated and "human in the loop" quality control (QC) processes to the data. Some users may wish to apply additional QC.
 
 ## Quality Control Tests
