@@ -20,6 +20,7 @@ website:
         menu:
           - pages/temp_overview.qmd
           - pages/temp_measurements.qmd
+          - pages/temp_thresholds.qmd
 format:
   html:
     theme: yeti

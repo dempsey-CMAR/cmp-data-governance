@@ -7,50 +7,11 @@ editor_options:
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
 
-library(dplyr)
-library(DT)
 library(here)
-library(ggplot2)
-library(leaflet)
-library(plotly)
-library(RColorBrewer)
-library(readr)
-library(stringr)
-library(summaryplots)
-library(tidyr)
 
+source(here("pages/import_data_and_params.R"))
 
-theme_set(theme_light())
-
-dt_options <- list(
-      dom = 'ft',
-      paging = FALSE,
-      searching = TRUE,
-      scrollY = "550px",
-      pageLength = 500,
-      columnDefs = list(list(className = 'dt-center', targets = "_all"))
-)
- 
-# all observations
-dat <- read_csv(
-  here("pages/data/summary.csv"), show_col_types = FALSE
-) %>%
-  filter(variable == "Temperature")
-
-# station locations
-st_locations <- read_csv(
-  here("pages/data/Station_Locations_2022-12-06.csv"), show_col_types = FALSE
-) %>%
-  mutate(
-    STATION = case_when(
-      STATION == "Sandy Cove St. Mary's" ~ "Sandy Cove St. Marys",
-      STATION == "Larry's River" ~ "Larrys River",
-      TRUE ~ STATION),
-    popup = paste("County: ", COUNTY, "</br>", "Station: ", STATION) 
-  )
-
-sensors <- read_csv(here("pages/data/sensors.csv"), show_col_types = FALSE)
-
+dat <- dat %>% filter(variable == "Temperature")
 ```
 
 ## Locations
@@ -62,10 +23,8 @@ CMAR has collected temperature data from `r length(na.omit(unique(dat$station)))
 #| fig-height: 7
 #| fig-cap: Approximate location of stations with temperature data. 
 
-# set up colour palette - need to interpolate with colorRampPalette
-n_col = length(unique(st_locations$COUNTY))
-getpal = colorRampPalette(brewer.pal(8, "Dark2"))
-pal <- colorFactor(getpal(n_col), domain = unique(st_locations$COUNTY))
+# set up colour palette 
+map_pal <- colorFactor(county_pal, domain = unique(st_locations$COUNTY))
 alpha <- 0.65
 size <- 6
 
@@ -74,14 +33,14 @@ leaflet(st_locations) %>%
   addProviderTiles(providers$CartoDB.Positron) %>% 
   addCircleMarkers(
     lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
-    color = ~pal(COUNTY),
-    fillColor =  ~pal(COUNTY),
+    color = ~map_pal(COUNTY),
+    fillColor =  ~map_pal(COUNTY),
     popup = ~popup,
     fillOpacity = alpha,
     radius = size
   ) %>%
   addLegend(
-    "bottomright", pal = pal, values = ~COUNTY,
+    "bottomright", pal = map_pal, values = ~COUNTY,
     title = "County",
     opacity = alpha
   )
@@ -98,12 +57,12 @@ n_county_obs <- dat %>%
 ```
 
 A large proportion of these records are from `r n_county_obs[1, "county"]$county` County
-(`r n_county_obs[1, "n_percent"]$n_percent` %), while a small proportion are from `r n_county_obs[nrow(n_county_obs), "county"]$county` (`r n_county_obs[nrow(n_county_obs), "n_percent"]$n_percent` %) and `r n_county_obs[nrow(n_county_obs)-1, "county"]$county` (`r n_county_obs[nrow(n_county_obs)-1, "n_percent"]$n_percent` %) Counties (@fig-do-n-obs-sat). 
+(`r n_county_obs[1, "n_percent"]$n_percent` %), while a small proportion are from `r n_county_obs[nrow(n_county_obs), "county"]$county` (`r n_county_obs[nrow(n_county_obs), "n_percent"]$n_percent` %) and `r n_county_obs[nrow(n_county_obs)-1, "county"]$county` (`r n_county_obs[nrow(n_county_obs)-1, "n_percent"]$n_percent` %) Counties (@fig-temp-n-obs). 
 
 ```{r}
-#| label: fig-do-n-obs-sat
+#| label: fig-temp-n-obs
 #| fig-height: 8
-#| fig-cap: The number of dissolved oxygen observations in each county. 
+#| fig-cap: The number of temperature observations in each county. 
 
 p <- dat %>%
   filter(group == "county") %>% 
@@ -122,7 +81,7 @@ Sensors may be placed at other depths for technical reasons or specific research
 ```{r}
 #| label: fig-temp-n-obs-depth
 #| fig-height: 10
-#| fig-cap: Number of temperature records at each depth (rounded to nearest whole number). Note that only depths with measurements are shown.
+#| fig-cap: Number of temperature observations at each depth (rounded to nearest whole number). Note that only depths with measurements are shown.
 
 p <- dat %>%
   filter(group == "all_depth") %>%
