@@ -16,12 +16,13 @@ library(tidyr)
 # datatable settings ------------------------------------------------------
 
 dt_options <- list(
-  dom = 'ft',
+  dom = 'Bft',
   paging = FALSE,
   searching = TRUE,
   scrollY = "550px",
   pageLength = 500,
-  columnDefs = list(list(className = 'dt-center', targets = "_all"))
+  columnDefs = list(list(className = 'dt-center', targets = "_all")),
+  buttons = c('copy', 'csv')
 )
 
 

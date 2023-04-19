@@ -142,13 +142,7 @@ user_thresh <- dat_filt %>%
 user_thresh %>% 
   select(county, mean, stdev, user_min, user_max) %>% 
   datatable(
-    dt_options <- list(
-      dom = 'ft',
-      searching = FALSE,
-      paging = FALSE,
-      pageLength = 500,
-      columnDefs = list(list(className = 'dt-center', targets = "_all"))
-    ), 
+    options = dt_options, extensions = 'Buttons', 
     rownames = FALSE,
     caption = "Table 2: Temperature statistics and user thresholds for the Gross Range Test."
   )
@@ -190,7 +184,7 @@ The season thresholds were calculated separately for each county due to expected
 ```{r}
 #| label: fig-temp-climatology
 #| fig-height: 10
-#| fig-cap: The mean and standard deviation of temperature in each county.
+#| fig-cap: The monthly mean and standard deviation of temperature in each county.
 
 county_month <- dat_filt %>% 
   filter(group == "county_month") %>% 
@@ -208,37 +202,147 @@ ggplotly(p)
 
 ```{r}
 #| fig-height: 8
-#| fig-cap: The mean and standard deviation of temperature in each county.
+#| fig-cap: The monthly mean and standard deviation of temperature in each county.
 
-# p <- ggplot(
-#   county_month, aes(month, mean, group = county, col = county)
-# ) +
-#   geom_point(size = 3) +
-#   geom_line(aes(col = county)) +
-#   geom_ribbon(
-#     aes(ymin = mean - stdev, ymax = mean + stdev, fill = county), 
-#     alpha = 0.25, col = NA
-#   ) +
-#   scale_x_discrete(name = "") +
-#   scale_y_continuous("Temperature (mean +/- standard deviation)") +
-#   scale_colour_manual(values = getpal(15)) +
-#   scale_fill_manual(values = getpal(15)) +
-#   guides(fill = "none")
-#   
-# p
-# 
-# 
-# ggplotly(p)
+p <- plot_mean_sd_season_ribbon(county_month, facet_county = FALSE)
+
+ggplotly(p, tooltip = "text")
+```
+:::
+
+Seasonal statistics and thresholds are presented in Table 3. The quality[^1] of these thresholds may vary by county and month, depending on the number and distribution (in space and time) of observations. There were no county-month groups with zero observations, although some groups had relatively few observations for many or all months (@fig-temp-n-clim; e.g., Cape Breton).
+
+<br>
+
+```{r}
+clim_thresholds <- county_month %>% 
+  mutate(
+    season_min = round((mean - 3 * stdev), digits = 3),
+    season_max = round((mean + 3 * stdev), digits = 3)
+  ) %>% 
+  select(county, month, mean, stdev, season_min, season_max) %>% 
+  arrange(county, month)  
+
+datatable(
+  clim_thresholds, extensions = 'Buttons', 
+  options = dt_options, rownames = FALSE,
+  caption = "Table 3: Seasonal statistics and thresholds by county and month."
+)
+```
+
+<br>
+
+### Spatial & Temporal Resolution
+
+The length of the time series varied among counties, from approximately 1 year (e.g., Cape Breton, Colchester) to over 7 years (select stations in Guysborough, Richmond, and Yarmouth counties; @fig-temp-n-years). This means that the monthly average for some county-month groups is based on only 1 year of data. 
+
+The number of stations varied by county, from a single station each in Colchester and Queens counties, to `r nrow(dat_filt[which(dat_filt$group == "all_station" & dat_filt$county == "Guysborough"),"station"])` stations in Guysborough (@fig-temp-station-locations).
+
+The seasonal thresholds for counties with limited years, number of observations, and/or number of stations are likely not representative of inter-annual or spatial variability in the county; however, they are adequate for this quality control exercise. These thresholds *are* representative of normal conditions of the observed deployments, and so outlying values will be flagged. If new deployments are added to these counties, it is recommended that the seasonal thresholds be re-evaluated and re-calculated if necessary. It is strongly recommended that all seasonal thresholds be re-calculated after several more years of data have been collected through the Coastal Monitoring Program.
+
+
+::: panel-tabset
+
+### Figure 5
+```{r}
+#| label: fig-temp-n-clim
+#| fig-height: 12
+#| fig-cap: The number of temperature observations in each month for each county.
+
+ p <- plot_n_obs_month(county_month, text_size = 12) +
+  theme(panel.spacing.y = unit(15, "lines"))
+
+ggplotly(p)
+
+```
+
+### Figure 6
+```{r}
+#| label: fig-temp-n-years
+#| fig-height: 12
+#| fig-cap: The number of years of temperature data for each month and county.
+#| message: false
+
+p <- dat_filt %>%
+  filter(group == "county_month_year") %>%
+  group_by(county, month) %>%
+  summarise(n = n()) %>%
+  mutate(month = month(month, label = TRUE)) %>% 
+  ungroup() %>% 
+  plot_n_obs_month(text_size = 12, fill = "#CCCCFF") +
+  scale_x_continuous("Number of Years", expand = expansion(mult = c(0, 0.1))) +
+  theme(panel.spacing.y = unit(15, "lines"))
+
+ggplotly(p)
+
+
+
 ```
 :::
 
 
+### Depth & Stratification
+
+Like the user thresholds, the seasonal thresholds were not resolved by depth. This means that there was high standard deviation for counties with seasonal stratification, particularly in the summer months when stratification is typically the strongest (@fig-temp-climatology; Table 3).
+
+The standard deviations for July through October in Inverness are the four highest overall standard deviations (Table 3). This high variability was driven by three deployments in Whycocomagh Basin in the Bras D'Or Lakes:
+
+-   Deep Basin (May to September 2018)
+-   0814x East (September to December 2020)
+-   0814x West (September to December 2020)
+
+These stations had sensors deployed above and below the thermocline. Temperatures below the thermocline, near the bottom, were typically very cold (about zero degrees for the whole Deep Basin deployment). Temperatures above the thermocline, closer to the surface, were typically much warmer, up to 25 °C in the summer (**link to Inverness report here**). The high standard deviation results in a very wide range of temperature values that would be flagged [Pass]{style="color: #009200;"}: e.g., from `r clim_thresholds[which(clim_thresholds$county == "Inverness" & clim_thresholds$month == "Aug"), "season_min"]$season_min` °C to `r clim_thresholds[which(clim_thresholds$county == "Inverness" & clim_thresholds$month == "Aug"), "season_max"]$season_max` °C in August.
+
+The temperatures below the thermocline could be considered anomalous and removed prior to calculating the thresholds. These temperatures would then be flagged [Of Interest]{style="color: #EDA247;"}. However, the temperatures were included in the current thresholds analysis for several reasons:
+
+1.  Together, these three deployments represent 68 % of the Inverness temperature observations (those from below the thermocline represents 30 % of the county observations).
+2.  Consistency with the threshold calculation for other counties (e.g., depth was not accounted for).
+3.  It is not [suspicious]{style="color: #EDA247;"} for these temperatures to be so cold in this region of Whycocomagh Basin.
+
+There are stations withe notable depth stratification in other counties, including Guysborough, Halifax, and Lunenburg. This is reflected in the relatively high standard deviation in the summer months for these counties (@fig-temp-climatology; Table 3). Future iterations of this threshold analysis could consider resolving the seasonal thresholds by depth; however it is beyond the scope of the current exercise.
+
+### User Thresholds vs. Seasonal Thresholds
 
 
+```{r}
+#| label: fig-climatology-thresh
+#| fig-cap: Monthly dissolved oxygen mean +/- 1 standard deviation. Solid orange lines indicate the climatology thresholds; dashed organge lines indicate the grossrange user thresholds.
 
+# user_col <- "#EDA247"
+# season_col <- 1
+# 
+# x <- county_month %>% 
+#   left_join(
+#     user_thresh %>% 
+#       select(-c(variable, qc_test, mean, stdev)), 
+#     by = "county") %>%
+#   left_join()
+# 
+# plot_mean_sd_season(x, facet_county = TRUE) +
+#   geom_ribbon(
+#     data = x,
+#     aes(month, 
+#         ymin = mean - 3 * stdev,
+#         ymax = mean + 3 * stdev)
+#   )
+# 
+#     geom_hline(data = x, aes(yintercept = user_min), col = 2)
+#   
+#   
+#   
+# ggplot(x, aes(month, mean)) +
+#     geom_point(size = 1) +
+#     geom_errorbar(
+#       aes(ymin = mean - stdev, ymax = mean + stdev), width = 0
+#     ) +
+#     scale_x_discrete(
+#       name = "", breaks = c("Jan", "Mar", "May", "Jul", "Sep", "Nov")
+#     ) +
+#   facet_wrap(~county, ncol = 3) +
+#   geom_hline(data = x, aes(yintercept = user_min))
 
-
-
+  
+```
 
 
 

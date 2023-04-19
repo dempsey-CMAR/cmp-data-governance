@@ -14,16 +14,14 @@ source(here("pages/import_data_and_params.R"))
 dat <- dat %>% filter(variable == "Dissolved Oxygen")
 
 st_locations <- st_locations %>%
-  left_join(do_units, by = "STATION") %>% 
-  mutate(
-    popup = paste("County: ", COUNTY, "</br>", "Station: ", STATION) 
-  )
+  left_join(do_units, by = "STATION") 
   
 ```
 
 ## Locations
 
 CMAR has collected dissolved oxygen data from `r length(na.omit(unique(dat$station)))` stations in `r length(na.omit(unique(dat$county)))` counties (@fig-do-station-locations). 
+
 ```{r, fig-do-station-units}
 #| label: fig-do-station-locations
 #| fig-height: 7
