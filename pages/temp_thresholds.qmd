@@ -24,9 +24,6 @@ Most QC test thresholds for temperature were based on historical Coastal Monitor
 #| fig-height: 7
 #| fig-cap: Approximate location of stations with temperature data used to inform QC test thresholds. Marker size is proportional to the number of temperature observations within the county.
 
-#map_pal <- colorFactor(county_pal, domain = unique(st_locations$COUNTY))
-#alpha <- 0.65
-
 # join the station locations dataset with the number of obs from each station
 st_locations <- st_locations %>% 
   inner_join(
@@ -52,25 +49,11 @@ leaflet(st_locations) %>%
   ) %>% 
   add_county_fill_legend(county_pal = county_pal)
   
-  
-  #  addCircleMarkers(
-  #   lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
-  #   radius = ~n_prop * 25,
-  #   color = ~map_pal(COUNTY),
-  #   fillColor = ~map_pal(COUNTY),
-  #   popup = ~popup,
-  #   fillOpacity = 0.5
-  # )  %>% 
-  # addLegend(
-  #   "bottomright", pal = map_pal, values = ~COUNTY,
-  #   title = "County",
-  #   opacity = alpha
-  # )
 ```
 
 ## Gross Range Test
 
-### Sensor Min / Max
+### Sensor Thresholds
 
 The sensor thresholds were determined based on the associated manual (Table 1).
 
@@ -84,19 +67,17 @@ sensors %>%
   select(`Sensor Type (link to manual)`, sensor_min, sensor_max ) %>%
   distinct() %>% 
   datatable(
-    dt_options <- list(
+    options <- list(
       dom = 'ft',
       searching = FALSE,
-      paging = FALSE,
-      pageLength = 500,
       columnDefs = list(list(className = 'dt-center', targets = "_all"))
     ), 
     rownames = FALSE, escape = FALSE,
-    caption = "Table 1: Temperature gross range thresholds as determined by sensor specifications."
+    caption = "Table 1: Temperature sensor thresholds for the Gross Range Test."
   )
 ```
 
-### User Min / Max
+### User Thresholds
 
 User thresholds were calculated separately for each county due to expected and observed spatial differences in temperature (@fig-temp-mean-sd).
 
@@ -113,7 +94,7 @@ ggplotly(p, tooltip = "text")
 
 ```
 
-Most counties have substantially different number of observations for different seasons (@fig-temp-n-clim). Because temperature has a clear seasonal cycle (@fig-temp-climatology), this can weight the average towards months with more observations. To give each month equal weight, the user thresholds were based on the monthly climatology[^3].
+Most counties have substantially different number of observations for different seasons (@fig-temp-n-obs-county-month). Because temperature has a clear seasonal cycle (@fig-temp-climatology), this can weight the average towards months with more observations. To give each month equal weight, the user thresholds were based on the monthly climatology[^3].
 
 [^3]: it was assumed that the different number of days per month was negligible
 
@@ -219,7 +200,7 @@ ggplotly(p, tooltip = "text")
 ```
 :::
 
-Seasonal statistics and thresholds are presented in Table 3. The quality[^2] of these thresholds may vary by county and month, depending on the number and distribution (in space and time) of observations. There were no county-month groups with zero observations, although some groups had relatively few observations for many or all months (@fig-temp-n-clim; e.g., Cape Breton).
+Seasonal statistics and thresholds are presented in Table 3. The quality[^2] of these thresholds may vary by county and month, depending on the number and distribution (in space and time) of observations. There were no county-month groups with zero observations, although some groups had relatively few observations for many or all months (@fig-temp-n-obs-county-month; e.g., Cape Breton).
 
 <br>
 
@@ -254,7 +235,7 @@ The seasonal thresholds for counties with limited years, number of observations,
 
 ### Figure 5
 ```{r}
-#| label: fig-temp-n-clim
+#| label: fig-temp-n-obs-county-month
 #| fig-height: 12
 #| fig-cap: The number of temperature observations in each month for each county.
 
@@ -283,8 +264,6 @@ p <- dat_filt %>%
   theme(panel.spacing.y = unit(15, "lines"))
 
 ggplotly(p)
-
-
 
 ```
 :::

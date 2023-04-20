@@ -27,9 +27,6 @@ CMAR has collected dissolved oxygen data from `r length(na.omit(unique(dat$stati
 #| fig-height: 7
 #| fig-cap: Approximate location of stations with dissolved oxygen data. At most stations, dissolved oxygen is measured in units of percent saturation. For several stations in Halifax and Lunenburg counties, dissolved oxygen is now recorded in units of concentration.
 
-# set up colour palette 
-#map_pal <- colorFactor(county_pal, domain = unique(st_locations$COUNTY))
-
 size <- 6
 
 # interactive map
@@ -122,6 +119,6 @@ The HOBO U26 sensor does not account for salinity, so the measurements should be
 
 ## Biofouling
 
-The DOT and HOBO U26 do not have any anti-fouling mechanisms, and so measurements can be susceptible to biofouling. Ideally, sensors would be cleaned every 2 - 4 weeks to remove fouling, but this is not feasible due to logistical and financial constraints. Significant effort was made to identify and flag possible biofouling signals, although this is challenging for the reasons noted [here](pages/do_overview.qmd).
+The DOT and HOBO U26 do not have any anti-fouling mechanisms, and so measurements can be susceptible to biofouling. Ideally, sensors would be cleaned every 2 - 4 weeks to remove fouling, but this is not feasible due to logistical and financial constraints. Significant effort was made to identify and flag possible biofouling signals, although this is challenging for the reasons noted [here](../pages/do_overview.qmd).
 
 
