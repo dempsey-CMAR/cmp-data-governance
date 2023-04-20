@@ -24,8 +24,8 @@ Most QC test thresholds for temperature were based on historical Coastal Monitor
 #| fig-height: 7
 #| fig-cap: Approximate location of stations with temperature data used to inform QC test thresholds. Marker size is proportional to the number of temperature observations within the county.
 
-map_pal <- colorFactor(county_pal, domain = unique(st_locations$COUNTY))
-alpha <- 0.65
+#map_pal <- colorFactor(county_pal, domain = unique(st_locations$COUNTY))
+#alpha <- 0.65
 
 # join the station locations dataset with the number of obs from each station
 st_locations <- st_locations %>% 
@@ -46,19 +46,26 @@ st_locations <- st_locations %>%
 # interactive map
 leaflet(st_locations) %>% 
   addProviderTiles(providers$CartoDB.Positron) %>% 
-  addCircleMarkers(
-    lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
-    radius = ~n_prop * 25,
-    color = ~map_pal(COUNTY),
-    fillColor = ~map_pal(COUNTY),
-    popup = ~popup,
-    fillOpacity = 0.5
-  )  %>% 
-  addLegend(
-    "bottomright", pal = map_pal, values = ~COUNTY,
-    title = "County",
-    opacity = alpha
-  )
+  add_circle_markers_county(
+    county_pal = county_pal, 
+    size =  ~n_prop * 25
+  ) %>% 
+  add_county_fill_legend(county_pal = county_pal)
+  
+  
+  #  addCircleMarkers(
+  #   lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
+  #   radius = ~n_prop * 25,
+  #   color = ~map_pal(COUNTY),
+  #   fillColor = ~map_pal(COUNTY),
+  #   popup = ~popup,
+  #   fillOpacity = 0.5
+  # )  %>% 
+  # addLegend(
+  #   "bottomright", pal = map_pal, values = ~COUNTY,
+  #   title = "County",
+  #   opacity = alpha
+  # )
 ```
 
 ## Gross Range Test
@@ -106,7 +113,7 @@ ggplotly(p, tooltip = "text")
 
 ```
 
-Most counties have substantially different number of observations for different seasons. Because temperature has a clear seasonal cycle, this can weight the average towards months with more observations. To give each month equal weight, the user thresholds were based on the monthly climatology[^3].
+Most counties have substantially different number of observations for different seasons (@fig-temp-n-clim). Because temperature has a clear seasonal cycle (@fig-temp-climatology), this can weight the average towards months with more observations. To give each month equal weight, the user thresholds were based on the monthly climatology[^3].
 
 [^3]: it was assumed that the different number of days per month was negligible
 
@@ -121,6 +128,8 @@ stdev_{temp} = sd(avg_{Jan}, avg_{Feb}, ... avg_{Dec})
 $$ {#eq-temp-stdev}
 
 County statistics and user thresholds are presented in Table 2.
+
+<br>
 
 ```{r}
 # calculate thresholds based on the climatology
@@ -210,7 +219,7 @@ ggplotly(p, tooltip = "text")
 ```
 :::
 
-Seasonal statistics and thresholds are presented in Table 3. The quality[^1] of these thresholds may vary by county and month, depending on the number and distribution (in space and time) of observations. There were no county-month groups with zero observations, although some groups had relatively few observations for many or all months (@fig-temp-n-clim; e.g., Cape Breton).
+Seasonal statistics and thresholds are presented in Table 3. The quality[^2] of these thresholds may vary by county and month, depending on the number and distribution (in space and time) of observations. There were no county-month groups with zero observations, although some groups had relatively few observations for many or all months (@fig-temp-n-clim; e.g., Cape Breton).
 
 <br>
 
@@ -301,7 +310,7 @@ The temperatures below the thermocline could be considered anomalous and removed
 
 There are stations withe notable depth stratification in other counties, including Guysborough, Halifax, and Lunenburg. This is reflected in the relatively high standard deviation in the summer months for these counties (@fig-temp-climatology; Table 3). Future iterations of this threshold analysis could consider resolving the seasonal thresholds by depth; however it is beyond the scope of the current exercise.
 
-### User Thresholds vs. Seasonal Thresholds
+### User vs. Seasonal Thresholds
 
 
 ```{r}

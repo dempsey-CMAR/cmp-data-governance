@@ -1,6 +1,112 @@
 ---
 title: "Thresholds"
+editor_options: 
+  chunk_output_type: console
 ---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
+
+library(here)
+
+source(here("pages/import_data_and_params.R"))
+
+dat_filt <- dat_filt %>% filter(variable == "Dissolved Oxygen")
+
+st_locations <- st_locations %>%
+  left_join(do_units, by = "STATION")
+
+```
+
+
+Most QC test thresholds for dissolved oxygen were based on historical Coastal Monitoring Program data. Preliminary quality control was applied to the data[^1]. Different thresholds were calculated for data measured in percent saturation and concentration. The number of observations collected and number of counties and stations monitored for each set of units is presented in Table 1. Station locations are shown in @fig-do-station-locations. 
+
+[^1]: e.g., obvious outliers, suspected biofouling, and freshwater stations were omitted
+
+<br>
+
+```{r}
+
+dat_filt %>% 
+  filter(group == "all_station") %>% 
+  group_by(units) %>% 
+  summarise(
+    `Number of Observations` = sum(n),
+    `Number of Counties` = length(unique(county)),
+    `Number of Stations` = length(unique(station))
+  ) %>% 
+  datatable(
+    options = list(
+      dom = 'ft', 
+      searching = FALSE,
+      columnDefs = list(list(className = 'dt-center', targets = "_all"))
+    ), 
+    rownames = FALSE,
+    caption = "Overview of dissolved oxygen observations used in the thresholds analysis."
+  )
+
+```
+
+<br>
+
+```{r, fig-do-station-units}
+#| label: fig-do-station-locations
+#| fig-height: 7
+#| fig-cap: Approximate location of stations with dissolved oxygen data. Marker size is proportional to the number of dissolved oxygen observations within the county. Five counties (Antigonish, Colchester, Pictou, Queens, and Richmond) only have one station with DO data.
+
+#map_pal <- colorFactor(county_pal, domain = unique(st_locations$COUNTY))
+
+
+# join the station locations dataset with the number of obs from each station
+st_locations_units <- st_locations %>% 
+ # rename(county = COUNTY, station = STATION) %>% 
+  inner_join(
+    dat_filt %>% 
+      filter(group == "all_station") %>% 
+      select(COUNTY = county, STATION = station, n, st_units = units),
+     by = c("COUNTY", "STATION")  
+  ) %>% 
+  group_by(STATION) %>% 
+  mutate(n = sum(n)) %>% 
+  filter(st_units == "percent saturation") %>% # to remove duplicate rows from different units
+  group_by(COUNTY) %>% 
+  mutate(
+    n_tot = sum(n),
+    n_prop = round(n / sum(n), digits = 2),
+    popup = paste(COUNTY, STATION, n_prop, sep = "</br>")
+  ) %>% 
+  ungroup() %>% 
+  select(-st_units) 
+
+# interactive map
+leaflet(st_locations_units) %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>%
+  add_circle_markers_county(
+    dat = filter(st_locations_units, do_units == "percent saturation"),
+    county_pal = county_pal,
+    size =  ~n_prop * 25,
+    group = "percent saturation"
+  ) %>% 
+  add_circle_markers_county(
+    dat = filter(st_locations_units, do_units == "percent saturation & mg/L"),
+    county_pal = county_pal,
+    # needed here to keep cols consistent because only 2 counties have concentration
+    pal_domain = unique(st_locations_units$COUNTY), 
+    size =  ~n_prop * 25,
+    group = "percent saturation & mg/L"
+  )%>% 
+  addLayersControl(
+    overlayGroups = c("percent saturation", "percent saturation & mg/L"),
+    options = layersControlOptions(collapsed = FALSE)
+  ) %>% 
+  add_county_fill_legend(county_pal = county_pal)
+
+```
+
+
+
+
+
 
 For most counties, there are fewer "good" records in the spring and summer months, when conditions are conducive to biofouling[^6], and several counties have no data for at least one month (@fig-do-n-obs-county-month).
 

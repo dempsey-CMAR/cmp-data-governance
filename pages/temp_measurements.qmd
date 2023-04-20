@@ -23,27 +23,25 @@ CMAR has collected temperature data from `r length(na.omit(unique(dat$station)))
 #| fig-height: 7
 #| fig-cap: Approximate location of stations with temperature data. 
 
-# set up colour palette 
-map_pal <- colorFactor(county_pal, domain = unique(st_locations$COUNTY))
-alpha <- 0.65
-size <- 6
-
 # interactive map
 leaflet(st_locations) %>% 
   addProviderTiles(providers$CartoDB.Positron) %>% 
-  addCircleMarkers(
-    lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
-    color = ~map_pal(COUNTY),
-    fillColor =  ~map_pal(COUNTY),
-    popup = ~popup,
-    fillOpacity = alpha,
-    radius = size
-  ) %>%
-  addLegend(
-    "bottomright", pal = map_pal, values = ~COUNTY,
-    title = "County",
-    opacity = alpha
-  )
+  add_circle_markers_county(county_pal = county_pal, size = 6) %>% 
+  add_county_fill_legend(county_pal = county_pal)
+  
+  # addCircleMarkers(
+  #   lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
+  #   color = ~map_pal(COUNTY),
+  #   fillColor =  ~map_pal(COUNTY),
+  #   popup = ~popup,
+  #   fillOpacity = alpha,
+  #   radius = size
+  # ) %>%
+  # addLegend(
+  #   "bottomright", pal = map_pal, values = ~COUNTY,
+  #   title = "County",
+  #   opacity = alpha
+  # )
 ```
 
 ```{r}

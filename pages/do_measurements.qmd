@@ -28,42 +28,33 @@ CMAR has collected dissolved oxygen data from `r length(na.omit(unique(dat$stati
 #| fig-cap: Approximate location of stations with dissolved oxygen data. At most stations, dissolved oxygen is measured in units of percent saturation. For several stations in Halifax and Lunenburg counties, dissolved oxygen is now recorded in units of concentration.
 
 # set up colour palette 
-map_pal <- colorFactor(county_pal, domain = unique(st_locations$COUNTY))
-alpha <- 0.65
+#map_pal <- colorFactor(county_pal, domain = unique(st_locations$COUNTY))
+
 size <- 6
 
 # interactive map
 leaflet(st_locations) %>% 
   addProviderTiles(providers$CartoDB.Positron) %>% 
-  addCircleMarkers(
-    data = filter(st_locations, do_units == "percent saturation"),
-    lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
-    color = ~map_pal(COUNTY),
-    fillColor = ~map_pal(COUNTY),
-    popup = ~popup,
-    fillOpacity = alpha,
-    radius = size,
+  add_circle_markers_county(
+    dat = filter(st_locations, do_units == "percent saturation"),
+    county_pal = county_pal,
+    size = size,
     group = "percent saturation"
-  ) %>%
-  addCircleMarkers(
-    data = filter(st_locations, do_units == "percent saturation & mg/L"),
-    lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
-    color = ~map_pal(COUNTY),
-    fillColor =  ~map_pal(COUNTY),
-    popup = ~popup,
-    fillOpacity = alpha,
-    radius = size,
+  ) %>% 
+    add_circle_markers_county(
+    dat = filter(st_locations, do_units == "percent saturation & mg/L"),
+    county_pal = county_pal,
+    # needed here to keep cols consistent because only 2 counties have concentration
+    pal_domain = unique(st_locations$COUNTY), 
+    size = size,
     group = "percent saturation & mg/L"
   ) %>% 
   addLayersControl(
     overlayGroups = c("percent saturation", "percent saturation & mg/L"),
     options = layersControlOptions(collapsed = FALSE)
   ) %>% 
-  addLegend(
-    "bottomright", pal = map_pal, values = ~COUNTY,
-    title = "County",
-    opacity = alpha
-  )
+  add_county_fill_legend(dat = st_locations, county_pal = county_pal)
+
 ```
 
 ```{r}

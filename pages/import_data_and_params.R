@@ -33,11 +33,10 @@ dat <- read_csv(
   here("pages/data/summary.csv"), show_col_types = FALSE
 )
 
-# summarized data - filtered
+# summarized data - filtered (obvious outliers, suspected biofouling, and freshwater stations omitted)
 dat_filt <- read_csv(
   here("pages/data/summary_filtered_data.csv"), show_col_types = FALSE
-) %>% 
-  filter(variable == "Temperature")
+) 
 
 # gross range thresholds (sensors)
 sensors <- read_csv(
