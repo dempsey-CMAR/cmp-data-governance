@@ -20,8 +20,8 @@ dt_options <- list(
   dom = 'Bft',
   paging = FALSE,
   searching = TRUE,
-  scrollY = "550px",
-  pageLength = 500,
+ # scrollY = "550px",
+ # pageLength = 500,
   columnDefs = list(list(className = 'dt-center', targets = "_all")),
   buttons = c('copy', 'csv')
 )
