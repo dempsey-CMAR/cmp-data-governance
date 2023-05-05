@@ -7,9 +7,7 @@ title: "Overview"
 #| fig-align: center
 #| fig-cap: Image by <a href="https://pixabay.com/users/josethestoryteller-5100055/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2408062">Jose R. Cabello</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2408062">Pixabay</a>
 
-knitr::include_graphics(
-  "figures/under-construction.png"
-)
+knitr::include_graphics("figures/under-construction.png")
 
 ```
 

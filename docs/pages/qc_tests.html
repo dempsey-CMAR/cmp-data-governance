@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Governance - QC Tests</title>
+<title>Coastal Monitoring Program - QC Tests</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,6 +49,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../pages/figures/cmar3.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -90,8 +91,11 @@ div.csl-indent {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../pages/figures/cmar3.png" alt="" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Data Governance</span>
+    <span class="navbar-title">Coastal Monitoring Program</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -115,10 +119,6 @@ div.csl-indent {
         <li>
     <a class="dropdown-item" href="../pages/qc_tests.html">
  <span class="dropdown-text">QC Tests</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../pages/qc_thresholds.html">
- <span class="dropdown-text">Thresholds Analysis</span></a>
   </li>  
     </ul>
   </li>
@@ -203,20 +203,15 @@ div.csl-indent {
 
 </header>
 
-<p>Intro blurb about tests</p>
-<ul>
-<li><strong>depending on variable, grouped by county or not. Didn’t group by depth</strong></li>
-<li>From QARTOD manuals</li>
-<li>Provide codeable instructions</li>
-<li>Data providers must determine thresholds</li>
-<li>Include table here of ones that we are actually using?</li>
-</ul>
+<p>This page describes the QC tests applied to the Coastal Monitoring Program Water Quality data, and the general methods for selecting the most appropriate thresholds.</p>
+<p>Where possible, the thresholds were determined from historical data, which provide a baseline of “normal” and “outlying” conditions. The historical data used here was the Coastal Monitoring Program Water Quality data sets submitted to the <a href="https://data.novascotia.ca/browse?q=coastal%20monitoring&amp;sortBy=relevance">Nova Scotia Open Data Portal</a> in December 2022. Preliminary quality control measures (e.g., obvious outliers and suspected biofouling removed) were applied to these datasets before submission. Additionally, freshwater and other outlier stations were excluded from the threshold analysis to provide a better representation of “normal” conditions.</p>
+<p>These thresholds should be re-evaluated and re-calculated if necessary in several years, when more data is available.</p>
 <section id="gross-range-test" class="level2">
 <h2 class="anchored" data-anchor-id="gross-range-test">Gross Range Test</h2>
 <p>The Gross Range Test aims to flag observations that fall outside of the sensor measurement range (flagged <span style="color: #DB4325;">Fail</span>) and observations that are statistical outliers (flagged <span style="color: #EDA247;">Suspect/Of Interest</span>).</p>
 <p>Thresholds for <span style="color: #DB4325;">failed</span> observations are named <span class="math inline">\(sensor_{min}\)</span> and <span class="math inline">\(sesnor_{max}\)</span>, and are determined by the sensor specifications. CMAR named assigned these thresholds for each variable and sensor based on information in the associated manuals.</p>
 <p>Thresholds for <span style="color: #EDA247;">suspect/of interest</span> observations are named <span class="math inline">\(user_{min}\)</span>$ and $<span class="math inline">\(user_{max}\)</span>, and are defined by the data provider. CMAR assigned these thresholds based on historical Coastal Monitoring Program data.</p>
-<p>Following the <a href="https://docs.google.com/document/d/19pS5V1hsKAcSaGjwfmyrmZRIJFMXNAc4B0Uo9Akvmd4/edit#heading=h.u87btnaapb66">OOI Biogeochemical Sensor Data: Best Practices &amp; User Guide</a>, <strong>these thresholds were calculated from historical data as the mean +/- three standard deviations</strong> (<a href="#eq-user-min">Equation&nbsp;1</a>, <a href="#eq-user-max">Equation&nbsp;2</a>):</p>
+<p>Following the <a href="https://docs.google.com/document/d/19pS5V1hsKAcSaGjwfmyrmZRIJFMXNAc4B0Uo9Akvmd4/edit#heading=h.u87btnaapb66">OOI Biogeochemical Sensor Data: Best Practices &amp; User Guide</a>, these thresholds were calculated from historical data as the mean +/- three standard deviations (<a href="#eq-user-min">Equation&nbsp;1</a>, <a href="#eq-user-max">Equation&nbsp;2</a>):</p>
 <p><span id="eq-user-min"><span class="math display">\[
 user_{min} = avg_{var} - 3 * stdev_{var}  
 \tag{1}\]</span></span></p>
@@ -224,9 +219,6 @@ user_{min} = avg_{var} - 3 * stdev_{var}
 user_{max} = avg_{var} + 3 * stdev_{var}
 \tag{2}\]</span></span></p>
 <p>where <span class="math inline">\(avg_{var}\)</span> is average of the variable of interest, and <span class="math inline">\(stdev_{var}\)</span> is the standard deviation of the variable of interest.</p>
-<ul>
-<li><strong>depending on variable, grouped by county or not. Didn’t group by depth</strong></li>
-</ul>
 </section>
 <section id="climatological-test" class="level2">
 <h2 class="anchored" data-anchor-id="climatological-test">Climatological Test</h2>

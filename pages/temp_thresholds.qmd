@@ -194,7 +194,7 @@ ggplotly(p)
 #| fig-height: 8
 #| fig-cap: The monthly mean and standard deviation of temperature in each county.
 
-p <- plot_mean_sd_season_ribbon(county_month, facet_county = FALSE)
+p <- plot_mean_sd_season_ribbon(county_month, group = "county", facet_county = FALSE)
 
 ggplotly(p, tooltip = "text")
 ```

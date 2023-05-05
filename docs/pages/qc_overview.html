@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Governance - Overview</title>
+<title>Coastal Monitoring Program - Overview</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,6 +49,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../pages/figures/cmar3.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -89,8 +90,11 @@ div.csl-indent {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../pages/figures/cmar3.png" alt="" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Data Governance</span>
+    <span class="navbar-title">Coastal Monitoring Program</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -114,10 +118,6 @@ div.csl-indent {
         <li>
     <a class="dropdown-item" href="../pages/qc_tests.html">
  <span class="dropdown-text">QC Tests</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../pages/qc_thresholds.html">
- <span class="dropdown-text">Thresholds Analysis</span></a>
   </li>  
     </ul>
   </li>
@@ -209,7 +209,7 @@ div.csl-indent {
 
 <section id="quality-control" class="level1">
 <h1>Quality Control</h1>
-<p>It is beyond the scope of the Coastal Monitoring Program to produce analysis-ready data products for all potential users. However, CMAR does apply some automated and “human in the loop” quality control (QC) processes to the data. Some users may wish to apply additional QC.</p>
+<p>CMAR applies automated and “human in the loop” quality control (QC) processes to the Coastal Monitoring Program data. It is beyond the scope of the Program to produce analysis-ready data products for all potential users, and some users may wish to apply additional QC.</p>
 <section id="quality-control-tests" class="level2">
 <h2 class="anchored" data-anchor-id="quality-control-tests">Quality Control Tests</h2>
 <p>An automated QC test is an algorithm that evaluates each data record and assigns a flag to the record indicating the test results. These flags are typically reviewed by human experts, which is referred to as “human in the loop” QC. End users can then filter the data set for records that meet their quality criteria <span class="citation" data-cites="RN26831">(<a href="#ref-RN26831" role="doc-biblioref">UNESCO 2013</a>)</span>.</p>
@@ -217,7 +217,7 @@ div.csl-indent {
 </section>
 <section id="qartod" class="level2">
 <h2 class="anchored" data-anchor-id="qartod">QARTOD</h2>
-<p>QARTOD stands for the “Quality Assurance / Quality Control of Real-Time Oceanographic Data”. It is a project that grew from a 2003 grassroots effort to develop guidelines for high-quality oceanographic data. From 2012 to 2019, QARTOD developed 13 Quality Control manuals covering 14 ocean variables, plus additional supporting materials <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>. Each QC manual is subjected to three iterations of formal review by subject-matter experts, with the final round soliciting international reviews. Published manuals are updated as needed to reflect new technology, additional knowledge, or growth of the Project <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
+<p>QARTOD stands for the <a href="https://ioos.noaa.gov/project/qartod/">“Quality Assurance / Quality Control of Real-Time Oceanographic Data”</a>. It is a project that grew from a 2003 grassroots effort to develop guidelines for high-quality oceanographic data. From 2012 to 2019, QARTOD developed 13 Quality Control manuals covering 14 ocean variables, plus additional supporting materials <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>. Each QC manual is subjected to three iterations of formal review by subject-matter experts, with the final round soliciting international reviews. Published manuals are updated as needed to reflect new technology, additional knowledge, or growth of the Project <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
 <section id="flag-scheme" class="level3">
 <h3 class="anchored" data-anchor-id="flag-scheme">Flag Scheme</h3>
 <p>The QARTOD flag scheme has 5 levels, as described in <a href="#tbl-qartod-flags">Table&nbsp;1</a>. More detail on how this flag scheme was developed is provided in <span class="citation" data-cites="RN26831">UNESCO (<a href="#ref-RN26831" role="doc-biblioref">2013</a>)</span>.</p>
@@ -335,7 +335,7 @@ div.csl-indent {
 </table>
 </div>
 <p>QARTOD manuals focus on QC of real-time data<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, although the manuals acknowledge that other data types may also benefit from these flags and tests <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>. The CMAR Coastal Monitoring Program data is not processed in real-time. Instead, data is logged and offloaded for processing every 6 - 12 months. Some QARTOD tests were therefore not applicable to this data, and it was necessary and / or advantageous to modify some tests to reflect the nature of the data and processing.</p>
-<p>For example, Test 1 and Test 2 are meant to identify gaps and syntax errors in real time so that the errors can be fixed and the record resume. They are therefore not applicable to the Coastal Monitoring Program data sets and were not implemented. Most of the remaining Required and Implemented tests were applied, but the Suggested tests are beyond the capacity of the current Data Governance team. These additional tests could be implemented in the future.</p>
+<p>For example, Test 1 and Test 2 are meant to identify gaps and syntax errors in real time so that the errors can be fixed and the record resume. They are therefore not applicable to the Coastal Monitoring Program data sets and were not implemented. Most of the remaining Required and Strongly Recommended tests were applied, but the Suggested tests are beyond the capacity of the current Data Governance team. These Suggested tests could be implemented in the future.</p>
 </section>
 <section id="thresholds" class="level3">
 <h3 class="anchored" data-anchor-id="thresholds">Thresholds</h3>

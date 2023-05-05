@@ -335,7 +335,7 @@ Substantially more observations will be flagged from the raw data[^5]. Some of t
 
 [^5]: data with no preliminary quality control
 
-### Climatology Test
+## Climatology Test
 
 Observations from all counties were pooled to calculate a single set of climatology thresholds (Table 4). The $avg_{season}$ was calculated as the average of all observations in a given month, and $stdev_{season}$ was the associated standard deviation. 
 

@@ -3,7 +3,8 @@ title: "Overview"
 ---
 
 # Quality Control
-It is beyond the scope of the Coastal Monitoring Program to produce analysis-ready data products for all potential users. However, CMAR does apply some automated and "human in the loop" quality control (QC) processes to the data. Some users may wish to apply additional QC.
+
+CMAR applies automated and "human in the loop" quality control (QC) processes to the Coastal Monitoring Program data. It is beyond the scope of the Program to produce analysis-ready data products for all potential users, and some users may wish to apply additional QC.
 
 ## Quality Control Tests
 
@@ -13,7 +14,7 @@ Numerous QC flagging schemes and tests exist and have been applied to oceanograp
 
 ## QARTOD
 
-QARTOD stands for the "Quality Assurance / Quality Control of Real-Time Oceanographic Data". It is a project that grew from a 2003 grassroots effort to develop guidelines for high-quality oceanographic data. From 2012 to 2019, QARTOD developed 13 Quality Control manuals covering 14 ocean variables, plus additional supporting materials [@RN25921]. Each QC manual is subjected to three iterations of formal review by subject-matter experts, with the final round soliciting international reviews. Published manuals are updated as needed to reflect new technology, additional knowledge, or growth of the Project [@RN25921].
+QARTOD stands for the ["Quality Assurance / Quality Control of Real-Time Oceanographic Data"](https://ioos.noaa.gov/project/qartod/). It is a project that grew from a 2003 grassroots effort to develop guidelines for high-quality oceanographic data. From 2012 to 2019, QARTOD developed 13 Quality Control manuals covering 14 ocean variables, plus additional supporting materials [@RN25921]. Each QC manual is subjected to three iterations of formal review by subject-matter experts, with the final round soliciting international reviews. Published manuals are updated as needed to reflect new technology, additional knowledge, or growth of the Project [@RN25921].
 
 ### Flag Scheme
 
@@ -56,7 +57,7 @@ QARTOD manuals define QC tests for the 14 variables. For each variable, the test
 
 QARTOD manuals focus on QC of real-time data[^3], although the manuals acknowledge that other data types may also benefit from these flags and tests [@RN25922]. The CMAR Coastal Monitoring Program data is not processed in real-time. Instead, data is logged and offloaded for processing every 6 - 12 months. Some QARTOD tests were therefore not applicable to this data, and it was necessary and / or advantageous to modify some tests to reflect the nature of the data and processing. 
 
-For example, Test 1 and Test 2 are meant to identify gaps and syntax errors in real time so that the errors can be fixed and the record resume. They are therefore not applicable to the Coastal Monitoring Program data sets and were not implemented. Most of the remaining Required and Implemented tests were applied, but the Suggested tests are beyond the capacity of the current Data Governance team. These additional tests could be implemented in the future.
+For example, Test 1 and Test 2 are meant to identify gaps and syntax errors in real time so that the errors can be fixed and the record resume. They are therefore not applicable to the Coastal Monitoring Program data sets and were not implemented. Most of the remaining Required and Strongly Recommended tests were applied, but the Suggested tests are beyond the capacity of the current Data Governance team. These Suggested tests could be implemented in the future.
 
 [^3]: e.g., minimal delay from when data are recorded to when they are ready for use
 

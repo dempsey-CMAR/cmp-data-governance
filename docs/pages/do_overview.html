@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Governance - Overview</title>
+<title>Coastal Monitoring Program - Overview</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -49,6 +49,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../pages/figures/cmar3.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -90,8 +91,11 @@ div.csl-indent {
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../pages/figures/cmar3.png" alt="" class="navbar-logo">
+    </a>
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Data Governance</span>
+    <span class="navbar-title">Coastal Monitoring Program</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -115,10 +119,6 @@ div.csl-indent {
         <li>
     <a class="dropdown-item" href="../pages/qc_tests.html">
  <span class="dropdown-text">QC Tests</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../pages/qc_thresholds.html">
- <span class="dropdown-text">Thresholds Analysis</span></a>
   </li>  
     </ul>
   </li>
@@ -238,11 +238,20 @@ DO_{\%saturation} = 100 * pO_2 / pO_{2, air}
 </section>
 <section id="supersaturation" class="level2">
 <h2 class="anchored" data-anchor-id="supersaturation">Supersaturation</h2>
-<p>When the measured DO concentration is greater than the DO solubility (<span class="math inline">\(DO_{\%saturation} &gt; 100 \%\)</span>), the water is considered “supersaturated”. Supersaturated water is typically caused by photosynthetic organisms, which are a large source of pure oxygen to the water column (<span class="citation" data-cites="RN26885">YSI (<a href="#ref-RN26885" role="doc-biblioref">2019</a>)</span>; <span class="citation" data-cites="RN12865">Craig and Hayward (<a href="#ref-RN12865" role="doc-biblioref">1987</a>)</span>)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Additionally, a rapid increase in temperature can decrease the DO solubility without altering the measured DO concentration, resulting in saturation values greater than 100 %<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The excess DO will eventually diffuse into the atmosphere, but this process is not instantaneous (<strong>ref</strong>).</p>
+<p>When the measured DO concentration is greater than the DO solubility (<span class="math inline">\(DO_{\%saturation} &gt; 100 \%\)</span>), the water is considered “supersaturated”. Supersaturated water is typically caused by photosynthetic organisms, which are a large source of pure oxygen to the water column <span class="citation" data-cites="RN26885 RN12865">(<a href="#ref-RN26885" role="doc-biblioref">YSI 2019</a>; <a href="#ref-RN12865" role="doc-biblioref">Craig and Hayward 1987</a>)</span> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Additionally, a rapid increase in temperature can decrease the DO solubility without altering the measured DO concentration, resulting in saturation values greater than 100 %<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The excess DO will eventually diffuse into the atmosphere, but this process is not instantaneous.</p>
 </section>
 <section id="biofouling" class="level2">
 <h2 class="anchored" data-anchor-id="biofouling">Biofouling</h2>
-<p>A major challenge of accurately measuring DO near the surface<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is the growth of aquatic organisms on and around the sensor, called biofouling <span class="citation" data-cites="RN26877">(<a href="#ref-RN26877" role="doc-biblioref">OOI 2022</a>)</span>. Biofouling can range from a small film of algae, to large colonies/growths of seaweed, to colonies of mollusks <strong>Insert CMAR photos</strong>. The daily cycle of photosynthesis (oxygen production during the day) and respiration (oxygen consumption, relatively higher at night) of these organisms can cause extreme variability in the DO measurements. The recorded DO therefore reflects the microcosm growing on the sensor, but not the ambient environment. This signal can occur within a month or two of deployment <span class="citation" data-cites="RN26877">(<a href="#ref-RN26877" role="doc-biblioref">OOI 2022</a>)</span>, depending on time time of year and location. Other impacts of biofouling can include signal attenuation, sensor drift, and decreased mooring depth from the additional weight <span class="citation" data-cites="RN26562">(<a href="#ref-RN26562" role="doc-biblioref">IOOS 2018</a>)</span>.</p>
+<p>A major challenge of accurately measuring DO near the surface<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is the growth of aquatic organisms on and around the sensor, called biofouling <span class="citation" data-cites="RN26877">(<a href="#ref-RN26877" role="doc-biblioref">OOI 2022</a>)</span>. Biofouling can range from a small film of algae, to large colonies/growths of seaweed, to colonies of mollusks (<a href="#fig-biofouling">Figure&nbsp;3</a>). The daily cycle of photosynthesis (oxygen production during the day) and respiration (oxygen consumption, relatively higher at night) of these organisms can cause extreme variability in the DO measurements. The recorded DO therefore reflects the microcosm growing on the sensor, but not the ambient environment. This signal can occur within a month or two of deployment <span class="citation" data-cites="RN26877">(<a href="#ref-RN26877" role="doc-biblioref">OOI 2022</a>)</span>, depending on time time of year and location. Other impacts of biofouling can include signal attenuation, sensor drift, and decreased mooring depth from the additional weight <span class="citation" data-cites="RN26562">(<a href="#ref-RN26562" role="doc-biblioref">IOOS 2018</a>)</span>.</p>
+<div id="fig-biofouling" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/biofouling.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Examples of biofouling on CMAR sensor strings.</figcaption><p></p>
+</figure>
+</div>
+<div class="cell" data-layout-align="center">
+
+</div>
 <p>Anti-fouling strategies can be employed to reduce fouling and improve data quality, although these present other challenges. Sensors can be cleaned regularly to remove growth (e.g., every 2 - 4 weeks), although this may not be feasible for many reasons (e.g., cost and time constraints). Some sensors have built-in anti-fouling mechanisms such as wipers <span class="citation" data-cites="RN26903">(<a href="#ref-RN26903" role="doc-biblioref">PME 2023</a>)</span> or UV light <span class="citation" data-cites="RN26901">(<a href="#ref-RN26901" role="doc-biblioref">Mariscope 2020</a>)</span> to reduce growth, but these sensors tend to be expensive and have reduced battery life. Copper (a natural biocide) tape, wire, or screens around the sensor can reduce fouling for several weeks, although this can also become expensive and may not be sufficient for longer deployments <span class="citation" data-cites="RN26887">(<a href="#ref-RN26887" role="doc-biblioref">YSI 2023</a>)</span>.</p>
 </section>
 <section id="other-challenges" class="level2">
@@ -289,7 +298,7 @@ PME. 2023. <span>“miniWIPER.”</span> Pamphlet. <a href="https://www.pme.com/
 Santana, Rafael, Guilherme Lessa, John Haskins, and Kerstin Wasson. 2017. <span>“Continuous Monitoring Reveals Drivers of Dissolved Oxygen Variability in a Small California Estuary.”</span> Journal Article. <em>Estuaries and Coasts</em> 41. <a href="https://doi.org/10.1007/s12237-017-0329-8">https://doi.org/10.1007/s12237-017-0329-8</a>.
 </div>
 <div id="ref-RN26885" class="csl-entry" role="doc-biblioentry">
-YSI. 2019. <span>“Environmental Dissolved Oxygen: VALUES GREATER THAN 100.”</span> <a href="https://www.ysi.com/file%20library/documents/technical%20notes/t602-environmental-dissolved-oxygen-values-above-100-percent-air-saturation.pdf">https://www.ysi.com/file%20library/documents/technical%20notes/t602-environmental-dissolved-oxygen-values-above-100-percent-air-saturation.pdf</a>.
+YSI. 2019. <span>“Environmental Dissolved Oxygen: VALUES GREATER THAN 100% AIR SATURATION.”</span> <a href="https://www.ysi.com/file%20library/documents/technical%20notes/t602-environmental-dissolved-oxygen-values-above-100-percent-air-saturation.pdf">https://www.ysi.com/file%20library/documents/technical%20notes/t602-environmental-dissolved-oxygen-values-above-100-percent-air-saturation.pdf</a>.
 </div>
 <div id="ref-RN26887" class="csl-entry" role="doc-biblioentry">
 ———. 2023. <span>“Anti-Fouling Copper Tape.”</span> <a href="https://www.ysi.com/accessory/id-616189/anti-fouling-copper-tape">https://www.ysi.com/accessory/id-616189/anti-fouling-copper-tape</a>.

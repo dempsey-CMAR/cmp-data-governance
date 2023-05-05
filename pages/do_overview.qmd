@@ -97,7 +97,7 @@ Conversion between DO units can be non-trivial [@RN26886]. DO solubility is used
 
 ## Supersaturation
 
-When the measured DO concentration is greater than the DO solubility ($DO_{\%saturation} > 100 \%$), the water is considered "supersaturated". Supersaturated water is typically caused by photosynthetic organisms, which are a large source of pure oxygen to the water column (@RN26885; @RN12865)[^2]. Additionally, a rapid increase in temperature can decrease the DO solubility without altering the measured DO concentration, resulting in saturation values greater than 100 %[^3]. The excess DO will eventually diffuse into the atmosphere, but this process is not instantaneous (**ref**).
+When the measured DO concentration is greater than the DO solubility ($DO_{\%saturation} > 100 \%$), the water is considered "supersaturated". Supersaturated water is typically caused by photosynthetic organisms, which are a large source of pure oxygen to the water column [@RN26885; @RN12865] [^2]. Additionally, a rapid increase in temperature can decrease the DO solubility without altering the measured DO concentration, resulting in saturation values greater than 100 %[^3]. The excess DO will eventually diffuse into the atmosphere, but this process is not instantaneous.
 
 
 [^2]: This is important because DO sensors are typically calibrated in *air*-saturated water (or water-saturated air). Air is only ~ 21 % oxygen, so there are nearly 5 times more $O_2$ molecules in pure oxygen compared to the same volume of air. This means that a sensor reading from *air*-saturated water would be 100 %, while a reading from pure *oxygen*-saturated water would be ~ 500 %. Photosynthesis can therefore account for very high percent saturation measurements [@RN26885].
@@ -107,9 +107,25 @@ When the measured DO concentration is greater than the DO solubility ($DO_{\%sat
 
 ## Biofouling
 
-A major challenge of accurately measuring DO near the surface[^4] is the growth of aquatic organisms on and around the sensor, called biofouling [@RN26877]. Biofouling can range from a small film of algae, to large colonies/growths of seaweed, to colonies of mollusks **Insert CMAR photos**. The daily cycle of photosynthesis (oxygen production during the day) and respiration (oxygen consumption, relatively higher at night) of these organisms can cause extreme variability in the DO measurements. The recorded DO therefore reflects the microcosm growing on the sensor, but not the ambient environment. This signal can occur within a month or two of deployment [@RN26877], depending on time time of year and location. Other impacts of biofouling can include signal attenuation, sensor drift, and decreased mooring depth from the additional weight [@RN26562].
+A major challenge of accurately measuring DO near the surface[^4] is the growth of aquatic organisms on and around the sensor, called biofouling [@RN26877]. Biofouling can range from a small film of algae, to large colonies/growths of seaweed, to colonies of mollusks (@fig-biofouling). The daily cycle of photosynthesis (oxygen production during the day) and respiration (oxygen consumption, relatively higher at night) of these organisms can cause extreme variability in the DO measurements. The recorded DO therefore reflects the microcosm growing on the sensor, but not the ambient environment. This signal can occur within a month or two of deployment [@RN26877], depending on time time of year and location. Other impacts of biofouling can include signal attenuation, sensor drift, and decreased mooring depth from the additional weight [@RN26562].
 
 [^4]: in the euphotic zone
+
+
+![Examples of biofouling on CMAR sensor strings.](figures/biofouling.png){#fig-biofouling}
+
+```{r}
+#| echo: false
+#| label: fig-biofouling
+#| fig-align: center
+#| fig-cap: Examples of biofouling on CMAR sensor strings.
+
+
+#knitr::include_graphics("figures/biofouling.png")
+
+```
+
+
 
 Anti-fouling strategies can be employed to reduce fouling and improve data quality, although these present other challenges. Sensors can be cleaned regularly to remove growth (e.g., every 2 - 4 weeks), although this may not be feasible for many reasons (e.g., cost and time constraints). Some sensors have built-in anti-fouling mechanisms such as wipers [@RN26903] or UV light [@RN26901] to reduce growth, but these sensors tend to be expensive and have reduced battery life. Copper (a natural biocide) tape, wire, or screens around the sensor can reduce fouling for several weeks, although this can also become expensive and may not be sufficient for longer deployments [@RN26887].
 
