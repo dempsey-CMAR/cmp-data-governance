@@ -15,7 +15,7 @@ library(RColorBrewer)
 theme_set(theme_light())
 ```
 
-Dissolved oxygen (DO) is a measure of the amount of gaseous oxygen dissolved in water, which is a key water quality parameter for much aquatic life [@RN26876]. There are many drivers of DO variability, including biological activity (e.g., photosynthesis, respiration, plankton blooms), physical processes (e.g., air-sea exchange, tidal events, meteorology, seasonal stratification), and chemical reactions (e.g., oxidation of organic material) [@RN26876; @RN26562]. DO is typically higher near the surface, where it is produced by photosynthetic organisms and is in flux to maintain equilibrium with the atmosphere (refs). DO is distributed to deeper waters by vertical mixing and diffusion.
+Dissolved oxygen (DO) is a measure of the amount of gaseous oxygen dissolved in water, which is a key water quality parameter for much aquatic life [@RN26876]. There are many drivers of DO variability, including biological activity (e.g., photosynthesis, respiration, plankton blooms), physical processes (e.g., air-sea exchange, tidal events, meteorology, seasonal stratification), and chemical reactions (e.g., oxidation of organic material) [@RN26876; @RN26562]. DO is typically higher near the surface, where it is produced by photosynthetic organisms and is in flux to maintain equilibrium with the atmosphere. DO is distributed to deeper waters by vertical mixing and diffusion.
 
 ## Units 
 Dissolved oxygen can be measured in different units, including concentration and percent saturation [@RN26886]. For fisheries and aquaculture applications, concentration is often reported in milligrams of gaseous oxygen per litre of water (mg / L) [@RN13158], which is equivalent to parts per million (ppm). 
@@ -93,7 +93,7 @@ ggplot(do_pres, aes(Temperature, C_p, group = Pressure, col = Pressure)) +
 ```
 
 
-Conversion between DO units can be non-trivial [@RN26886]. DO solubility is used to convert between units of concentration and percent saturation, which means estimates of temperature, salinity, and pressure are required. For the most accurate conversion, each DO observation should have a corresponding observation of these water properties. However, this is not always feasible, particularly for long deployments. Single value estimates can be used to convert data from the whole deployment (refs)
+Conversion between DO units can be non-trivial [@RN26886]. DO solubility is used to convert between units of concentration and percent saturation, which means estimates of temperature, salinity, and pressure are required. For the most accurate conversion, each DO observation should have a corresponding observation of these water properties. However, this is not always feasible, particularly for long deployments. Single value estimates can be used to convert data from the whole deployment [@RN26911].
 
 ## Supersaturation
 

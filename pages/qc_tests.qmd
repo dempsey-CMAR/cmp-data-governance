@@ -1,6 +1,21 @@
 ---
 title: "QC Tests"
+editor_options: 
+  chunk_output_type: console
 ---
+
+
+```{r, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
+
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(plotly)
+library(qaqcmar)
+```
+
+**These tests will be applied to the December 2023 release of Water Quality Data**
 
 This page describes the QC tests applied to the Coastal Monitoring Program Water Quality data, and the general methods for selecting the most appropriate thresholds. 
 
@@ -12,9 +27,9 @@ These thresholds should be re-evaluated and re-calculated if necessary in severa
 
 The Gross Range Test aims to flag observations that fall outside of the sensor measurement range (flagged [Fail]{style="color: #DB4325;"}) and observations that are statistical outliers (flagged [Suspect/Of Interest]{style="color: #EDA247;"}).
 
-Thresholds for [failed]{style="color: #DB4325;"} observations are named $sensor_{min}$ and $sesnor_{max}$, and are determined by the sensor specifications. CMAR named assigned these thresholds for each variable and sensor based on information in the associated manuals.
+Thresholds for [failed]{style="color: #DB4325;"} observations are named $sensor_{min}$ and $sensor_{max}$, and are determined by the sensor specifications. CMAR named assigned these thresholds for each variable and sensor based on information in the associated manuals.
 
-Thresholds for [suspect/of interest]{style="color: #EDA247;"} observations are named $user_{min}$$ and $$user_{max}$, and are defined by the data provider. CMAR assigned these thresholds based on historical Coastal Monitoring Program data.
+Thresholds for [suspect/of interest]{style="color: #EDA247;"} observations are named $user_{min}$ and $user_{max}$, and are defined by the data provider. CMAR assigned these thresholds based on historical Coastal Monitoring Program data.
 
 Following the [OOI Biogeochemical Sensor Data: Best Practices & User Guide](https://docs.google.com/document/d/19pS5V1hsKAcSaGjwfmyrmZRIJFMXNAc4B0Uo9Akvmd4/edit#heading=h.u87btnaapb66), these thresholds were calculated from historical data as the mean +/- three standard deviations (@eq-user-min, @eq-user-max):
 
@@ -48,8 +63,81 @@ The $avg_{season}$ was calculated as the average of all observations for a given
 Note that OOI used a more complex method (harmonic analysis, as described [here](https://github.com/oceanobservatories/qc-lookup)) to estimate $avg_{season}$ to account for spurious values. This was beyond the current scope of the CMAR Coastal Monitoring Program, but could be applied in future iterations of this threshold analysis.
 
 
-## Spike Test             
+## Spike Test     
+
+Text to come.
 
 ## Rate of Change Test    
 
+The Rate of Change test applied to CMAR data was modified from the test described in the QARTOD documents [@RN24432; @RN26562]. The QARTOD test compares the values of consecutive observations to a threshold defined by the operator. The threshold can be defined as a set value, or as $n_{dev}$ (operator-specific) standard deviations, where the standard deviation is calculated over an operator-specified time frame. An observation is flagged as [Suspect/Of Interest]{style="color: #EDA247;"} if:
+
+$$ | T_n - T_{n-1} | > n_{dev} * stdev $$
+where $T_n$ is the current observation, and $T_{n-1}$ is the previous observation.
+
+This test is similar to the Spike Test, which compares the current observation the two adjacent observations.
+
+
+The goal of the **CMAR** Rate of Change Test was to identify suspected biofouling in the dissolved oxygen data. This test was based on the rolling standard deviation, and should perhaps be renamed the Standard Deviation Test for clarity.
+
+The test assumes that there is a 24-hour oxygen cycle, with net oxygen production during the day, and net oxygen consumption during the night. Biofouling is suspected when the amplitude of this cycle, as measured by the standard deviation, increases above a threshold (@fig-do-cycle). 
+
+```{r}
+#| label: fig-do-cycle
+#| fig-height: 6
+#| fig-cap: Simulated dissolved oxygen data. The green points (January 1 to January 15) represent no biofouling; the orange points represent biofouling. The mean value and amplitudes are based on data observed from the Coastal Monitoring Program.
+
+path <- system.file("testdata", package = "qaqcmar")
+
+p <- readRDS(paste0(path, "/test_data_rate_of_change.RDS")) %>% 
+  mutate(
+    status = ordered(
+      status, 
+      levels = c("No biofouling", "Biofouling")
+     # levels = c("No biofouling", "Moderate biofouling",  "Intense biofouling")
+    ),
+    dissolved_oxygen_percent_saturation = round(
+      dissolved_oxygen_percent_saturation, digits = 2
+    )
+  ) %>% 
+  ggplot(aes(timestamp_utc, dissolved_oxygen_percent_saturation, col = status)) +
+  geom_point(size = 0.75) + 
+  scale_color_manual("", values = c("#009200", "#EDA247")) +
+  scale_x_datetime("timestamp") +
+  scale_y_continuous("dissolved oxygen (percent saturation)") +
+  theme_light(base_size = 13) +
+  theme(legend.title = element_blank())
+
+ggplotly(p) %>% 
+  layout(legend = list(x = 0.05, y = 0.09))
+
+```
+
+
+The standard deviation, $stdev_{roll}$, was calculated from a 24-hour centered rolling window of observations, i.e., $T_{n-m/2}$, ... $T_{n-1}$, $T_{n}$, $T_{n+1}$, ... $T_{n+m/2}$.[^1]  The number of observations in each window depends on the sample interval, which is typically 10 minutes.
+
+[^1]: Note that a centered window is possible because the data is being post-processed after collection. Real-time data would likely use a left-aligned window, i.e., observations $T_{n}$, $T_{n-1}$, $T_{n-2}$ ... $T_{n-m}$.
+
+Although this test was designed to identify suspected biofouling, it was also applied to the other Water Quality variables as a general Rate of Change test. In particular, it is expected to flag rapid changes in temperature due to fall storms. 
+
+Following the QARTOD Rate of Change Test, this test does not flag any observations as [fail]{style="color: #DB4325;"} because of the high natural variable in dissolved oxygen, temperature, and salinity. Observations with a standard deviation that exceeds the threshold are flagged as [Suspect/Of Interest]{style="color: #EDA247;"}. Observations at the beginning and end of the deployment for which the rolling standard deviation cannot be calculated (i.e, observations less than 12 hours from the start or end of deployment) are flagged [Not evaluated]{style="color: #c4c1a5;"}.  
+
+
+
 ## Flat Line Test   
+
+
+Text to come.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

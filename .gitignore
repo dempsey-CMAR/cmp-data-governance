@@ -3,6 +3,10 @@
 .RData
 .Ruserdata
 
+
 /.quarto/
 
 /pages/data
+/pages/figures/*.pptx
+
+

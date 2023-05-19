@@ -2,6 +2,8 @@
 title: "Overview"
 ---
 
+Text to come.
+
 ```{r}
 #| echo: false
 #| fig-align: center
@@ -11,9 +13,3 @@ knitr::include_graphics("figures/under-construction.png")
 
 ```
 
-- drivers (atmosphere, currents, freshwater input)
-- importance
-
-## Units
-
-- degrees C
