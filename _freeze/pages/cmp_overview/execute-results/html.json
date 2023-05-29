@@ -1,8 +1,10 @@
 {
-  "hash": "efc97738f6f5263013feb7fb135c6cb7",
+  "hash": "5e34549d8fb332b5f78cbb524c5b7245",
   "result": {
-    "markdown": "---\ntitle: \"Coastal Monitoring Program\"\n---\n\n\nThe Centre for Marine Applied Research's (CMAR) Coastal Monitoring Program is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia's marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change. \n\nThis website is part of CMAR's Data Governance initiatives, and provides technical information on Quality Control applied to the Water Quality data. This website is under development, and content will be revised and added.\n\nTo return to CMAR's main Coastal Monitoring Program website page, click [here].\n\n\n::: {.cell layout-align=\"center\"}\n::: {.cell-output-display}\n![](figures/cmp_icons.png){fig-align='center' width=1460}\n:::\n:::",
-    "supporting": [],
+    "markdown": "---\ntitle: \"Coastal Monitoring Program\"\n---\n\n\nThe Centre for Marine Applied Research's (CMAR) Coastal Monitoring Program is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia's marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change. \n\nThis website is part of CMAR's Data Governance initiatives, and provides technical information on Quality Control applied to the Water Quality data. This website is under development, and content will be revised and added.\n\nTo return to CMAR's main Coastal Monitoring Program website page, click [here](https://cmar.ca/coastal-monitoring-program/).\n\n\n::: {.cell layout-align=\"center\"}\n::: {.cell-output-display}\n![](figures/cmp_icons.png){fig-align='center' width=1460}\n:::\n:::",
+    "supporting": [
+      "cmp_overview_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],

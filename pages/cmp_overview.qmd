@@ -6,7 +6,7 @@ The Centre for Marine Applied Research's (CMAR) Coastal Monitoring Program is an
 
 This website is part of CMAR's Data Governance initiatives, and provides technical information on Quality Control applied to the Water Quality data. This website is under development, and content will be revised and added.
 
-To return to CMAR's main Coastal Monitoring Program website page, click [here].
+To return to CMAR's main Coastal Monitoring Program website page, click [here](https://cmar.ca/coastal-monitoring-program/).
 
 ```{r}
 #| echo: false
