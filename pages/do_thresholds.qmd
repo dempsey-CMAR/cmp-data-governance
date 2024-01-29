@@ -39,6 +39,7 @@ dat_sat <- import_strings_data(input_path = here("pages/data/data-raw")) %>%
 
 Most QC test thresholds for dissolved oxygen were based on historical Coastal Monitoring Program data. Preliminary quality control was applied to the data[^1]. Different thresholds were calculated for data measured in percent saturation and concentration. The number of observations collected and number of counties and stations monitored for each set of units is presented in Table 1. Station locations are shown in @fig-do-station-locations. 
 
+**Flesh this out**
 [^1]: e.g., obvious outliers, suspected biofouling, and freshwater stations were omitted. Three deployments in Whycocomagh Basin (Inverness County) measured data near or below the oxycline. This data was also omitted from the thresholds analysis because it is not representative of typical conditions measured by the Program.
 
 <br>

@@ -18,6 +18,8 @@ st_locations <- st_locations %>%
   
 ```
 
+**This data is from... all data, prelim QC applied**
+
 ## Locations
 
 CMAR has collected dissolved oxygen data from `r length(na.omit(unique(dat$station)))` stations in `r length(na.omit(unique(dat$county)))` counties (@fig-do-station-locations). 
@@ -55,7 +57,6 @@ leaflet(st_locations) %>%
 ```
 
 ```{r}
-
 n_county_obs <- dat %>% 
   filter(group == "county") %>% 
   group_by(county) %>%  
@@ -66,6 +67,8 @@ n_county_obs <- dat %>%
 
 A large proportion of these records are from `r n_county_obs[1, "county"]$county` County
 (`r n_county_obs[1, "n_percent"]$n_percent` %) and `r n_county_obs[2, "county"]$county` County (`r n_county_obs[2, "n_percent"]$n_percent` %), while a small proportion are from `r n_county_obs[nrow(n_county_obs), "county"]$county` (`r n_county_obs[nrow(n_county_obs), "n_percent"]$n_percent` %) and `r n_county_obs[nrow(n_county_obs)-1, "county"]$county` (`r n_county_obs[nrow(n_county_obs)-1, "n_percent"]$n_percent` %) Counties (@fig-do-n-obs-sat). 
+
+Most observations to date have been measured in units of percent saturation. In 2021, CMAR began deploying several sensors that record in concentration (mg / L) (@fig-do-n-obs-sat; see the Sensors section for more information).
 
 ```{r}
 #| label: fig-do-n-obs-sat
@@ -97,7 +100,7 @@ p <- dat %>%
   filter(group == "all_depth") %>%
   group_by(depth) %>%
   summarise(n = sum(n)) %>%
-  plot_n_obs_depth()
+  plot_n_obs_depth(facet_county = FALSE)
   
 ggplotly(p, tooltip = "text")
 
@@ -117,7 +120,7 @@ CMAR supplemented their DO sensor inventory with 13 HOBO U26 sensors in 2021, an
 
 The HOBO U26 sensor does not account for salinity, so the measurements should be adjusted based on a salinity correction factor before analysis. The [HOBOware software](https://www.onsetcomp.com/products/software/hoboware) can apply this salinity correction if salinity conditions are provided. [HOBOware](https://www.onsetcomp.com/products/software/hoboware) can also convert measured concentration values to percent saturation if salinity and pressure conditions are provided. The CMAR R package `docalcs` provides functions for those calculations; however, CMAR does not have consistent salinity or pressure measurements, and so the uncorrected data are provided. 
 
-## Biofouling
+### Biofouling
 
 The DOT and HOBO U26 do not have any anti-fouling mechanisms, and so measurements can be susceptible to biofouling. Ideally, sensors would be cleaned every 2 - 4 weeks to remove fouling, but this is not feasible due to logistical and financial constraints. Significant effort was made to identify and flag possible biofouling signals, although this is challenging for the reasons noted [here](../pages/do_overview.qmd).
 

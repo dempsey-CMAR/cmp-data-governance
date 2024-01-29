@@ -4,9 +4,10 @@ title: "Overview"
 
 # Quality Control
 
-CMAR applies automated and "human in the loop" quality control (QC) processes to the Coastal Monitoring Program data. 
+CMAR applies automated and "human in the loop" quality control (QC) processes to the Coastal Monitoring Program Water Quality data. 
 
 Note that it is beyond the scope of the Program to produce analysis-ready data products for all potential users, and some users may wish to apply additional QC.
+
 
 ## Quality Control Tests
 
@@ -15,6 +16,8 @@ An automated QC test is an algorithm that evaluates each data record and assigns
 Numerous QC flagging schemes and tests exist and have been applied to oceanographic data sets [e.g., Appendix A in @RN26831]. CMAR has adopted the well-known QARTOD flag scheme and several QARTOD tests, which are applied by the U.S. Integrated Ocean Observing System (IOOS) and other ocean observing entities [see Table 1 of @RN25921].
 
 ## QARTOD Guidance
+
+*shorten this para?*
 
 QARTOD stands for the ["Quality Assurance / Quality Control of Real-Time Oceanographic Data"](https://ioos.noaa.gov/project/qartod/). It is a project that grew from a 2003 grassroots effort to develop guidelines for high-quality oceanographic data. From 2012 to 2019, QARTOD developed 13 Quality Control manuals covering 14 ocean variables, plus additional supporting materials [@RN25921]. Each QC manual is subjected to three iterations of formal review by subject-matter experts, with the final round soliciting international reviews. Published manuals are updated as needed to reflect new technology, additional knowledge, or growth of the Project [@RN25921].
 
@@ -40,22 +43,40 @@ CMAR has adopted the QARTOD flag scheme (@tbl-qartod-flags) with minor adaptatio
 
 The main CMAR adaptation to this flag scheme is that the [Missing data]{style="color: #5A5A5A;"} flag is not used. This flag is meant to alert real-time operators that an expected observation was not received, and may trigger efforts to fix recording and transmission issues. Since CMAR does not receive real-time data, this placeholder flag was deemed unnecessary. Note that data gaps may still occur due to sensor failure (e.g., battery failure), delays between retrieval and re-deployment, and vandalism. It is the responsibility of the data users to identify and address these data gaps if required.
 
-Note that QARTOD uses a flag of [3]{style="color: #EDA247;"} to denote observations that are [Suspect]{style="color: #EDA247;"} (e.g., of dubious quality) and [Of High Interest]{style="color: #EDA247;"} (e.g., an unusual event). This is meant to encourage human in the loop decisions making [@RN25922]. Where possible, CMAR has defined when these test results should likely be considered [Suspect]{style="color: #EDA247;"} vs. [Of High Interest]{style="color: #EDA247;"}, although data users should inspect these records carefully before deciding how to use (or discard) them.
+Note that QARTOD uses a flag of [3]{style="color: #EDA247;"} to denote observations that are [Suspect]{style="color: #EDA247;"} (e.g., of dubious quality) **or** [Of High Interest]{style="color: #EDA247;"} (e.g., an unusual event). This is meant to encourage human in the loop decisions making [@RN25922]. Where possible, CMAR has defined when these test results are likely [Suspect]{style="color: #EDA247;"} vs. [Of High Interest]{style="color: #EDA247;"}, although data users should inspect these records carefully before deciding how to use (or discard) them.
 
 ## Tests
 
-As of January 2024, CMAR applies XX QC tests to the Water Quality Coastal Monitoring Program data (@tbl-cmar_tests).
+As of February 2024, CMAR applies 5 QC tests to the Coastal Monitoring Program Water Quality data (@tbl-cmar_tests). Click [here](../pages/qc_tests.qmd) for more detail on each test,
+
+*order of tests??*
 
 
 | Test | Description | Reference |
-|---|---|---|
-| Gross Range | Flags observations that fall outside of the sensor measurement range and observations that are statistical outliers. | [@RN26562], [@RN24432] |
-| Climatology  | Flags observations that are statistical outliers for a given month. | @RN26562, @RN24432, RN26877 |
-| Spike | Flags single value spikes. | @RN26562, @RN24432 |
+|---|-----|---|
+| Climatology  | Flags observations that are statistical outliers for a given month. | @RN26562, @RN24432, @RN26877 |
+| Depth Crosscheck[^3] | Flags deployments where the sensor depth at low tide is different from the measured depth at low tide. | CMAR |
+| Gross Range | Flags observations that fall outside of the sensor measurement range and observations that are statistical outliers. | @RN26562, @RN24432 |
 | Rolling Standard Deviation | Flags observations with statistically high rolling standard deviation (e.g., multiple-value spikes). | CMAR |
-| Depth Crosscheck | Flags observations where the sensor depth at low tide is different from the measured depth at low tide. | CMAR |
+| Spike | Flags single-value spikes. | @RN26562, @RN24432 |
 
 
+: Automated Quality Control tests applied to Water Quality Data. {#tbl-cmar_tests}
+
+[^3]: note that this is a deployment-level test. See xx for more information.
+
+
+### Thresholds
+
+Each QC test requires threshold(s) that determine the results of the test. Choosing appropriate thresholds for each test and variable is a key part of the QC effort. The operator (data provider) is responsible for selecting thresholds for QARTOD tests, and thresholds should be based on historical data when possible [@RN25922; @RN15382; @RN26877]. 
+
+*Make this more about CMAR?*
+
+The `Thresholds` link under each variable dropdown menu details how the threshold(s) for each test were selected.
+
+
+
+# Delete
 
 QARTOD manuals define real-time QC tests for 14 variables. For each variable, the tests are grouped into three categories: Required, Strongly Recommended, and Suggested. Tests increase in complexity and typically decrease in utility [@RN26562]. Not all tests can be implemented in all situations [@RN26562].
 
@@ -89,11 +110,5 @@ Test 1 and Test 2 are meant to identify gaps and syntax errors in real time so t
 
 The Suggested tests were considered too complicated for little additional value for this first round of automated QC, although they may be implemented in the future. In particular, the "Multi-Variate Test" may be useful for data from sensors that record multiple variables.
 
-
-### Thresholds
-
-Each QC test require threshold(s) that determine the results of the test. Choosing appropriate thresholds for each test and variable is a key part of the QC effort. The operator (data provider) is responsible for selecting thresholds for QARTOD tests, and thresholds should be based on historical data when possible [@RN25922; @RN15382; @RN26877]. 
-
-The `Thresholds` link under each variable dropdown menu details how the threshold(s) for each test were selected.
 
 

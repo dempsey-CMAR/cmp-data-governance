@@ -8,28 +8,72 @@ editor_options:
 ```{r, include=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
 
+library(DT)
 library(dplyr)
 library(ggplot2)
 library(lubridate)
+library(knitr)
 library(plotly)
 library(qaqcmar)
+
+theme_set(theme_light())
+
+dt_options1 <- list(
+      dom = 'ft',
+      paging = FALSE,
+      searching = FALSE,
+      pageLength = 500,
+      columnDefs = list(list(className = 'dt-center', targets = "_all"))
+)
+
+dt_options2 <- list(
+      dom = 'Bft',
+      paging = FALSE,
+      searching = TRUE,
+      pageLength = 500,
+      scrollY = "500px",
+      scrollX = "500px",
+      columnDefs = list(list(className = 'dt-center', targets = "_all")),
+      buttons = c('copy', 'csv')
+)
+
 ```
 
-**These tests will be applied to the December 2023 release of Water Quality Data**
+
+- Flag - summary flag for each var
+- CMAR interpretation
+- Grouped different depending on the test and variable 
+- Include decision table here
+- Clarify which were CMAR-developed and which were QARTOD?
+- Read through for tense
+- Examples here?
+
 
 This page describes the QC tests applied to the Coastal Monitoring Program Water Quality data, and the general methods for selecting the most appropriate thresholds. 
 
-Where possible, the thresholds were determined from historical data, which provide a baseline of "normal" and "outlying" conditions. The historical data used here was the Coastal Monitoring Program Water Quality data sets submitted to the [Nova Scotia Open Data Portal](https://data.novascotia.ca/browse?q=coastal%20monitoring&sortBy=relevance) in December 2022. Preliminary quality control measures (e.g., obvious outliers and suspected biofouling removed) were applied to these datasets before submission. Additionally, freshwater and other outlier stations were excluded from the threshold analysis to provide a better representation of "normal" conditions.
+Where possible, the thresholds were determined from historical data, which provide a baseline of "normal" and "outlying" conditions. The historical data used here was the Coastal Monitoring Program Water Quality data sets submitted to the [Nova Scotia Open Data Portal](https://data.novascotia.ca/browse?q=coastal%20monitoring&sortBy=relevance) in December 2022. Preliminary quality control measures (e.g., obvious outliers and suspected biofouling removed) were applied to these datasets before submission. Additionally, freshwater and other outlier stations were excluded from the threshold analysis to provide a better representation of "normal" coastal ocean conditions.
+
+
 
 These thresholds should be re-evaluated and re-calculated if necessary in several years, when more data is available.
 
+*delete?*
+
+## Location Test
+
+- text here
+- fixed in processing (human error, not sensor error)
+- no flag
+
+*order of tests??*
+
 ## Gross Range Test
 
-The Gross Range Test aims to flag observations that fall outside of the sensor measurement range (flagged [Fail]{style="color: #DB4325;"}) and observations that are statistical outliers (flagged [Suspect/Of Interest]{style="color: #EDA247;"}).
+Following QARTOD, the Gross Range Test aims to identify observations that fall outside of the sensor measurement range (flagged [Fail]{style="color: #DB4325;"}) and observations that are statistical outliers (flagged [Suspect/Of Interest]{style="color: #EDA247;"}).
 
-Thresholds for [failed]{style="color: #DB4325;"} observations are named $sensor_{min}$ and $sensor_{max}$, and are determined by the sensor specifications. CMAR named assigned these thresholds for each variable and sensor based on information in the associated manuals.
+Thresholds for [failed]{style="color: #DB4325;"} observations are named $sensor_{min}$ and $sensor_{max}$, and are determined by the sensor specifications. CMAR assigned these thresholds for each variable and sensor based on information in the associated manuals.
 
-Thresholds for [suspect/of interest]{style="color: #EDA247;"} observations are named $user_{min}$ and $user_{max}$, and are defined by the data provider. CMAR assigned these thresholds based on historical Coastal Monitoring Program data.
+Thresholds for [suspect/of interest]{style="color: #EDA247;"} observations are named $user_{min}$ and $user_{max}$. CMAR assigned these thresholds based on historical Coastal Monitoring Program data.
 
 Following the [OOI Biogeochemical Sensor Data: Best Practices & User Guide](https://docs.google.com/document/d/19pS5V1hsKAcSaGjwfmyrmZRIJFMXNAc4B0Uo9Akvmd4/edit#heading=h.u87btnaapb66), these thresholds were calculated from historical data as the mean +/- three standard deviations (@eq-user-min, @eq-user-max):
 
@@ -46,9 +90,9 @@ where $avg_{var}$ is average of the variable of interest, and $stdev_{var}$ is t
 
 ## Climatological Test
 
-The Climatological Test is a variation of the Gross Range Test that accounts for seasonal variability. There is no [Fail]{style="color: #DB4325;"} flag associated with this test for temperature, salinity, or dissolved oxygen due to the dynamic nature of these variables [@RN24432;@RN26562]. Observations that are seasonal outliers were assigned the flag [Suspect/Of Interest]{style="color: #EDA247;"}.
+The Climatological Test is a variation of the Gross Range Test that accounts for seasonal variability. Under QARTOD, there is no [Fail]{style="color: #DB4325;"} flag associated with this test for temperature, salinity, or dissolved oxygen due to the dynamic nature of these variables [@RN24432; @RN26562]. Following this guidance, CMAR chose to assign the flag [Suspect/Of Interest]{style="color: #EDA247;"} to seasonal outliers for all variables.
 
-These thresholds are named $season_{min}$ and $season_{max}$. The seasonal time period (e.g., monthly, seasonally, other) and associated thresholds are defined by the data provider. Following the [OOI Biogeochemical Sensor Data: Best Practices & User Guide](https://docs.google.com/document/d/19pS5V1hsKAcSaGjwfmyrmZRIJFMXNAc4B0Uo9Akvmd4/edit#heading=h.u87btnaapb66), seasons were defined based on the calendar month, and the thresholds were based on historical data. The monthly thresholds were defined similar to the Gross Range Test:
+The Climatological thresholds are named $season_{min}$ and $season_{max}$. Following the [OOI Biogeochemical Sensor Data: Best Practices & User Guide](https://docs.google.com/document/d/19pS5V1hsKAcSaGjwfmyrmZRIJFMXNAc4B0Uo9Akvmd4/edit#heading=h.u87btnaapb66), seasons were defined based on the calendar month, and the thresholds were based on historical data. The monthly thresholds were defined similar to the Gross Range Test:
 
 $$
 season_{min} = avg_{season} - 3 * stdev_{season}  
@@ -65,71 +109,137 @@ Note that OOI used a more complex method (harmonic analysis, as described [here]
 
 ## Spike Test     
 
-Text to come.
-
-## Rate of Change Test    
-
-The Rate of Change test applied to CMAR data was modified from the test described in the QARTOD documents [@RN24432; @RN26562]. The QARTOD test compares the values of consecutive observations to a threshold defined by the operator. The threshold can be defined as a set value, or as $n_{dev}$ (operator-specific) standard deviations, where the standard deviation is calculated over an operator-specified time frame. An observation is flagged as [Suspect/Of Interest]{style="color: #EDA247;"} if:
-
-$$ | T_n - T_{n-1} | > n_{dev} * stdev $$
-where $T_n$ is the current observation, and $T_{n-1}$ is the previous observation.
-
-This test is similar to the Spike Test, which compares the current observation the two adjacent observations.
+The Spike Test identifies single observations that are unexpectedly high (or low) based on the previous and following observations.
 
 
-The goal of the **CMAR** Rate of Change Test was to identify suspected biofouling in the dissolved oxygen data. This test was based on the rolling standard deviation, and should perhaps be renamed the Standard Deviation Test for clarity.
+For each observation, a $spike_{value}$ is calculated based on a spike reference ($spike_{ref}$). The $spike_{value}$ is compared to the Spike Test thresholds and the appropriate flag is assigned.
 
-The test assumes that there is a 24-hour oxygen cycle, with net oxygen production during the day, and net oxygen consumption during the night. Biofouling is suspected when the amplitude of this cycle, as measured by the standard deviation, increases above a threshold (@fig-do-cycle). 
+$$spike_{value} = abs(value - spike_{ref})$$
+$$spike_{ref} = (lead_{value} - lag_{value}) / 2$$
+
+
+Due to the dependence on $lead_{value}$ and $lag_{value}$, the first and last observations in each sensor deployment will be flagged as "Not Evaluated" because the $spike_{ref}$ cannot be calculated.
+
+As a simple example, consider several observations that increase linearly over time (Example 1: Figure). Here, the $spike_{ref}$ is always equal to the observed value, and so the $spike_{value}$ is zero, indicating no spike detected (Example 1: Table).
+
+::: panel-tabset
+
+### Example 1: Figure 
+```{r, fig.height=4}
+flag_colours <- c("chartreuse4", "#E6E1BC", "#EDA247", "#DB4325", "grey24")
+
+
+dat <- data.frame(time = 1:11, observation_value = seq(10, 20, 1)) %>% 
+  mutate(
+    spike_ref = (lag(observation_value) + lead(observation_value)) / 2, 
+    spike_value = abs(observation_value - spike_ref),
+    flag = case_when(
+      spike_value == 0 ~ 1,
+      spike_value == 5 ~ 3,
+      spike_value == 10 ~ 4,
+      is.na(spike_value) ~ 2
+    )) %>% 
+  qc_assign_flag_labels()
+
+ggplot(dat, aes(time, observation_value, color = flag)) +
+  geom_point() +
+  scale_colour_manual("Flag Value", values = flag_colours, drop = FALSE) +
+  guides(color = guide_legend(override.aes = list(size = 4))) 
+```
+
+### Example 1: Table
+```{r}
+datatable(dat, rownames = FALSE, options = dt_options1)
+```
+:::
+
+
+Now consider that the value of one of these observations lies above or below the linear pattern (Example 2: Figure). This value will have a relatively high $spike_{value}$, and may be flagged, depending on the threshold values. Note that the observations on either side of the spike may also be flagged. 
+
+::: panel-tabset
+
+### Example 2: Figure 
+```{r, fig.height=4}
+dat[6, 2] <- 25
+
+dat2 <- dat %>% 
+  mutate(
+    spike_ref = (lag(observation_value) + lead(observation_value)) / 2,
+    spike_value = abs(observation_value - spike_ref),
+    flag = case_when(
+      spike_value == 0 ~ 1,
+      spike_value == 5 ~ 3,
+      spike_value == 10 ~ 4,
+      is.na(spike_value) ~ 2
+    )) %>% 
+  qc_assign_flag_labels()
+
+
+ggplot(dat2, aes(time, observation_value, colour = flag)) +
+    geom_point() +
+    scale_colour_manual("Flag Value", values = flag_colours, drop = FALSE) +
+    guides(color = guide_legend(override.aes = list(size = 4))) 
+
+```
+
+### Example 2: Table
+```{r}
+datatable(dat2, rownames = FALSE, options = dt_options1)
+```
+
+:::
+
+CMAR uses two Spike Test thresholds: $spike_{low}$ and $spike_{high}$. Observations greater than $spike_{low}$ but less than or equal to  $spike_{high}$ are assigned a flag of [Suspect/Of Interest]{style="color: #EDA247;"}. Values greater than $spike_{high}$ are assigned a flag of [Fail]{style="color: #DB4325;"}.
+
+Values for $spike_{low}$ were selected based on the 99.7th quartile of the $spike_{value}$ for each variable. The quartile was used instead of the mean and standard deviation because the distribution of $spike_{value}$ skews right for each variable. The value for $spike_{high}$ was set to be 3 * $spike_{low}$. 
+
+## Rolling Standard Deviation
+
+The Rolling Standard Deviation test was developed by CMAR to identify suspected biofouling in the dissolved oxygen data. The test assumes that there is a 24-hour oxygen cycle, with net oxygen production during the day, and net oxygen consumption during the night. Biofouling is suspected when the amplitude of this cycle, as measured by the standard deviation, increases above a threshold (@fig-do-cycle). 
+
+The rolling standard deviation, $sd_{roll}$, was calculated from a 24-hour centered rolling window of observations, i.e., $T_{n-m/2}$, ... $T_{n-1}$, $T_{n}$, $T_{n+1}$, ... $T_{n+m/2}$.[^1]  The number of observations in each window depends on the sample interval, which is typically 10 minutes.
+
+[^1]: Note that a centered window is possible because the data is being post-processed after collection. Real-time data would likely use a left-aligned window, i.e., observations $T_{n}$, $T_{n-1}$, $T_{n-2}$ ... $T_{n-m}$.
+
+Although this test was designed to identify suspected biofouling, it was also applied to the other Water Quality variables as a general test of the standard deviation. In particular, it is expected to flag rapid changes in temperature due to fall storms and upwelling. 
+
+The Rolling Standard Deviation Test threshold is called $rolling\_sd\_max$. Observations greater than this threshold are flagged as [Suspect/Of Interest]{style="color: #EDA247;"}. This test does not flag any observations as [fail]{style="color: #DB4325;"} because of the high natural variability in the Water Quality variables. Observations at the beginning and end of the deployment for which the rolling standard deviation cannot be calculated (i.e, observations less than 12 hours from the start or end of deployment) are flagged [Not evaluated]{style="color: #c4c1a5;"}.  
+
+Values for $rolling\_sd\_max$ were selected based on the mean and standard deviation or an upper quartile $sd_{roll}$, depending on the distribution of the variable observations.
 
 ```{r}
 #| label: fig-do-cycle
 #| fig-height: 6
-#| fig-cap: Simulated dissolved oxygen data. The green points (January 1 to January 15) represent no biofouling; the orange points represent biofouling. The mean value and amplitudes are based on data observed from the Coastal Monitoring Program.
+#| message: false
+#| fig-cap: Simulated dissolved oxygen data and associated flags from the rolling standard deviation test.
 
 path <- system.file("testdata", package = "qaqcmar")
 
-p <- readRDS(paste0(path, "/test_data_rate_of_change.RDS")) %>% 
-  mutate(
-    status = ordered(
-      status, 
-      levels = c("No biofouling", "Biofouling")
-     # levels = c("No biofouling", "Moderate biofouling",  "Intense biofouling")
-    ),
-    dissolved_oxygen_percent_saturation = round(
-      dissolved_oxygen_percent_saturation, digits = 2
-    )
-  ) %>% 
-  ggplot(aes(timestamp_utc, dissolved_oxygen_percent_saturation, col = status)) +
-  geom_point(size = 0.75) + 
-  scale_color_manual("", values = c("#009200", "#EDA247")) +
-  scale_x_datetime("timestamp") +
-  scale_y_continuous("dissolved oxygen (percent saturation)") +
-  theme_light(base_size = 13) +
-  theme(legend.title = element_blank())
+dat <- readRDS(paste0(path, "/test_data_rolling_sd.RDS")) %>%
+  qc_test_rolling_sd()
 
-ggplotly(p) %>% 
-  layout(legend = list(x = 0.05, y = 0.09))
+p <- qc_plot_flags(dat, qc_tests = "rolling_sd", plotly_friendly = TRUE)
+p <- p$dissolved_oxygen_percent_saturation$rolling_sd 
 
+ggplotly(p) %>%
+  layout(legend = list(x = 1.0, y = 0.6))
 ```
 
 
-The standard deviation, $stdev_{roll}$, was calculated from a 24-hour centered rolling window of observations, i.e., $T_{n-m/2}$, ... $T_{n-1}$, $T_{n}$, $T_{n+1}$, ... $T_{n+m/2}$.[^1]  The number of observations in each window depends on the sample interval, which is typically 10 minutes.
+## Depth Crosscheck
 
-[^1]: Note that a centered window is possible because the data is being post-processed after collection. Real-time data would likely use a left-aligned window, i.e., observations $T_{n}$, $T_{n-1}$, $T_{n-2}$ ... $T_{n-m}$.
+The Depth Crosscheck Test was developed by CMAR to flag deployments where the measured sensor depth does not align with the estimated sensor depth in the `sensor_depth_at_low_tide_m` column. 
 
-Although this test was designed to identify suspected biofouling, it was also applied to the other Water Quality variables as a general Rate of Change test. In particular, it is expected to flag rapid changes in temperature due to fall storms. 
+For this test, the difference between the minimum value of measured depth and the estimated depth is calculated. If the absolute difference ($abs_{diff}$) between the two is greater than the threshold $depth\_diff\_max$, then test results in a flag of [Suspect/Of Interest]{style="color: #EDA247;"}.
 
-Following the QARTOD Rate of Change Test, this test does not flag any observations as [fail]{style="color: #DB4325;"} because of the high natural variable in dissolved oxygen, temperature, and salinity. Observations with a standard deviation that exceeds the threshold are flagged as [Suspect/Of Interest]{style="color: #EDA247;"}. Observations at the beginning and end of the deployment for which the rolling standard deviation cannot be calculated (i.e, observations less than 12 hours from the start or end of deployment) are flagged [Not evaluated]{style="color: #c4c1a5;"}.  
+$$abs_{diff} = abs(sensor\_depth\_at\_low\_tide\_m - min\_measured\_depth\_m) $$
 
-
-
-## Flat Line Test   
+$depth\_diff\_max$ was determined based on the 95th percentile of the $abs_{diff}$ from all deployments with measured depth data.
 
 
-Text to come.
+Note that all observations from a deployment will have the same depth crosscheck flag. If there is more than one sensor on the string that measures depth, the worst (highest) flag will be assigned to the deployment. 
 
-
-
+This is because a [Suspect/Of Interest]{style="color: #EDA247;"} flag for the Depth Crosscheck test is an indication that the sensor string was moored in an area deeper (or shallower) than expected. For example, if the string was moored in an area 10 m deeper than anticipated, all sensors will likely be 10 m deeper than recorded in the `sensor_depth_at_low_tide_m` column.
 
 
 

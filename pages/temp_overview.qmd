@@ -2,14 +2,14 @@
 title: "Overview"
 ---
 
-Text to come.
+*could use an image here*
 
-```{r}
-#| echo: false
-#| fig-align: center
-#| fig-cap: Image by <a href="https://pixabay.com/users/josethestoryteller-5100055/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2408062">Jose R. Cabello</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2408062">Pixabay</a>
+Temperature is a key driver of biological and physical components of the marine ecosystem. 
 
-knitr::include_graphics("figures/under-construction.png")
+Ocean temperature is a critical parameter for marine life, influencing physiological processes, species distribution, and species abundance [@RN12876]. Warming temperatures have been linked to individual and population-level changes in fish species, including decreased body size [@RN13690] and population expansion or shifts towards cooler, deeper waters [@RN13620; @RN7236]. For example, several species typically associated with warm waters south of Nova Scotia are now considered “well established” on the Scotian Shelf (e.g., the blackbelly rosefish; *Helicolenus dactylopterus*), and it is expected that more warm water species will become established as temperatures increase [@RN15387].
 
-```
+Temperature is directly related to ocean stratification, which refers to vertical layers of water with similar properties (e.g., temperature and salinity). Upper ocean stratification is seasonal, with a warm fresh layer developing in the spring and summer[^1] and disappearing in the fall and winter[^2]. This process brings heat and carbon dioxide into deeper waters, and transports nutrients from deep waters to the euphotic zone, supporting the base of the food web [@RN13951]. There is evidence that stratification in some regions of Atlantic Canada is increasing due to changes in temperature and salinity [@RN15284]. Increased stratification has implications for climate change (e.g., reduced ability to absorb carbon dioxide) and the ecosystem (e.g., fewer nutrients available for phytoplankton).
 
+
+[^1]: e.g., from surface warming and freshwater inputs
+[^2]: e.g., from wind-driven mixing

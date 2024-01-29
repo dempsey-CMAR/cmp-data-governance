@@ -125,8 +125,6 @@ A major challenge of accurately measuring DO near the surface[^4] is the growth 
 
 ```
 
-
-
 Anti-fouling strategies can be employed to reduce fouling and improve data quality, although these present other challenges. Sensors can be cleaned regularly to remove growth (e.g., every 2 - 4 weeks), although this may not be feasible for many reasons (e.g., cost and time constraints). Some sensors have built-in anti-fouling mechanisms such as wipers [@RN26903] or UV light [@RN26901] to reduce growth, but these sensors tend to be expensive and have reduced battery life. Copper (a natural biocide) tape, wire, or screens around the sensor can reduce fouling for several weeks, although this can also become expensive and may not be sufficient for longer deployments [@RN26887].
 
 ## Other Challenges 
