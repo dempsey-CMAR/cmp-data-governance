@@ -1,0 +1,44 @@
+---
+title: "QC Flags"
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r, include=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
+
+library(DT)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(knitr)
+library(plotly)
+library(qaqcmar)
+
+theme_set(theme_light())
+
+dt_options1 <- list(
+      dom = 'ft',
+      paging = FALSE,
+      searching = FALSE,
+      pageLength = 500,
+      columnDefs = list(list(className = 'dt-center', targets = "_all"))
+)
+
+dt_options2 <- list(
+      dom = 'Bft',
+      paging = FALSE,
+      searching = TRUE,
+      pageLength = 500,
+      scrollY = "500px",
+      scrollX = "500px",
+      columnDefs = list(list(className = 'dt-center', targets = "_all")),
+      buttons = c('copy', 'csv')
+)
+
+```
+
+
+
+- describe flag columns + summary column?

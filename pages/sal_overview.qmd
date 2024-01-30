@@ -1,0 +1,17 @@
+---
+title: "Overview"
+---
+
+*could use an image here*
+
+Salinity impacts both biological and physical components of the ocean ecosystem, including growth rates of marine organisms and vertical stratification [@RN13951, @RN14209]. 
+
+Salinity has direct impacts on marine organisms. Different species and life stages have preferred salinity conditions, outside of which they experience deleterious physiological effects, including mortality [@RN7554; @RN14209]. It is expected that many organisms shift their spatial distribution to avoid poor environmental conditions [@RN13620], although sessile and cultured organisms have limited to no ability to do so. Salinity is of particular concern for shellfish aquaculture. For example, two cultured species in Nova Scotia (blue mussels and oysters) can tolerate a wide range of salinity for short periods of time, but prolonged exposure to low salinity[^1] can result in reduced growth and reproduction, higher disease prevalence, and eventually death [@RN14209; @RN14690]. 
+
+[^1]: e.g., from freshwater pulses
+
+Like temperature, salinity is directly related to seasonal ocean stratification. Freshwater inputs in the spring and summer contribute to a fresh, warm surface layer that disappears in the fall and winter from wind-driven mixing. In turn, salinity is impacted by rates of evaporation and precipitation, freshwater inputs, melting and freezing of sea ice, and ocean circulation [@RN13951]. Remote sensing observations of salinity, along with temperature and chlorophyll-a, can also be used to estimate ocean acidification [@RN5714; @RN5712].
+
+Surface waters around Canada, including off the coast of Nova Scotia, are generally becoming fresher due to climate change and natural variability [@RN13951]. This trend is expected to continue as a result of the projected increase in precipitation and ice melt [@RN13951; @RN14690]. In contrast, deep waters in the Gulf of St. Lawrence are becoming more saline as a result of the northward shift in subtropical currents bringing in saltier waters [@RN13951; @RN14690]. 
+
+
