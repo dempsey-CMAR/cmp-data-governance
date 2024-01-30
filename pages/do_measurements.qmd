@@ -18,7 +18,7 @@ st_locations <- st_locations %>%
   
 ```
 
-**This data is from... all data, prelim QC applied**
+**Update this with newest data???**
 
 ## Locations
 
@@ -112,8 +112,6 @@ CMAR uses two types of sensors to measure DO: the [aquaMeasure DOT](https://rsaq
 
 ### aquaMeasure DOT 
 CMAR has a large inventory of DOTs (71 in April 2023), which are used for most deployments with DO. The DOT measures temperature and partial pressure of oxygen, providing DO values in units of percent saturation. Partial pressure values are not affected by salinity [@RN13158], and so no correction factor is required for these measurements. For CMAR deployments, each DOT is programmed to measure and internally log at 10 minute intervals. CMAR typically retrieves sensors after ~1 year for data offload, cleaning, and calibration/validation.
-
-  - InnovaSea water vapour cal does not include salinity (assumes 0)
 
 ### HOBO U26
 CMAR supplemented their DO sensor inventory with 13 HOBO U26 sensors in 2021, and purchased an additional 10 in January 2023. The HOBO U26 measures concentration, and provides DO vales in units of mg / L. For CMAR deployments, each HOBO U26 is programmed to recorded temperature and dissolved oxygen every 10 minutes. These sensors have a sensor cap that needs to be replaced every 6 months. They are deployed in St. Margaret's Bay and Mahone Bay rather than more remote locations so that they can be serviced twice a year with minimal travel requirements (@fig-do-station-locations).

@@ -51,8 +51,11 @@ dt_options2 <- list(
 
 This page describes the QC tests applied to the Coastal Monitoring Program Water Quality data, and the general methods for selecting the most appropriate thresholds. 
 
-Where possible, the thresholds were determined from historical data, which provide a baseline of "normal" and "outlying" conditions. The historical data used here was the Coastal Monitoring Program Water Quality data sets submitted to the [Nova Scotia Open Data Portal](https://data.novascotia.ca/browse?q=coastal%20monitoring&sortBy=relevance) in December 2022. Preliminary quality control measures (e.g., obvious outliers and suspected biofouling removed) were applied to these datasets before submission. Additionally, freshwater and other outlier stations were excluded from the threshold analysis to provide a better representation of "normal" coastal ocean conditions.
+Where possible, the thresholds for each QC test and variable were determined from historical data, which provide a baseline of "normal" and "outlying" conditions. The historical data used here was the Coastal Monitoring Program Water Quality data sets submitted to the [Nova Scotia Open Data Portal](https://data.novascotia.ca/browse?q=coastal%20monitoring&sortBy=relevance) in December 2022. Preliminary quality control measures (e.g., obvious outliers and suspected biofouling removed) were applied to these datasets before submission. Additional QC was applied where required throughout the thresholds analysis. For example, freshwater and other outlier stations were excluded to provide a better representation of "normal" coastal ocean conditions.
 
+**does this go here or on a separate page**
+The historical data was reviewed carefully prior to calculating thresholds. Depending on the number of observations and the spatial and temporal resolution of observations, data was pooled together or separated by county. Other grouping variables (e.g., sensor type) were also used when applicable (**mention depth here??**).
+The distribution of observations was reviewed to determined which statistics to use to determine outlying conditions. Mean and 3 * standard deviation was used for relatively normally distributed variables, while upper quartiles were used for skewed distributions. The final decisions for each QC test, variable, group, and statistic is recorded in Table X. See the individual variable tabs for more details.
 
 
 These thresholds should be re-evaluated and re-calculated if necessary in several years, when more data is available.

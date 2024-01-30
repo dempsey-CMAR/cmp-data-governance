@@ -14,8 +14,6 @@ library(stringr)
 library(strings)
 library(tidyr)
 
-
-
 # datatable settings ------------------------------------------------------
 
 dt_options <- list(
@@ -25,6 +23,13 @@ dt_options <- list(
   scrollY = "500px",
   columnDefs = list(list(className = 'dt-center', targets = "_all")),
   buttons = c('copy', 'csv')
+)
+
+dt_options2 <- list(
+  dom = 'ft',
+  paging = FALSE,
+  searching = FALSE,
+  columnDefs = list(list(className = 'dt-center', targets = "_all"))
 )
 
 

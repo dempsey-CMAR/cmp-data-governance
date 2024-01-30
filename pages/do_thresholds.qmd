@@ -1,5 +1,5 @@
 ---
-title: "Thresholds"
+title: "Thresholds (% saturation)"
 editor_options: 
   chunk_output_type: console
 ---
@@ -8,39 +8,224 @@ editor_options:
 knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
 
 library(here)
+library(lubridate)
+library(plotly)
+library(stringr)
+library(summaryplots)
 
 source(here("pages/import_data_and_params.R"))
 
-dat_filt <- dat_filt %>% filter(variable == "Dissolved Oxygen")
+x_axis <- scale_x_continuous("Dissolved Oxygen (percent saturation)")
+
+#dat_filt <- dat_filt %>% filter(variable == "Dissolved Oxygen")
 
 st_locations <- st_locations %>%
   left_join(do_units, by = "STATION")
 
 # percent saturation data used for threshold analysis
-dat_sat <- import_strings_data(input_path = here("pages/data/data-raw")) %>%
-  select(COUNTY, WATERBODY, DEPLOYMENT_PERIOD, STATION, SENSOR, TIMESTAMP, DEPTH, VARIABLE, VALUE, UNITS) %>%
+# dat_sat <- import_strings_data(input_path = here("pages/data/data-raw")) %>%
+#   select(COUNTY, WATERBODY, DEPLOYMENT_PERIOD, STATION, SENSOR, TIMESTAMP, DEPTH, VARIABLE, VALUE, UNITS) %>%
+#   mutate(
+#     COUNTY = if_else(STATION == "Sandy Cove St. Marys", "Digby", COUNTY),
+#     DEPTH = round(as.numeric(DEPTH)),
+#     MONTH = month(TIMESTAMP),
+#     YEAR = year(TIMESTAMP)
+#   ) %>%
+#   filter(
+#     VARIABLE == "Dissolved Oxygen",
+#     UNITS == "percent saturation",
+#     !(STATION %in% c("Piper Lake", "Hourglass Lake", "0193", "Sissiboo")),
+#     !(COUNTY == "Inverness" & DEPTH %in% c(8, 18, 28, 36) & VARIABLE == "Dissolved Oxygen"),
+#     !(STATION == "Ram Island" &
+#         TIMESTAMP > as_datetime("2021-10-10")
+#       & TIMESTAMP < as_datetime("2021-11-15"))
+#   )
+
+dat_sat <- readRDS(here("pages/data/do_rolling_sd_prelim_qc.rds")) %>% 
+   filter(
+    !(station %in% c("Piper Lake", "Hourglass Lake", "0193", "Sissiboo")),
+    !(county == "Inverness" & sensor_depth_at_low_tide_m %in% c(8, 18, 28, 36)),
+    !(county == "Guysborough" & sensor_depth_at_low_tide_m == 60)
+  ) %>% 
+  mutate(month = month(timestamp_utc, label = TRUE))
+
+colnames(dat_sat) <- str_remove_all(colnames(dat_sat), "value_")
+```
+
+Separate thresholds were calculated for the different units of measured dissolved oxygen. 
+
+QC test thresholds for dissolved oxygen (percent saturation) were based on historical Coastal Monitoring Program data. Preliminary quality control was applied to the data. Obvious outliers, suspected biofouling, and freshwater stations were omitted. Three deployments in Whycocomagh Basin (Inverness County) measured data near or below the oxycline. This data was also omitted from the thresholds analysis because it is not representative of typical conditions measured by the Program. 
+
+A single set of user thresholds was determined for all counties because the DO records were relatively patchy in space and time (@fig-do-station-locations; @fig-do-n-obs-county-month), and because there was minimal variation between counties (@fig-do-mean-sd). For most counties, there were fewer "good" records in the spring and summer months, when conditions are conducive to biofouling[^2]. Several counties have no data for at least one month (@fig-do-n-obs-county-month), and 5 counties only have data from a single station (@fig-do-station-locations). This analysis could be revisited and thresholds revised when there is more consistent data.
+
+- Expect many obs to be flagged, esp with Rolling Standard deviation test
+- Thresholds will be influenced by areas and seasons with the most observations, but will be good enough
+- Note that Inverness only has data for June to September (months that typically have relatively high DO), while Antigonish is missing data from July to September
+- Advantage to colouring bars by year, depth, or county?
+- Depths rounded to nearest whole number
+- Where thresholds can be downloaded from
+
+# Gross Range Test
+
+## Sensor Thresholds
+
+The sensor thresholds were determined based on the manual for the aquaMeasure DOT (Table 1).
+
+```{r}
+sensors %>%
+  filter(str_detect(variable, "dissolved_oxygen"), sensor_type == "aquameasure") %>%
   mutate(
-    COUNTY = if_else(STATION == "Sandy Cove St. Marys", "Digby", COUNTY),
-    DEPTH = round(as.numeric(DEPTH)),
-    MONTH = month(TIMESTAMP),
-    YEAR = year(TIMESTAMP)
+    `Sensor (link to spec sheet)` =
+      paste0('<a  target=_blank href=', url, '>', sensor_type,'</a>')
   ) %>%
-  filter(
-    VARIABLE == "Dissolved Oxygen",
-    UNITS == "percent saturation",
-    !(STATION %in% c("Piper Lake", "Hourglass Lake", "0193", "Sissiboo")),
-    !(COUNTY == "Inverness" & DEPTH %in% c(8, 18, 28, 36) & VARIABLE == "Dissolved Oxygen"),
-    !(STATION == "Ram Island" &
-        TIMESTAMP > as_datetime("2021-10-10")
-      & TIMESTAMP < as_datetime("2021-11-15"))
+  select(`Sensor (link to spec sheet)`, sensor_min, sensor_max) %>%
+  datatable(
+    options = dt_options2,
+    rownames = FALSE, escape = FALSE,
+    caption = "Table 1: Dissolved oxygen (percent saturation) sensor thresholds for the Gross Range Test."
   )
+```
+
+
+## User Thresholds
+
+The dissolved oxygen (percent saturation) observations are relatively normally distributed (@fig-do-hist), and so the mean and 3 * standard deviation was used to determine $user_{min}$ and $user_{max}$. The statistcs and threshold values are shown in Table 2.
+
+:::panel-tabset
+
+### Figure 1
+```{r}
+#| fig-height: 4
+#| fig-cap: Distribution of dissolved oxygen observations (binwidth = 2 %). Shaded green area shows observations that wil be flagged "Pass", and shaded green area shows observations that will be flagged as "Suspect / Of Interest by the Gross Range Test.
+#| label: fig-do-hist
+
+user_do <- dat_sat %>% 
+  qc_calculate_user_thresholds(
+    var = "dissolved_oxygen_percent_saturation",
+    n_sd = 3, keep_stats = TRUE
+  ) %>% 
+  pivot_wider(names_from = threshold, values_from = threshold_value) %>% 
+  select(mean = mean_var, stdev = sd_var, user_min, user_max) 
+
+plot_histogram_user_thresholds(
+  dat_sat,
+  hist_col = dissolved_oxygen_percent_saturation,
+  binwidth = 2,
+  user_min = user_do$user_min,
+  user_max = user_do$user_max
+) +
+  x_axis
+
+#ggplotly(p)
 
 ```
 
-Most QC test thresholds for dissolved oxygen were based on historical Coastal Monitoring Program data. Preliminary quality control was applied to the data[^1]. Different thresholds were calculated for data measured in percent saturation and concentration. The number of observations collected and number of counties and stations monitored for each set of units is presented in Table 1. Station locations are shown in @fig-do-station-locations. 
+### Table 2
+```{r}
+user_do %>% 
+  datatable(options = dt_options2, rownames = FALSE)
+```
 
-**Flesh this out**
-[^1]: e.g., obvious outliers, suspected biofouling, and freshwater stations were omitted. Three deployments in Whycocomagh Basin (Inverness County) measured data near or below the oxycline. This data was also omitted from the thresholds analysis because it is not representative of typical conditions measured by the Program.
+
+# Climatological Test
+
+There is a small but noticeable climatological cycle in the dissolved oxygen data (@fig-do-clim). The observations are normally distributed within each month (@fig-do-hist-clim), and so the mean and standard deviation were used to calculate the seasonal thresholds (Table 3).
+
+::: panel-tabset
+
+### Figure 2
+```{r}
+#| fig-height: 5
+#| fig-cap: Mean and standard deviation of the monthly dissolved oxygen (percent saturation) observations.
+#| label: fig-do-clim
+#| message: false
+
+do_clim <- dat_sat %>% 
+  group_by(month) %>% 
+  summarise(
+    mean = mean(dissolved_oxygen_percent_saturation),
+    stdev = sd(dissolved_oxygen_percent_saturation)
+  ) %>% 
+  mutate(variable = "dissolved_oxygen_percent_saturation")
+
+p <- plot_mean_sd_season(do_clim, facet_county = FALSE) +
+  scale_y_continuous("Dissolved Oxygen (percent saturation)")
+  
+ggplotly(p)
+
+```
+
+### Figure 3
+```{r}
+#| fig-height: 8
+#| fig-cap: Mean and standard deviation of the monthly dissolved oxygen (percent saturation) observations. Note the difference in scale on the y-axis.
+#| label: fig-do-hist-clim
+#| message: false
+
+dat_sat %>% 
+  plot_histogram(hist_col = dissolved_oxygen_percent_saturation, binwidth = 2) +
+  x_axis +
+  facet_wrap(~month, scales = "free_y", ncol = 3) 
+
+```
+
+### Table 3
+```{r}
+thresholds %>% 
+  filter(
+    variable == "dissolved_oxygen_percent_saturation",
+         qc_test == "climatology"
+    ) %>% 
+  mutate(month = month(month, label = TRUE)) %>% 
+  select(month, threshold, threshold_value) %>% 
+  pivot_wider(names_from = threshold, values_from = threshold_value) %>% 
+  datatable(options = dt_options, rownames = FALSE)
+```
+
+:::
+
+
+# Rolling Standard Deviation Test
+
+**show figures from 3.3_rolling_...??**
+
+The distribution of rolling standard deviation is skewed right. The long tail is likely due to biofouling signals that were undetected in the preliminary QC of the data. It was therefore anticipated that a relatively large proportion of the QC'd data should be flagged by the rolling standard deviation test.
+
+A range of upper quartile values were evaluated to use as the $rolling_sd_{max}$. The 90th, 95th, and 99.7th quartile values were each applied to the the raw data (no preliminary QC) and the results inspected. The 90th quartile was determined to be too stringent, as it flagged 31 % of the observations and generate false positives. The 99.7th quartile was determined to be too lenient, as only about 11 % of the observations were flagged, and visual inspection identified false negatives.
+
+Q95 = golidliocks zone
+
+
+
+
+
+```{r}
+#| fig-height: 4
+#| fig-cap: Distribution of the 24-hour rolling standard deviation of dissolved oxygen (percent saturation) observations (binwidth = 0.25 %).
+
+dat_sat %>% 
+  filter(!is.na(sd_roll)) %>% 
+  plot_histogram_user_thresholds(
+    hist_col = sd_roll, binwidth = 0.25, user_max = 2.99
+  ) +
+  scale_x_continuous(
+    "Dissolved Oxygen (percent saturation)\nRolling Standard Deviation")
+
+```
+
+
+
+`r knitr::knit_exit()`
+
+# Additional Material
+
+The number of observations collected and number of counties and stations monitored for each set of units is presented in Table 1. Station locations are shown in @fig-do-station-locations. 
+
+
+[^6]: Note that Inverness only has data for June to September (months that typically have relatively high DO), while Antigonish is missing data from July to September (@fig-do-n-obs-county-month).
+
+[^2]: e.g. more daylight
+
 
 <br>
 
@@ -165,11 +350,7 @@ county_month_sat <- dat_filt_sat %>%
 ```
 
 
-A single set of user thresholds was determined for all counties because the DO records were relatively patchy in space and time (@fig-do-station-locations; @fig-do-n-obs-county-month), and because there was minimal variation between counties[^6] (@fig-do-mean-sd). For most counties, there were fewer "good" records in the spring and summer months, when conditions are conducive to biofouling[^2]. Several counties have no data for at least one month (@fig-do-n-obs-county-month), and 5 counties only have data from a single station (@fig-do-station-locations). This analysis could be revisited and thresholds revised when there is more consistent data.
 
-[^6]: Note that Inverness only has data for June to September (months that typically have relatively high DO), while Antigonish is missing data from July to September (@fig-do-n-obs-county-month).
-
-[^2]: e.g. more daylight
 
 
 ```{r}
@@ -437,7 +618,7 @@ dat_roll <- dat_sat %>%
   separate(sensor, into = c("sensor_type", "sensor_serial_number")) %>% 
   mutate(variable = "dissolved_oxygen_percent_saturation") %>% 
   ss_pivot_wider() %>%
-  qc_test_rate_of_change(keep_sd_cols = TRUE) %>% 
+  qc_test_rolling_sd(keep_sd_cols = TRUE) %>% 
   na.omit()
 
 p <- plot_histogram(dat_roll, sd_roll, binwidth = 0.25) +
