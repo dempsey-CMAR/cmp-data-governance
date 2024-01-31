@@ -16,12 +16,14 @@ website:
         menu:
           - pages/qc_overview.qmd
           - pages/qc_tests.qmd
+          - pages/qc_thresholds.qmd
           - pages/qc_flags.qmd
       - text: "Dissolved Oxygen"
         menu:
           - pages/do_overview.qmd
           - pages/do_measurements.qmd
           - pages/do_thresholds.qmd
+          - pages/do_thresholds_mg_per_l.qmd
       - text: "Salinity"
         menu:
           - pages/sal_overview.qmd
@@ -37,6 +39,9 @@ website:
           - pages/temp_overview.qmd
           - pages/temp_measurements.qmd
           - pages/temp_thresholds.qmd
+      - text: "Data Output"
+        menu:
+          - pages/data_output.qmd
 format:
   html:
     theme: yeti

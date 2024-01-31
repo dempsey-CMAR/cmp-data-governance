@@ -1,5 +1,5 @@
 ---
-title: "QC Flags"
+title: "Thresholds Summary"
 editor_options: 
   chunk_output_type: console
 ---
@@ -8,38 +8,53 @@ editor_options:
 ```{r, include=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
 
+library(data.table)
 library(DT)
 library(dplyr)
-library(ggplot2)
-library(lubridate)
-library(knitr)
-library(plotly)
+library(here)
 library(qaqcmar)
 
-theme_set(theme_light())
-
-dt_options1 <- list(
-      dom = 'ft',
-      paging = FALSE,
-      searching = FALSE,
-      pageLength = 500,
-      columnDefs = list(list(className = 'dt-center', targets = "_all"))
-)
-
-dt_options2 <- list(
-      dom = 'Bft',
-      paging = FALSE,
-      searching = TRUE,
-      pageLength = 500,
-      scrollY = "500px",
-      scrollX = "500px",
-      columnDefs = list(list(className = 'dt-center', targets = "_all")),
-      buttons = c('copy', 'csv')
-)
+source(here("pages/import_data_and_params.R"))
 
 ```
 
 
+- applied by deployment
+- one flag column for each test and variable
 
-- decision table
-- final thresholds (can be downloaded)
+# Table 1
+
+```{r}
+fread(here("pages/data/thresholds_tracker.csv"), na.strings = "na") %>% 
+  datatable(options = dt_options, rownames = FALSE)
+```
+
+</br>
+
+Download thresholds
+
+blank spaces mean NA
+
+# Table 2
+
+```{r}
+thresholds %>% 
+  datatable(options = dt_options, rownames = FALSE, extensions = "Buttons")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -21,6 +21,7 @@ dt_options <- list(
   paging = FALSE,
   searching = TRUE,
   scrollY = "500px",
+  scrollX = "500px",
   columnDefs = list(list(className = 'dt-center', targets = "_all")),
   buttons = c('copy', 'csv')
 )
@@ -36,14 +37,14 @@ dt_options2 <- list(
 # data --------------------------------------------------------------------
 
 # summarized data - all observations
-dat <- read_csv(
-  here("pages/data/summary.csv"), show_col_types = FALSE
-)
-
-# summarized data - filtered (obvious outliers, suspected biofouling, and freshwater stations omitted)
-dat_filt <- read_csv(
-  here("pages/data/summary_filtered_data.csv"), show_col_types = FALSE
-) 
+# dat <- read_csv(
+#   here("pages/data/summary.csv"), show_col_types = FALSE
+# )
+# 
+# # summarized data - filtered (obvious outliers, suspected biofouling, and freshwater stations omitted)
+# dat_filt <- read_csv(
+#   here("pages/data/summary_filtered_data.csv"), show_col_types = FALSE
+# ) 
 
 # gross range thresholds (sensors)
 sensors <- read_csv(

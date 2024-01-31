@@ -55,7 +55,10 @@ Where possible, the thresholds for each QC test and variable were determined fro
 
 **does this go here or on a separate page**
 The historical data was reviewed carefully prior to calculating thresholds. Depending on the number of observations and the spatial and temporal resolution of observations, data was pooled together or separated by county. Other grouping variables (e.g., sensor type) were also used when applicable (**mention depth here??**).
+
 The distribution of observations was reviewed to determined which statistics to use to determine outlying conditions. Mean and 3 * standard deviation was used for relatively normally distributed variables, while upper quartiles were used for skewed distributions. The final decisions for each QC test, variable, group, and statistic is recorded in Table X. See the individual variable tabs for more details.
+
+QC tests were applied using CMAR-developed R package `qaqcmar`, which is available to view and install from [GitHub](https://github.com/dempsey-CMAR/qaqcmar).
 
 
 These thresholds should be re-evaluated and re-calculated if necessary in several years, when more data is available.
@@ -114,12 +117,10 @@ Note that OOI used a more complex method (harmonic analysis, as described [here]
 
 The Spike Test identifies single observations that are unexpectedly high (or low) based on the previous and following observations.
 
-
 For each observation, a $spike_{value}$ is calculated based on a spike reference ($spike_{ref}$). The $spike_{value}$ is compared to the Spike Test thresholds and the appropriate flag is assigned.
 
 $$spike_{value} = abs(value - spike_{ref})$$
 $$spike_{ref} = (lead_{value} - lag_{value}) / 2$$
-
 
 Due to the dependence on $lead_{value}$ and $lag_{value}$, the first and last observations in each sensor deployment will be flagged as "Not Evaluated" because the $spike_{ref}$ cannot be calculated.
 

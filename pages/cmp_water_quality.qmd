@@ -2,8 +2,6 @@
 title: "Water Quality"
 ---
 
-
-- sensor string figure
 - table of sensors used
 - more about cal/val? 
 - link to SOPs?
@@ -11,19 +9,36 @@ title: "Water Quality"
 
 Through the Water Quality branch of the Coastal Monitoring Program, CMAR collects high resolution temperature, dissolved oxygen, and salinity data. **add depth here**?
 
+# Data Collection
+
 Water Quality data is collected using “sensor strings”. Each string is attached to the seafloor by an anchor and suspended by a sub-surface buoy, with sensors attached at various depths (Figure). Most strings deployed since 2018 are attached to the anchor by an acoustic receiver with a release mechanism. The receiver also logs detections of tagged animals including great white sharks, sturgeon, and tuna for the [Ocean Tracking Network](https://oceantrackingnetwork.org/).
 
 ```{r}
 #| echo: false
 #| fig-align: center
+#| fig-cap: Sensor string diagram (not to scale).
 
 knitr::include_graphics("figures/sensor_string.png")
 ```
 
-
 Characteristics of the station location (e.g., depth, bottom type, and currents) and stakeholder needs dictate the string configuration (e.g., anchor weight, and number/type of sensors). Sensor strings are generally deployed 200 m to 1000 m from shore, in depths up to 75 m. Historically, strings were deployed with only temperature sensors, but in more recent years at least one dissolved oxygen sensor is included (typically at 5 m). At the request of industry, salinity sensors are also included at stations near proposed and existing shellfish aquaculture leases.
 
+# Calibration & Validation
+
 Prior to deployment, each sensor is calibrated by the service provider following manufacturer’s instructions. CMAR has developed a “calibration-validation” dashboard to document and track sensor calibrations. Standard Operating Procedures (SOPs) for deployment and retrieval have been developed by the service provider and approved by CMAR. Calibrated sensors are typically attached to the string at standard depths (2, 5, 10, 15, 20 m, etc.) and deployed at the designated station. Data are measured every 10 minutes to 1 hour depending on the sensor, and strings are typically deployed for 6 – 12 months, resulting in tens- to hundreds- of thousands of observations for a typical deployment. Sensors are retrieved by triggering an acoustic releaser, enabling the sensors to float to the surface for retrieval and data download. Strings without an acoustic release are retrieved by dragging or with divers. Sensors may be re-deployed at the same location or moved to another area of interest depending on program objectives. 
+
+# Data Access
+
+Coastal Monitoring Program Water Quality Data can be accessed from several platforms. Summary reports are available on the [CMAR Website](https://cmar.ca/reports/). Full datasets can be downloaded from the [Nova Scotia Open Data Portal](https://data.novascotia.ca/browse?tags=coastal+monitoring+program) and the [CIOOS Atlantic](https://catalogue.cioosatlantic.ca/organization/cmar).
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+knitr::include_graphics("figures/data_access.png")
+```
+
+
 
 
 
