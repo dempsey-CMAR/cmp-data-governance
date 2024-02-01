@@ -1,0 +1,211 @@
+---
+title: "CMAR Measurements"
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
+
+library(dplyr)
+library(here)
+library(lubridate)
+library(plotly)
+
+source(here("pages/import_data_and_params.R"))
+
+dat_depth <- readRDS(here("pages/data/depth_rolling_sd_reprocessed.rds")) %>%
+  select(
+    -c(int_sample, n_sample, rolling_sd_flag_sensor_depth_measured_m)
+  ) %>%
+  ss_pivot_longer() %>%
+  filter(
+    # sensor read outside range
+    !(station == "Olding Island" &
+        deployment_range == "2022-Jun-03 to 2022-Sep-30" &
+        depth_log == 3),
+    # freshwater stations
+    !(station %in% c("Piper Lake", "Hourglass Lake", "0193", "Sissiboo")),
+    # suspect range
+    !(station == "Long Beach" &
+        deployment_range == "2020-Jul-16 to 2020-Nov-29" & depth_log == 5),
+    !(station == "Sandy Cove" &
+        deployment_range == "2020-Jul-16 to 2020-Nov-30" & depth_log == 5),
+    !(station == "Tickle Island 1" &
+        deployment_range == "2020-Oct-21 to 2021-Aug-25" & depth_log == 5)
+  )
+
+beaver <- readRDS(here("pages/data-reprocessed/beaver_point_2019-10-20.rds")) %>% 
+  filter(
+    timestamp_utc >= as_datetime("2020-01-01"),
+    timestamp_utc < as_datetime("2020-02-01")
+  ) %>% 
+  select(
+    sensor_type, sensor_serial_number, 
+    timestamp_utc, sensor_depth_at_low_tide_m, sensor_depth_measured_m)
+
+```
+
+# Locations
+
+CMAR has collected depth data from `r length(na.omit(unique(dat_depth$station)))` stations in `r length(na.omit(unique(dat_depth$county)))` counties (@fig-depth-station-locations). 
+
+```{r, fig-temp-station-units}
+#| label: fig-depth-station-locations
+#| fig-height: 7
+#| fig-cap: Approximate location of stations with temperature data. 
+
+# interactive map
+st_locations %>% 
+  inner_join(
+    dat_depth %>% 
+      select(COUNTY = county, STATION = station) %>% 
+      distinct(), by = join_by(COUNTY, STATION)
+  ) %>% 
+  leaflet() %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  add_circle_markers_county(county_pal = county_pal, size = 6) %>% 
+  add_county_fill_legend(county_pal = county_pal)
+  
+```
+
+**are we putting depth sensors in specific locations now?**
+# Sensors
+
+CMAR does not deploy sensors specifically to measure depth; however, some of the sensors used to measure other variables also measure depth. Most vemco units and some aquaMeasure units (DOTs and SALs) provide depth measurements.
+
+The aquaMeasure sensors are programmed to record depth every 10 minutes, and have a precision of 0. 1 m. this typically results in a clear sinusoidal signal that would be expected from tidal changes (@fig-aquameasure).
+
+```{r}
+#| fig-height: 4
+#| fig-cap: Measured depth observations from an aquaMeasure sensor deployed in January 2020 at Beaver Point.
+#| label: fig-aquameasure
+#| warning: false
+
+p <- beaver %>% 
+  filter(sensor_type == "aquameasure") %>% 
+  ss_ggplot_variables() +
+  facet_wrap(~sensor_type) +
+  geom_point(col = "grey20", size = 0.5) +
+  scale_y_continuous("sensor_depth_measured_m")
+   
+ggplotly(p)
+
+```
+
+In contrast, the VR2AR units only record depth every hour and have a resolution of 1 m. This results in very coarse depth measurements that don't clearly show a sinusoidal signal, and can result in apparent spikes (@fig-vemco). 
+
+```{r}
+#| fig-height: 4
+#| fig-cap: Measured depth observations from a VR2AR sensor deployed in January 2020 at Beaver Point.
+#| label: fig-vemco
+#| warning: false
+
+p <- beaver %>% 
+  filter(sensor_type == "vr2ar") %>% 
+  ss_ggplot_variables() +
+  facet_wrap(~sensor_type) +
+  geom_point(col = "grey20", size = 0.5)  +
+  scale_y_continuous("sensor_depth_measured_m")
+   
+ggplotly(p)
+```
+
+# Applications
+
+CMAR takes advantage of the opportunistic depth sampling to verify the estimated depth of sensors on the string in the Depth Crosscheck Test. Abrupt changes in measured depth can indicate that a sensor string was moved during or between deployments. Measured depth that increases over the deployment could indicate substantial biofouling causing the sensors to sink below the intended depth. Measured depth can also provide an estimate of the tidal range in an area.
+
+
+
+
+**needed?**
+
+Table 1: A subset of these sensors can measure sensor depth.
+```{r}
+sensors %>%
+  filter(manufacturer == "InnovaSea") %>% 
+  select(-c(sensor_type, sensor_min, sensor_max)) %>% 
+  mutate(
+    variable = case_when(
+      str_detect(variable, "temp") ~ "Temperature",
+      str_detect(variable, "dissolved") ~ "Dissolved Oxygen",
+      str_detect(variable, "salinity") ~ "Salinity",
+      str_detect(variable, "depth") ~ "Pressure (sensor depth)"
+    )
+  ) %>% 
+  pivot_wider(names_from = "variable", values_from = "variable") %>% 
+  mutate(
+    `Variable(s) Measured` = paste(
+      Temperature, `Dissolved Oxygen`, Salinity, `Pressure (sensor depth)`,
+      sep = ", "
+    ),
+    `Variable(s) Measured` = str_remove_all(`Variable(s) Measured`, "NA,|, NA"),
+    `Sensor (link to manual)` = 
+      paste0('<a  target=_blank href=', url, '>', sensor_model,'</a>')
+  ) %>% 
+  select(`Sensor (link to manual)`, Manufacturer = manufacturer, `Variable(s) Measured`) %>%
+  arrange(Manufacturer) %>% 
+  datatable(options = dt_options, rownames = FALSE, escape = FALSE)
+```
+
+<br>
+
+Some of these sensors also measure other variables including dissolved oxygen, salinity, depth, and acoustic detections.
+
+The Vemco VR2AR is typically the deepest sensor, anchored about 0.5 m above the sea floor. It has an acoustic release that is triggered to retrieve the sensor string. Deployments without VR2AR sensors are usually accessible from the surface, but some are retrieved by dragging or divers.
+
+`r knitr::knit_exit()`
+## Depth
+
+The placement of the temperature sensors depends on the depth of the water at each station. Typically, sensors are fastened 2, 5, 10, 15, and 20 m below the surface at low tide. At deeper stations, additional sensors are added every 5 - 10 m. At shallow stations, sensors maybe be attached nearer to the surface (@fig-temp-n-obs-depth).
+
+Sensors may be placed at other depths for technical reasons or specific research projects (e.g., investigation of the oxycline in Whycocomagh Basin).
+
+```{r}
+#| label: fig-temp-n-obs-depth
+#| fig-height: 10
+#| fig-cap: Number of temperature observations at each depth (rounded to nearest whole number). Note that only depths with measurements are shown.
+
+p <- dat %>%
+  filter(group == "all_depth") %>%
+  group_by(depth) %>%
+  summarise(n = sum(n)) %>%
+  plot_n_obs_depth(text_size = 12)
+
+ggplotly(p, tooltip = "text")
+
+```
+
+## Sensors
+
+
+
+
+```{r}
+
+n_county_obs <- dat %>% 
+  filter(group == "county") %>% 
+  group_by(county) %>%  
+  summarise(n = sum(n)) %>% 
+  mutate(n_percent = round(100 * n / sum(n), digits = 2)) %>% 
+  arrange(desc(n_percent))
+```
+
+A large proportion of these records are from `r n_county_obs[1, "county"]$county` County
+(`r n_county_obs[1, "n_percent"]$n_percent` %), while a small proportion are from `r n_county_obs[nrow(n_county_obs), "county"]$county` (`r n_county_obs[nrow(n_county_obs), "n_percent"]$n_percent` %) and `r n_county_obs[nrow(n_county_obs)-1, "county"]$county` (`r n_county_obs[nrow(n_county_obs)-1, "n_percent"]$n_percent` %) Counties (@fig-temp-n-obs). 
+
+```{r}
+#| label: fig-temp-n-obs
+#| fig-height: 8
+#| fig-cap: The number of temperature observations in each county. 
+
+p <- dat %>%
+  filter(group == "county") %>% 
+  plot_n_obs_county()
+
+ggplotly(p)
+
+```
+
+
