@@ -2,12 +2,7 @@
 title: "Water Quality"
 ---
 
-- table of sensors used
-- more about cal/val? 
-- link to SOPs?
-
-
-Through the Water Quality branch of the Coastal Monitoring Program, CMAR collects high resolution temperature, dissolved oxygen, and salinity data. **add depth here**?
+Through the Water Quality branch of the Coastal Monitoring Program, CMAR collects high resolution temperature, dissolved oxygen, and salinity data.
 
 # Data Collection
 
@@ -25,7 +20,7 @@ Characteristics of the station location (e.g., depth, bottom type, and currents)
 
 # Calibration & Validation
 
-Prior to deployment, each sensor is calibrated by the service provider following manufacturer’s instructions. CMAR has developed a “calibration-validation” dashboard to document and track sensor calibrations. Standard Operating Procedures (SOPs) for deployment and retrieval have been developed by the service provider and approved by CMAR. Calibrated sensors are typically attached to the string at standard depths (2, 5, 10, 15, 20 m, etc.) and deployed at the designated station. Data are measured every 10 minutes to 1 hour depending on the sensor, and strings are typically deployed for 6 – 12 months, resulting in tens- to hundreds- of thousands of observations for a typical deployment. Sensors are retrieved by triggering an acoustic releaser, enabling the sensors to float to the surface for retrieval and data download. Strings without an acoustic release are retrieved by dragging or with divers. Sensors may be re-deployed at the same location or moved to another area of interest depending on program objectives. 
+Text to come
 
 # Data Access
 

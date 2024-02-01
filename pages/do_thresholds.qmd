@@ -20,6 +20,7 @@ st_locations <- st_locations %>%
 
 # filter DO (percent saturation) data
 dat_sat <- readRDS(here("pages/data/do_rolling_sd_prelim_qc.rds")) %>% 
+  select(-c(int_sample, n_sample, n_sample_effective)) %>% 
    filter(
     !(station %in% c("Piper Lake", "Hourglass Lake", "0193", "Sissiboo")),
     !(county == "Inverness" & sensor_depth_at_low_tide_m %in% c(8, 18, 28, 36)),
@@ -30,21 +31,13 @@ dat_sat <- readRDS(here("pages/data/do_rolling_sd_prelim_qc.rds")) %>%
 colnames(dat_sat) <- str_remove_all(colnames(dat_sat), "value_")
 ```
 
-Separate thresholds were calculated for dissolved oxygen measured in units of percent saturation and dissolved oxygen measured in units of mg per L. This page describes the thresholds for percent saturation. Click **here** for the thresholds for mg per L.
+Separate thresholds were calculated for dissolved oxygen measured in units of percent saturation and dissolved oxygen measured in units of mg per L. This page describes the thresholds for percent saturation. Click [here](../pages/do_thresholds_mg_per_l.qmd) for the thresholds for mg per L.
 
 QC test thresholds for dissolved oxygen (percent saturation) were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data. Obvious outliers, suspected biofouling, and freshwater stations were omitted. Three deployments in Whycocomagh Basin (Inverness County) measured data near or below the oxycline. This data was also omitted from the thresholds analysis because it is not representative of typical conditions measured by the Program. 
 
-A single set of thresholds was determined for all counties because the dissolved oxygen (percent saturation) records were relatively patchy in space and time (@fig-do-station-locations; @fig-do-n-obs-county-month).
+The observations were pooled to calculate a single set of thresholds for all counties because there were limited observations for several counties[^1]. This analysis could be revisited and thresholds revised when there is more consistent data.
 
-**needed?**
-and because there was minimal variation between counties (@fig-do-mean-sd). For most counties, there were fewer "good" records in the spring and summer months, when conditions are conducive to biofouling[^2]. Several counties have no data for at least one month (@fig-do-n-obs-county-month), and 5 counties only have data from a single station (@fig-do-station-locations). This analysis could be revisited and thresholds revised when there is more consistent data.
-
-
-- Thresholds will be influenced by areas and seasons with the most observations, but will be good enough
-- Note that Inverness only has data for June to September (months that typically have relatively high DO), while Antigonish is missing data from July to September
-- Advantage to colouring bars by year, depth, or county?
-- Depths rounded to nearest whole number
-- Where thresholds can be downloaded from
+[^1]: 5 counties only have data from a single station
 
 # Gross Range Test
 
@@ -88,6 +81,20 @@ user_do <- dat_sat %>%
   pivot_wider(names_from = threshold, values_from = threshold_value) %>% 
   select(mean = mean_var, stdev = sd_var, user_min, user_max) 
 
+# p <- dat_sat %>%
+#   mutate(
+#     qc_flag = case_when(
+#       dissolved_oxygen_percent_saturation < user_do$user_min ~ 3,
+#       dissolved_oxygen_percent_saturation > user_do$user_max ~ 3,
+#       TRUE ~ 1
+#     )) %>%
+#   qc_assign_flag_labels() %>%
+#   ggplot() +
+#   geom_histogram(aes(dissolved_oxygen_percent_saturation, fill = qc_flag), binwidth = 2) +
+#   geom_vline(xintercept = user_do$user_min, linetype = 2, col = "orange")
+# 
+# ggplotly(p)
+
 plot_histogram_user_thresholds(
   dat_sat,
   hist_col = dissolved_oxygen_percent_saturation,
@@ -96,9 +103,6 @@ plot_histogram_user_thresholds(
   user_max = user_do$user_max
 ) +
   scale_x_continuous("Dissolved Oxygen (percent saturation)")
-
-#ggplotly(p)
-
 ```
 
 ### Table 2
@@ -182,12 +186,6 @@ do_clim %>%
 :::
 
 # Rolling Standard Deviation Test
-
-**show figures from 3.3_rolling_...??**
-
-**careful with %'s**
-
-**coloured words?**
 
 The distribution of rolling standard deviation is skewed right (@fig-do-roll-sd-dist), and so several upper quartile values were evaluated to use as the $rolling\_sd\_max$. 
 
@@ -284,479 +282,5 @@ spike_thresh %>%
 ```
 
 :::
-
-`r knitr::knit_exit()`
-
-# Additional Material
-
-The number of observations collected and number of counties and stations monitored for each set of units is presented in Table 1. Station locations are shown in @fig-do-station-locations. 
-
-
-[^6]: Note that Inverness only has data for June to September (months that typically have relatively high DO), while Antigonish is missing data from July to September (@fig-do-n-obs-county-month).
-
-[^2]: e.g. more daylight
-
-
-<br>
-
-```{r}
-dat_filt %>% 
-  filter(group == "all_station") %>% 
-  group_by(units) %>% 
-  summarise(
-    `Number of Observations` = sum(n),
-    `Number of Counties` = length(unique(county)),
-    `Number of Stations` = length(unique(station))
-  ) %>% 
-  datatable(
-    options = list(
-      dom = 'ft', 
-      searching = FALSE,
-      columnDefs = list(list(className = 'dt-center', targets = "_all"))
-    ), 
-    rownames = FALSE,
-    caption = "Table 1: Overview of dissolved oxygen observations used in the thresholds analysis."
-  )
-```
-
-<br>
-
-```{r, fig-do-station-units}
-#| label: fig-do-station-locations
-#| fig-height: 7
-#| fig-cap: Approximate location of stations with dissolved oxygen data. Marker size is proportional to the number of dissolved oxygen observations within the county. Five counties (Antigonish, Colchester, Pictou, Queens, and Richmond) only have one station with DO data.
-
-# join the station locations dataset with the number of obs from each station
-st_locations_units <- st_locations %>% 
-  inner_join(
-    dat_filt %>% 
-      filter(group == "all_station") %>% 
-      select(COUNTY = county, STATION = station, n, st_units = units),
-     by = c("COUNTY", "STATION")  
-  ) %>% 
-  group_by(STATION) %>% 
-  mutate(n = sum(n)) %>% 
-  filter(st_units == "percent saturation") %>% # to remove duplicate rows from different units
-  group_by(COUNTY) %>% 
-  mutate(
-    n_tot = sum(n),
-    n_prop = round(n / sum(n), digits = 2),
-    popup = paste(COUNTY, STATION, n_prop, sep = "</br>")
-  ) %>% 
-  ungroup() %>% 
-  select(-st_units) 
-
-# interactive map
-leaflet(st_locations_units) %>% 
-  addProviderTiles(providers$CartoDB.Positron) %>%
-  add_circle_markers_county(
-    dat = filter(st_locations_units, do_units == "percent saturation"),
-    county_pal = county_pal,
-    size =  ~n_prop * 25,
-    group = "percent saturation"
-  ) %>% 
-  add_circle_markers_county(
-    dat = filter(st_locations_units, do_units == "percent saturation & mg/L"),
-    county_pal = county_pal,
-    # needed here to keep cols consistent because only 2 counties have concentration
-    pal_domain = unique(st_locations_units$COUNTY), 
-    size =  ~n_prop * 25,
-    group = "percent saturation & mg/L"
-  )%>% 
-  addLayersControl(
-    overlayGroups = c("percent saturation", "percent saturation & mg/L"),
-    options = layersControlOptions(collapsed = FALSE)
-  ) %>% 
-  add_county_fill_legend(county_pal = county_pal)
-
-```
-
-## Gross Range Test
-
-### Sensor Thresholds
-
-The sensor thresholds were determined based on the associated manual (Table 2).
-
-```{r}
-sensors %>%
-  filter(str_detect(variable, "dissolved_oxygen")) %>%
-  mutate(
-    units = if_else(sensor_type == "hobo do", "mg / L", "percent saturation"),
-    `Sensor (link to spec sheet)` =
-      paste0('<a  target=_blank href=', url, '>', sensor_type,'</a>')
-  ) %>%
-  select( `Sensor (link to spec sheet)`, sensor_min, sensor_max, units) %>%
-  datatable(
-    options <- list(
-      dom = 'ft',
-      searching = FALSE,
-      columnDefs = list(list(className = 'dt-center', targets = "_all"))
-    ),
-    rownames = FALSE, escape = FALSE,
-    caption = "Table 2: Dissolved oxygen sensor thresholds for the Gross Range Test."
-  )
-```
-
-
-### User Thresholds
-
-#### Percent Saturation
-
-```{r}
-dat_filt_sat <- dat_filt %>% 
-  filter(units == "percent saturation")
-
-county_month_sat <- dat_filt_sat %>% 
-  filter(group == "county_month") %>% 
-  mutate(month = month(month, label = TRUE))
-
-# county_gr_sat <- county_month_sat %>% 
-#   rename(mean_month = mean) %>% 
-#   group_by(county) %>%
-#   summarise(
-#     mean = round(mean(mean_month), digits = 3),
-#     stdev = round(sd(mean_month), digits = 3)
-#   )
-```
-
-
-
-
-
-```{r}
-#| label: fig-do-n-obs-county-month
-#| fig-height: 12
-#| fig-cap: The number of dissolved oxygen observations in each month for each county.
-
-p <- county_month_sat %>% 
-  plot_n_obs_month(text_size = 12) +
-  theme(panel.spacing.y = unit(15, "lines"))
-
-ggplotly(p)
-
-```
-
-
-
-```{r}
-#| label: fig-do-mean-sd
-#| fig-height: 8
-#| fig-cap: The mean and standard deviation of dissolved oxygen (percent saturation) monthly data in each county. 
-
-p <- dat_filt_sat %>% 
-  filter(group == "county") %>% 
-  plot_mean_sd_county()
-
-ggplotly(p, tooltip = "text")
-
-```
-
-
-
-Three grouping methods were used to identify an appropriate mean and standard deviation on which to base the thresholds.
-
-Method 1: the DO observations were grouped by calendar month to give equal weight to each month regardless of the number of observations (as described [here](../pages/temp_thresholds.qmd) for temperature). The average DO for each month was calculated, and the $avg_{DO_{Sat}}$ and $stdev_{DO_{Sat}}$ were calculated from these values. 
-
-Method 2: the DO observations were grouped by county to give equal weight to each county regardless of the number of observations. The average DO for each county was calculated, and the $avg_{DO_{Sat}}$ and $stdev_{DO_{Sat}}$ were calculated from these values.
- 
-Method 3: $avg_{DO_{Sat}}$ and $stdev_{DO_{Sat}}$ were calculated from all the observations, without any grouping. 
-
-The percent of observations flagged for each set of thresholds was used to inform the final choice of user thresholds.
-
-```{r}
-
-thresh_all <- dat_filt_sat %>% 
-  filter(group == "all_data") %>% 
-  select(mean, stdev) %>% 
-  mutate(user_min = mean - 3 * stdev, user_max = mean + 3 * stdev) 
-
-thresh_month <- dat_filt_sat %>% 
-  filter(group == "all_month") %>% 
-  rename(mean_month = mean) %>% 
-  summarise(mean = mean(mean_month), stdev = sd(mean_month)) %>% 
-  mutate(user_min = mean - 3 * stdev, user_max = mean + 3 * stdev) 
-
-thresh_county <- dat_filt_sat %>% 
-  filter(group == "county") %>% 
-  rename(mean_county = mean) %>% 
-  summarise(mean = mean(mean_county), stdev = sd(mean_county)) %>% 
-  mutate(user_min = mean - 3 * stdev, user_max = mean + 3 * stdev) 
-
-
-thresh_summary <- summarise_n_user_flags(dat_sat, thresh_month, group = "Method 1") %>% 
-  rbind(
-    summarise_n_user_flags(dat_sat, thresh_county, group = "Method 2") 
-  ) %>% 
-  rbind(
-    summarise_n_user_flags(dat_sat, thresh_all, group = "Method 3") 
-  ) %>% 
-  mutate(across(where(is.numeric), ~round(., 2))) 
-
-rownames(thresh_summary) <- thresh_summary$group
-thresh_summary <- select(thresh_summary, -group)
-
-thresh_summary %>% 
-  t() %>% 
-  datatable(
-    options = list(
-      dom = 'Bft',
-      searching = TRUE,
-      columnDefs = list(list(className = 'dt-center', targets = "_all")),
-      buttons = c('copy', 'csv')
-    ), 
-    extensions = 'Buttons', 
-    caption = "Table 3: Summary statistics from three different methods of calculating the user thresholds. percent_greater (percent_less) is the percent of observations used in the analysis that are greater (less) than user_max (user_min). percent_flagged is the percent of observations flagged."
-  )
-
-```
-
-
-```{r}
-# thresh_all %>% 
-#   datatable(
-#     options = dt_options, extensions = 'Buttons', 
-#     rownames = FALSE,
-#     caption = "Table 4: Dissolved oxygen statistics and user thresholds for the Gross Range Test."
-#   )
-```
-
-<br>
-
-The mean values for each grouping method were similar, but the standard deviations were not (Table 3). There was limited variability among the monthly means and the county means, resulting in relatively small standard deviations for Methods 1 and 2. This translates into very narrow user thresholds (Table 3; @fig-do-histogram). 
-
-Preliminary quality control was applied to the data used in this analysis, and
-`r thresh_summary["Method 1", "percent_flagged"]` % of these observations were still flagged using the Method 1 thresholds[^3]. For some months, these thresholds flag values within within one standard deviation of the monthly mean. This would lead to many "false positive" flags, i.e., observations that are flagged as [Suspect/Of Interest]{style="color: #EDA247;"}, despite being within a reasonable range. 
-
-[^3]: $avg_{DO_{Sat}}$ and $stdev_{DO_{Sat}}$ calculated from monthly means
-
-The standard deviation for Method 3[^4] is nearly twice as large as for the other Methods (Table 3). This leads to broader user thresholds and fewer false positive flags. **Correspond to literature?**. With these threshold values, `r thresh_summary["Method 3", "percent_flagged"]` % of the observations were flagged. 
-
-[^4]: $avg_{DO_{Sat}}$ and $stdev_{DO_{Sat}}$ calculated from all observations 
-
-
-To minimize the number of false positives, the thresholds based on Method 3 (all observations, ungrouped) will be used in QC analyses (Table 3).
-
-```{r}
-#| label: fig-do-histogram
-#| fig-cap: Distribution of dissolved oxygen observations (binwidth = 2 %; preliminary quality control applied). Observations flagged with the thresholds based on Method 1 are highlighted in light orange and dark orange. Observations flagged using the thresholds based on Method 3 are highlighted in dark orange.
-
-ggplot(dat_sat, aes(VALUE)) +
-  annotate(
-    "rect", fill = "#EDA247",
-    ymin = -Inf, ymax = Inf, alpha = 0.75,
-    xmin = -Inf, xmax = thresh_all$user_min
-  ) +
-  annotate(
-    "rect", fill = "#EDA247", alpha = 0.25,
-    ymin = -Inf, ymax = Inf,
-    xmin = thresh_all$user_min, xmax = thresh_month$user_min
-  ) +
-    annotate(
-    "rect", fill = "#EDA247",
-    ymin = -Inf, ymax = Inf, alpha = 0.75,
-    xmin = Inf, xmax = thresh_all$user_max
-  ) +
-  annotate(
-    "rect", fill = "#EDA247", alpha = 0.25,
-    ymin = -Inf, ymax = Inf,
-    xmin = thresh_month$user_max, xmax = thresh_all$user_max
-  ) +
-  # annotate(
-  #   "text", 
-  #   x = c(thresh_month$user_min, thresh_month$user_max),
-  #   y = 10, 
-  #   label = "month", 
-  #   color = "red"
-  #  # angle = 90
-  # ) +
-  # 
-  geom_histogram(
-    aes(y = 100 * after_stat(count / sum(count))),
-    binwidth = 2, col = "grey10", fill = "#B0E0E6"
-  ) +
-  geom_hline(yintercept = 0, colour = "grey10") +
-  scale_y_continuous("Percent of Observations", expand = expansion(mult = c(0, 0.1))) +
-  scale_x_continuous("Dissolved Oxygen (percent saturation)") +
-  theme(
-    panel.grid = element_blank(), 
-    panel.border = element_rect(colour = "grey10"),
-    text = element_text(size = 14)
-  )
-```
-
-Substantially more observations will be flagged from the raw data[^5]. Some of these should be considered [Of Interest]{style="color: #EDA247;"} (e.g., observations near the oxycline in Inverness, observations at depth in Guysborough), while others should be considered [Suspect]{style="color: #EDA247;"} (e.g., biofouling). Human-in-the-loop review will be required to make these distinctions.
-
-[^5]: data with no preliminary quality control
-
-## Climatology Test
-
-Observations from all counties were pooled to calculate a single set of climatology thresholds (Table 4). The $avg_{season}$ was calculated as the average of all observations in a given month, and $stdev_{season}$ was the associated standard deviation. 
-
-```{r}
-clim_thresholds <- dat_filt_sat %>%
-  filter(group == "all_month") %>% 
-  select(month, n, mean, stdev) %>% 
-  mutate(season_min = mean - 3 * stdev, season_max = mean + 3 * stdev)
-
-clim_thresholds %>% 
-  select(-n) %>% 
-  mutate(
-    month = month(month, label = TRUE),
-    across(where(is.numeric), ~round(., 2))
-  ) %>% 
-  datatable(
-    options = dt_options, extensions = 'Buttons', 
-    rownames = FALSE,
-    caption = "Table 4: Seasonal statistics and thresholds for the Climatological test."
-  )
-```
-
-<br>
-
-For some months the climatology threshold will trigger a [Suspect/Of Interest flag]{style="color: #EDA247;"} before the Gross Range test (e.g., January - April); in other months, the Gross Range test will trigger the flag first (@fig-do-climatology-thresh).
-
-```{r}
-#| label: fig-do-climatology-thresh
-#| fig-cap: Monthly dissolved oxygen mean +/- 1 standard deviation. Solid orange lines indicate the climatology thresholds; dashed organge lines indicate the grossrange user thresholds.
-
-alpha <- 0.4
-fill <- "#EDA247"
-col <- "#EDA247"
-linewidth <- 1
-
-ggplot(clim_thresholds, aes(month(month, label = TRUE), mean)) +
-  geom_ribbon(
-    aes(month, ymin = season_min, ymax = season_max), 
-    alpha = 0.25, fill = "#009200", col = NA,
-  ) +
-  geom_ribbon(
-    aes(month, ymin = season_max, ymax = Inf),
-    alpha = alpha, fill = fill, col = col, linewidth = linewidth
-  ) +
-  geom_ribbon(
-    aes(month, ymin = -Inf, ymax = season_min),
-    alpha = alpha, fill = fill, col = col, linewidth = linewidth,
-  ) +
-  annotate(
-    "rect",
-    ymin = thresh_all$user_max, ymax = Inf, xmin = 1, xmax = 12,
-    alpha = alpha * 1.5,
-    fill = fill, col = col, linewidth = linewidth, linetype = 2
-  ) +
-  annotate(
-    "rect",
-    ymin = -Inf, ymax = thresh_all$user_min, xmin = 1, xmax = 12,
-     alpha = alpha * 1.5,
-    fill = fill, col = col, linewidth = linewidth, linetype = 2
-  ) +
-  geom_point(size = 4, col = "grey20") +
-  geom_errorbar(
-    aes(ymin = mean - stdev, ymax = mean + stdev),
-    width = 0, col = "grey20"
-  ) +
-  scale_x_discrete("") + 
-  scale_y_continuous("Dissolved Oxygen (percent saturation)") +
-  theme(text = element_text(size = 14))
-
-```
-
-## Rate of Change Test
-
-Observations from all counties were pooled to calculate a single threshold for the rate of change test, $stdev_{max}$.
-
-First, $stdev_{roll}$ was calculated for each observation, and the distribution plotted (@fig-do-sd-roll-histogram).
-
-::: panel-tabset
-
-### A
-```{r}
-#| label: fig-do-sd-roll-histogram
-#| fig-cap: Distribution of the 24-hour rolling standard deviation of dissolved oxygen observations (binwidth = 0.25 %; preliminary quality control applied). 
-
-dat_roll <- dat_sat %>% 
-   select(
-     county = COUNTY,
-      deployment_range = DEPLOYMENT_PERIOD,
-      waterbody = WATERBODY,
-      station = STATION,
-      sensor = SENSOR,
-      timestamp_utc = TIMESTAMP,
-      sensor_depth_at_low_tide_m = DEPTH,
-      variable = VARIABLE,
-      value = VALUE
-    ) %>%
-  separate(sensor, into = c("sensor_type", "sensor_serial_number")) %>% 
-  mutate(variable = "dissolved_oxygen_percent_saturation") %>% 
-  ss_pivot_wider() %>%
-  qc_test_rolling_sd(keep_sd_cols = TRUE) %>% 
-  na.omit()
-
-p <- plot_histogram(dat_roll, sd_roll, binwidth = 0.25) +
-   scale_x_continuous("24-hour Standard Deviation (percent saturation)") 
-
-ggplotly(p)
-
-```
-
-### B
-```{r}
-#| label: fig-do-sd-roll-histogram-b
-#| fig-cap: Distribution of the 24-hour rolling standard deviation of dissolved oxygen observations (binwidth = 0.25 %; preliminary quality control applied). Filtered to show only standard deviations > 5.
-
-p <- dat_roll %>% 
-  filter(sd_roll > 5) %>% 
-  plot_histogram(sd_roll, binwidth = 0.25) +
-  scale_x_continuous(
-    "24-hour Standard Deviation (percent saturation)",
-    breaks = seq(5, 15, 1)
-  ) 
-  
-ggplotly(p)
-
-```
-:::
-
-<br>
-
-The rolling standard deviation for most observations is less than 5. The higher standard deviations are possibly from biofouling signals that were not identified in the preliminary QAQC exercise, which was completed manually. This highlights one advantage of automated quality control, which can flag suspect observations that are more subtle than a human would detect.
-
-Based on @fig-do-sd-roll-histogram, a $stdev_{max}$ of 4 or 5 would be reasonable. 
-
-@fig-do-sd-boxplot shows the percent of observations in each deployment that are flagged using a $stdev_{max}$ threshold of of 4 or 5. As expect, the threshold of 4 flags more observations; the next step is to investigate whether the more strict threshold leads to more false positives. This step is in progress.
-
-
-```{r}
-#| label: fig-do-sd-boxplot
-#| fig-cap: Boxplots of the percent of observations flagged within each deployment, by county, using stdev_max = 4 and stdev_max = 5. 
-#
-roc_flags <- read_csv(
-  here("pages/data/rate_of_change_flags.csv"),
-  show_col_types = FALSE
-) %>% 
-  mutate(diff = thresh_4 - thresh_5)
-
-flags_long <- roc_flags %>% 
-  pivot_longer(
-    cols = c("thresh_4", "thresh_5"), 
-    names_to = "stdev_max", names_prefix = "thresh_", values_to = "value"
-  )
-
-ggplot(flags_long, aes(county, value, fill = stdev_max)) +
-  geom_boxplot(alpha = 0.5) +
-  scale_fill_manual(values = c("#E78AC3", "#8DA0CB") ) +
-  scale_y_continuous("Percent of Observations Flagged as Suspect") +
-  scale_x_discrete("") +
-  theme(
-    legend.position = c(0.8, 0.8),
-    legend.box.background  = element_rect(colour = 1, linewidth = 1)
-  )
-
-
-```
-
-
-
-
-
 
 

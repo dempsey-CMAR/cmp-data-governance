@@ -96,6 +96,8 @@ ggplotly(p)
 
 In contrast, the VR2AR units only record depth every hour and have a resolution of 1 m. This results in very coarse depth measurements that don't clearly show a sinusoidal signal, and can result in apparent spikes (@fig-vemco). 
 
+Vr2 somettimes averaged depth
+
 ```{r}
 #| fig-height: 4
 #| fig-cap: Measured depth observations from a VR2AR sensor deployed in January 2020 at Beaver Point.
