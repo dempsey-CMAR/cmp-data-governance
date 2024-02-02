@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,6 +19,25 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
 }
 </style>
 
@@ -83,10 +102,21 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../pages/cmp_overview.html">
- <span class="menu-text">Program Overview</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-program-overview" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Program Overview</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-program-overview">    
+        <li>
+    <a class="dropdown-item" href="../pages/cmp_overview.html">
+ <span class="dropdown-text">Coastal Monitoring Program</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/cmp_water_quality.html">
+ <span class="dropdown-text">Water Quality</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item dropdown ">
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-quality-control" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Quality Control</span>
@@ -95,6 +125,10 @@ ul.task-list li input[type="checkbox"] {
         <li>
     <a class="dropdown-item" href="../pages/qc_overview.html">
  <span class="dropdown-text">Overview</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/qc_thresholds.html">
+ <span class="dropdown-text">QC Thresholds</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../pages/qc_tests.html">
@@ -117,6 +151,48 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="../pages/do_thresholds.html">
+ <span class="dropdown-text">Thresholds (% saturation)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/do_thresholds_mg_per_l.html">
+ <span class="dropdown-text">Thresholds (mg/L)</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-salinity" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Salinity</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-salinity">    
+        <li>
+    <a class="dropdown-item" href="../pages/sal_overview.html">
+ <span class="dropdown-text">Overview</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/sal_measurements.html">
+ <span class="dropdown-text">CMAR Measurements</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/sal_thresholds.html">
+ <span class="dropdown-text">Thresholds</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-sensor-depth" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Sensor Depth</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-sensor-depth">    
+        <li>
+    <a class="dropdown-item" href="../pages/depth_overview.html">
+ <span class="dropdown-text">Overview</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/depth_measurements.html">
+ <span class="dropdown-text">CMAR Measurements</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/depth_thresholds.html">
  <span class="dropdown-text">Thresholds</span></a>
   </li>  
     </ul>
@@ -137,6 +213,17 @@ ul.task-list li input[type="checkbox"] {
         <li>
     <a class="dropdown-item" href="../pages/temp_thresholds.html">
  <span class="dropdown-text">Thresholds</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-products" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Products</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-products">    
+        <li>
+    <a class="dropdown-item" href="../pages/data_output.html">
+ <span class="dropdown-text">Data Products</span></a>
   </li>  
     </ul>
   </li>
@@ -173,21 +260,44 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Text to come.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/under-construction.png" class="img-fluid figure-img" width="960"></p>
-<p></p><figcaption class="figure-caption">Image by <a href="https://pixabay.com/users/josethestoryteller-5100055/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2408062">Jose R. Cabello</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2408062">Pixabay</a></figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
+<p><em>could use an image here</em></p>
+<p>Temperature is a key driver of biological and physical components of the marine ecosystem.</p>
+<p>Ocean temperature is a critical parameter for marine life, influencing physiological processes, species distribution, and species abundance <span class="citation" data-cites="RN12876">(<a href="#ref-RN12876" role="doc-biblioref">Canada 2016</a>)</span>. Warming temperatures have been linked to individual and population-level changes in fish species, including decreased body size <span class="citation" data-cites="RN13690">(<a href="#ref-RN13690" role="doc-biblioref">Baudron et al. 2013</a>)</span> and population expansion or shifts towards cooler, deeper waters <span class="citation" data-cites="RN13620 RN7236">(<a href="#ref-RN13620" role="doc-biblioref">Nye et al. 2009</a>; <a href="#ref-RN7236" role="doc-biblioref">Shackell, Ricard, and Stortini 2014</a>)</span>. For example, several species typically associated with warm waters south of Nova Scotia are now considered “well established” on the Scotian Shelf (e.g., the blackbelly rosefish; <em>Helicolenus dactylopterus</em>), and it is expected that more warm water species will become established as temperatures increase <span class="citation" data-cites="RN15387">(<a href="#ref-RN15387" role="doc-biblioref">Fisheries and Canada 2020</a>)</span>.</p>
+<p>Temperature is directly related to ocean stratification, which refers to vertical layers of water with similar properties (e.g., temperature and salinity). Upper ocean stratification is seasonal, with a warm fresh layer developing in the spring and summer<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and disappearing in the fall and winter<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. This process brings heat and carbon dioxide into deeper waters, and transports nutrients from deep waters to the euphotic zone, supporting the base of the food web <span class="citation" data-cites="RN13951">(<a href="#ref-RN13951" role="doc-biblioref">Environment and Canada 2019</a>)</span>. There is evidence that stratification in some regions of Atlantic Canada is increasing due to changes in temperature and salinity <span class="citation" data-cites="RN15284">(<a href="#ref-RN15284" role="doc-biblioref">Hebert et al. 2021</a>)</span>. Increased stratification has implications for climate change (e.g., reduced ability to absorb carbon dioxide) and the ecosystem (e.g., fewer nutrients available for phytoplankton).</p>
 
 
 
-</main> <!-- /main -->
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-RN13690" class="csl-entry" role="doc-biblioentry">
+Baudron, Alan, Coby Needle, Adriaan Rijnsdorp, and C. Marshall. 2013. <span>“Warming Temperatures and Smaller Body Sizes: Synchronous Changes in Growth of North Sea Fishes.”</span> Journal Article. <em>Global Change Biology</em> 20. <a href="https://doi.org/10.1111/gcb.12514">https://doi.org/10.1111/gcb.12514</a>.
+</div>
+<div id="ref-RN12876" class="csl-entry" role="doc-biblioentry">
+Canada, Government of. 2016. <span>“Canada’s Marine Coasts in a Changing Climate.”</span> Report.
+</div>
+<div id="ref-RN13951" class="csl-entry" role="doc-biblioentry">
+Environment, and Climate Change Canada. 2019. <span>“Canada’s Changing Climate Report.”</span> Report. Government of Canada. <a href="https://www.nrcan.gc.ca/sites/www.nrcan.gc.ca/files/energy/Climate-change/pdf/CCCR_FULLREPORT-EN-FINAL.pdf">https://www.nrcan.gc.ca/sites/www.nrcan.gc.ca/files/energy/Climate-change/pdf/CCCR_FULLREPORT-EN-FINAL.pdf</a>.
+</div>
+<div id="ref-RN15387" class="csl-entry" role="doc-biblioentry">
+Fisheries, and Oceans Canada. 2020. <span>“Maritimes Research Vessel Survey Trends on the Scotian Shelf and Bay of Fundy.”</span> Report.
+</div>
+<div id="ref-RN15284" class="csl-entry" role="doc-biblioentry">
+Hebert, D., C. Layton, D. Brickman, and P. S. Galbraith. 2021. <span>“Physical Oceanographic Conditions on the Scotian Shelf and in the Gulf of Maine During 2019.”</span> <a href="https://www.dfo-mpo.gc.ca/csas-sccs/Publications/ResDocs-DocRech/2021/2021_040-eng.html">https://www.dfo-mpo.gc.ca/csas-sccs/Publications/ResDocs-DocRech/2021/2021_040-eng.html</a>.
+</div>
+<div id="ref-RN13620" class="csl-entry" role="doc-biblioentry">
+Nye, Janet A., Jason S. Link, Jonathan A. Hare, and William J. Overholtz. 2009. <span>“Changing Spatial Distribution of Fish Stocks in Relation to Climate and Population Size on the Northeast United States Continental Shelf.”</span> Journal Article. <em>Marine Ecology Progress Series</em> 393: 111–29. <a href="https://WOS:000272187800010">WOS:000272187800010</a>.
+</div>
+<div id="ref-RN7236" class="csl-entry" role="doc-biblioentry">
+Shackell, Nancy L., Daniel Ricard, and Christine Stortini. 2014. <span>“Thermal Habitat Index of Many Northwest Atlantic Temperate Species Stays Neutral Under Warming Projected for 2030 but Changes Radically by 2060.”</span> Journal Article. <em>PLOS ONE</em> 9 (3): e90662. <a href="https://doi.org/10.1371/journal.pone.0090662">https://doi.org/10.1371/journal.pone.0090662</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>e.g., from surface warming and freshwater inputs<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>e.g., from wind-driven mixing<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

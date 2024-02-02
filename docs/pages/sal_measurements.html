@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Coastal Monitoring Program - Water Quality</title>
+<title>Coastal Monitoring Program - CMAR Measurements</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,12 +108,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Overview</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../pages/qc_tests.html">
- <span class="dropdown-text">QC Tests</span></a>
+    <a class="dropdown-item" href="../pages/qc_thresholds.html">
+ <span class="dropdown-text">QC Thresholds</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../pages/qc_flags.html">
- <span class="dropdown-text">QC Flags</span></a>
+    <a class="dropdown-item" href="../pages/qc_tests.html">
+ <span class="dropdown-text">QC Tests</span></a>
   </li>  
     </ul>
   </li>
@@ -134,6 +134,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../pages/do_thresholds.html">
  <span class="dropdown-text">Thresholds (% saturation)</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/do_thresholds_mg_per_l.html">
+ <span class="dropdown-text">Thresholds (mg/L)</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -145,8 +149,14 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../pages/sal_overview.html">
  <span class="dropdown-text">Overview</span></a>
   </li>  
-        <li class="dropdown-header">pages/sal_measurements.qmd</li>
-        <li class="dropdown-header">pages/sal_thresholds.qmd</li>
+        <li>
+    <a class="dropdown-item" href="../pages/sal_measurements.html">
+ <span class="dropdown-text">CMAR Measurements</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/sal_thresholds.html">
+ <span class="dropdown-text">Thresholds</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -158,8 +168,14 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../pages/depth_overview.html">
  <span class="dropdown-text">Overview</span></a>
   </li>  
-        <li class="dropdown-header">pages/depth_measurements.qmd</li>
-        <li class="dropdown-header">pages/depth_thresholds.qmd</li>
+        <li>
+    <a class="dropdown-item" href="../pages/depth_measurements.html">
+ <span class="dropdown-text">CMAR Measurements</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/depth_thresholds.html">
+ <span class="dropdown-text">Thresholds</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -181,6 +197,17 @@ ul.task-list li input[type="checkbox"] {
   </li>  
     </ul>
   </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-products" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Products</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-products">    
+        <li>
+    <a class="dropdown-item" href="../pages/data_output.html">
+ <span class="dropdown-text">Data Products</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
@@ -199,7 +226,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Water Quality</h1>
+<h1 class="title">CMAR Measurements</h1>
 </div>
 
 
@@ -215,24 +242,9 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <ul>
-<li>sensor string figure</li>
-<li>table of sensors used</li>
-<li>more about cal/val?</li>
-<li>link to SOPs?</li>
+<li>Inverness county</li>
+<li>The lake is connected to the North Atlantic by two natural channels; the Great and Little Bras d’Or Channels which pass on either side of Boularderie Island.</li>
 </ul>
-<p>Through the Water Quality branch of the Coastal Monitoring Program, CMAR collects high resolution temperature, dissolved oxygen, and salinity data. <strong>add depth here</strong>?</p>
-<p>Water Quality data is collected using “sensor strings”. Each string is attached to the seafloor by an anchor and suspended by a sub-surface buoy, with sensors attached at various depths (Figure). Most strings deployed since 2018 are attached to the anchor by an acoustic receiver with a release mechanism. The receiver also logs detections of tagged animals including great white sharks, sturgeon, and tuna for the <a href="https://oceantrackingnetwork.org/">Ocean Tracking Network</a>.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="figures/sensor_string.png" class="img-fluid figure-img" width="541"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Characteristics of the station location (e.g., depth, bottom type, and currents) and stakeholder needs dictate the string configuration (e.g., anchor weight, and number/type of sensors). Sensor strings are generally deployed 200 m to 1000 m from shore, in depths up to 75 m. Historically, strings were deployed with only temperature sensors, but in more recent years at least one dissolved oxygen sensor is included (typically at 5 m). At the request of industry, salinity sensors are also included at stations near proposed and existing shellfish aquaculture leases.</p>
-<p>Prior to deployment, each sensor is calibrated by the service provider following manufacturer’s instructions. CMAR has developed a “calibration-validation” dashboard to document and track sensor calibrations. Standard Operating Procedures (SOPs) for deployment and retrieval have been developed by the service provider and approved by CMAR. Calibrated sensors are typically attached to the string at standard depths (2, 5, 10, 15, 20 m, etc.) and deployed at the designated station. Data are measured every 10 minutes to 1 hour depending on the sensor, and strings are typically deployed for 6 – 12 months, resulting in tens- to hundreds- of thousands of observations for a typical deployment. Sensors are retrieved by triggering an acoustic releaser, enabling the sensors to float to the surface for retrieval and data download. Strings without an acoustic release are retrieved by dragging or with divers. Sensors may be re-deployed at the same location or moved to another area of interest depending on program objectives.</p>
 
 
 
