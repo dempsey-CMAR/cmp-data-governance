@@ -1,0 +1,14 @@
+{
+  "hash": "43e035bb6bc3bd7cd9368e91572bed7f",
+  "result": {
+    "markdown": "---\ntitle: \"QC Flags\"\neditor_options: \n  chunk_output_type: console\n---\n\n\n\n\n\n\n- describe flag columns + summary column?\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

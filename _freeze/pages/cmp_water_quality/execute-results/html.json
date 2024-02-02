@@ -1,0 +1,16 @@
+{
+  "hash": "1775ebb599b99ba72d88a6cbf928f1bf",
+  "result": {
+    "markdown": "---\ntitle: \"Water Quality\"\n---\n\n\nThrough the Water Quality branch of the Coastal Monitoring Program, CMAR collects high resolution temperature, dissolved oxygen, and salinity data.\n\n# Data Collection\n\nWater Quality data is collected using “sensor strings”. Each string is attached to the seafloor by an anchor and suspended by a sub-surface buoy, with sensors attached at various depths (Figure). Most strings deployed since 2018 are attached to the anchor by an acoustic receiver with a release mechanism. The receiver also logs detections of tagged animals including great white sharks, sturgeon, and tuna for the [Ocean Tracking Network](https://oceantrackingnetwork.org/).\n\n\n::: {.cell layout-align=\"center\"}\n::: {.cell-output-display}\n![Sensor string diagram (not to scale).](figures/sensor_string.png){fig-align='center' width=541}\n:::\n:::\n\n\nCharacteristics of the station location (e.g., depth, bottom type, and currents) and stakeholder needs dictate the string configuration (e.g., anchor weight, and number/type of sensors). Sensor strings are generally deployed 200 m to 1000 m from shore, in depths up to 75 m. Historically, strings were deployed with only temperature sensors, but in more recent years at least one dissolved oxygen sensor is included (typically at 5 m). At the request of industry, salinity sensors are also included at stations near proposed and existing shellfish aquaculture leases.\n\n# Calibration & Validation\n\nText to come\n\n# Data Access\n\nCoastal Monitoring Program Water Quality Data can be accessed from several platforms. Summary reports are available on the [CMAR Website](https://cmar.ca/reports/). Full datasets can be downloaded from the [Nova Scotia Open Data Portal](https://data.novascotia.ca/browse?tags=coastal+monitoring+program) and the [CIOOS Atlantic](https://catalogue.cioosatlantic.ca/organization/cmar).\n\n\n::: {.cell layout-align=\"center\"}\n::: {.cell-output-display}\n![](figures/data_access.png){fig-align='center' width=2200}\n:::\n:::\n",
+    "supporting": [
+      "cmp_water_quality_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
