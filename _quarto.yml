@@ -15,9 +15,8 @@ website:
       - text: "Quality Control"
         menu:
           - pages/qc_overview.qmd
-          - pages/qc_tests.qmd
           - pages/qc_thresholds.qmd
-          - pages/qc_flags.qmd
+          - pages/qc_tests.qmd
       - text: "Dissolved Oxygen"
         menu:
           - pages/do_overview.qmd
@@ -39,7 +38,7 @@ website:
           - pages/temp_overview.qmd
           - pages/temp_measurements.qmd
           - pages/temp_thresholds.qmd
-      - text: "Data Output"
+      - text: "Data Products"
         menu:
           - pages/data_output.qmd
 format:

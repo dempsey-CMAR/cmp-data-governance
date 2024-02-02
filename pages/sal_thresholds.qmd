@@ -41,18 +41,15 @@ dat_sal <- readRDS(here("pages/data/sal_rolling_sd_prelim_qc.rds")) %>%
   ss_pivot_wider() %>%
   mutate(
     county_sal = if_else(county == "Inverness", "Inverness", "Other"),
-    month = month(timestamp_utc)
+    month = month(timestamp_utc, label = TRUE)
   )
 
-colnames(dat_sal) <- str_remove_all(colnames(dat_sal), "value_")
+#colnames(dat_sal) <- str_remove_all(colnames(dat_sal), "value_")
 ```
 
-**Separate thresholds were calculated for salinity measured in units of percent saturation and salinity measured in units of mg per L. This page describes the thresholds for mg per L. Click [here](../pages/do_thresholds.qmd) for the thresholds for percent saturation.**
+QC test thresholds for salinity were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data, when obvious outliers and observations impacted by suspected sensor drift (due to biofouling) were omitted.
 
-**QC test thresholds for salinity were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data. Obvious outliers, suspected biofouling, and freshwater stations were omitted.**
-
-**To date, salinity has only been measured in two counties[^1] in adjacent waterbodies[^2]. A single set of thresholds was determined for these counties.**
-
+Separate thresholds were calculated for salinity measured in Inverness County, and salinity measured elsewhere. **add to this**
 
 
 # Gross Range Test
@@ -80,16 +77,16 @@ sensors %>%
 
 ## User Thresholds
 
-The salinity observations are relatively normally distributed (@fig-do-hist), and so the mean and standard deviation was used to determine $user_{min}$ and $user_{max}$. The statistics and threshold values are shown in Table 2.
+The salinity observations are relatively normally distributed for both groups of data (@fig-sal-hist), and so the mean and standard deviation were used to determine $user_{min}$ and $user_{max}$. The statistics and threshold values are shown in Table 2.
 
 :::panel-tabset
 
 ### Figure 1
 ```{r}
 #| warning: false
-#| fig-height: 4
+#| fig-height: 6
 #| fig-cap: Distribution of salinity observations (binwidth = 0.5 PSU). Dotted orange lines indicate the user thresholds.
-#| label: fig-do-hist
+#| label: fig-sal-hist
 
 user_sal <- dat_sal %>% 
   group_by(county_sal) %>% 
@@ -113,7 +110,6 @@ p <- plot_histogram(
   geom_vline(
     data = user_sal, aes(xintercept = user_min), linetype = 3, col = "#EDA247"
   ) +
-  theme(strip.background = element_rect(color = 1)) +
   theme_facet_plotly
 
 ggplotly(p, tooltip = "text")
@@ -131,20 +127,18 @@ user_sal %>%
 
 # Climatological Test
 
-**Didn't calculate these**
-
-**@fig-do-clim shows the monthly mean and standard deviation of salinity data. The observations are normally distributed within each month (@fig-do-hist-clim), and so the mean and standard deviation were used to calculate the seasonal thresholds (Table 3).**
+The Climatological Test was not applied to the salinity data because there were insufficient observations to calculate robust seasonal thresholds. Both data groups were missing observations for at least one month (@fig-sal-clim). Additionally, there is no substantial seasonal salinity cycle, and so the Gross Range Test is expected to identify any outlying observations.
 
 ::: panel-tabset
 
 ### Figure 2
 ```{r}
-#| fig-height: 5
+#| fig-height: 6
 #| fig-cap: Mean +/- 3 standard deviations of the monthly salinity observations.
-#| label: fig-do-clim
+#| label: fig-sal-clim
 #| message: false
 
-do_clim <- dat_sal %>% 
+sal_clim <- dat_sal %>% 
   group_by(county_sal, month) %>% 
   summarise(
     mean = mean(salinity_psu), 
@@ -156,72 +150,63 @@ do_clim <- dat_sal %>%
     season_max = round(mean + 3 * stdev, digits = 3)
   )
 
-# # quick check
-# do_thresh <- thresholds %>%
-#   filter(variable == "salinity_psu", qc_test == "climatology") %>%
-#   pivot_wider(names_from = threshold, values_from = threshold_value)
-# 
-# all.equal(do_clim$season_min, do_thresh$season_min)
-# all.equal(do_clim$season_max, do_thresh$season_max)
-
-p <- plot_mean_sd_season(do_clim, n_sd = 3, facet_county = FALSE) +
+p <- plot_mean_sd_season(sal_clim, n_sd = 3, facet_county = FALSE) +
   scale_y_continuous("salinity (PSU)") +
   facet_wrap(~county_sal, ncol = 1) +
-  theme(strip.background = element_rect(color = 1)) #+
+  theme(strip.background = element_rect(color = 1)) +
   theme_facet_plotly
   
 ggplotly(p)
 
 ```
 
-### Figure 3
+### Figure 3A
 ```{r}
 #| warning: false
 #| fig-height: 10
-#| fig-cap:  Seasonal distribution of salinity observations (binwidth = 0.5 PSU). Dotted orange lines indicate the user thresholds. 
-#| label: fig-do-hist-clim
+#| fig-cap:  Seasonal distribution of salinity observations in Inverness County (binwidth = 0.5 PSU). 
+#| label: fig-sal-hist-clim-a
 #| message: false
 
-# p <- dat_sal %>% 
-#   plot_histogram(
-#     hist_col = salinity_psu, binwidth = 0.5,
-#     pal= hist_pal
-#   ) +
-#   geom_vline(
-#     data = do_clim, aes(xintercept = season_min), linetype = 3, col = "#EDA247"
-#   ) +
-#   geom_vline(
-#     data = do_clim, aes(xintercept = season_max), linetype = 3, col = "#EDA247"
-#   ) +
-#   scale_x_continuous("salinity (PSU)") +
-#   facet_wrap(~month,  ncol = 3) +
-#   theme(strip.background = element_rect(color = 1)) +
-#   theme_facet_plotly
-# 
-# ggplotly(p, tooltip = "text")
+p <- dat_sal %>%
+  filter(county_sal == "Inverness") %>% 
+  plot_histogram(
+    hist_col = salinity_psu, binwidth = 0.5,
+    pal= hist_pal
+  ) +
+  scale_x_continuous("Salinity (PSU)") +
+  facet_wrap(~month,  ncol = 3) +
+  theme_facet_plotly
+
+ggplotly(p, tooltip = "text")
 ```
 
-### Table 3
-
-Table 2: Climatology statistics and thresholds for salinity.
+### Figure 3B
 ```{r}
-# do_clim %>% 
-#   mutate( 
-#     season_mean = round(mean, digits = 3), 
-#     season_stdev = round(stdev, digits = 3)
-#   ) %>% 
-#   select(month, season_mean, season_stdev, season_min, season_max) %>% 
-#   datatable(options = dt_options, rownames = FALSE)
+#| warning: false
+#| fig-height: 10
+#| fig-cap: Seasonal distribution of salinity observations for all counties except Inverness (binwidth = 0.5 PSU). 
+#| label: fig-sal-hist-clim-b
+#| message: false
+
+p <- dat_sal %>%
+  filter(county_sal == "Other") %>% 
+  plot_histogram(
+    hist_col = salinity_psu, binwidth = 0.5,
+    pal= hist_pal
+  ) +
+  scale_x_continuous("Salinity (PSU)") +
+  facet_wrap(~month,  ncol = 3) +
+  theme_facet_plotly
+
+ggplotly(p, tooltip = "text")
 ```
 
 :::
 
-
 # Spike Test
 
-**probably could have used the same spike val**
-
-The distribution of the spike value is skewed right (@fig-do-spike-dist), and so several upper quartile values (90th, 95th, and 99.7th quartile) were evaluated to use as the $spike_{low}$. 
+The distribution of the spike value is skewed right (@fig-sal-spike-dist), and so several upper quartile values (90th, 95th, and 99.7th quartile) were evaluated to use as the $spike_{low}$. 
 
 There were relatively few large single-value spikes in the salinity data, and so the 99.7th quartile was selected to avoid false positives. $spike_{high}$ was defined as 3 * $spike_{low}$ to identify especially egregious spike values.
 
@@ -230,13 +215,14 @@ There were relatively few large single-value spikes in the salinity data, and so
 ### Figure 4
 ```{r}
 #| warning: false
-#| fig-height: 4
-#| fig-cap: Distribution of the spike value of salinity (percent saturation) observations (binwidth = 0.1 %). Dotted orange line indicates spike_low; dotted red line indicates spike_high.
-#| label: fig-do-spike-dist
+#| fig-height: 6
+#| fig-cap: Distribution of the spike value of salinity observations (binwidth = 0.1 %). Dotted orange line indicates $spike_{low}$; dotted red line indicates $spike_{high}$.
+#| label: fig-sal-spike-dist
 
 spike_thresh <- thresholds %>% 
   filter(variable == "salinity_psu", qc_test == "spike") %>% 
-  pivot_wider(names_from = threshold, values_from = threshold_value)
+  pivot_wider(names_from = threshold, values_from = threshold_value) %>% 
+  mutate(county_sal = if_else(is.na(county), "Other", county))
 
 dat_sp <- dat_sal %>% 
   group_by(county, station, deployment_range, sensor_serial_number) %>%
@@ -250,17 +236,17 @@ dat_sp <- dat_sal %>%
   filter(!is.na(spike_value))
 
 p <- dat_sp %>% 
-  plot_histogram(
-    hist_col = spike_value, binwidth = 0.1, pal = hist_pal,
-    user_thresh = spike_thresh$spike_low
-  ) +
+  plot_histogram(hist_col = spike_value, binwidth = 0.1, pal = hist_pal) +
   facet_wrap(~county_sal, ncol = 1) +
+  geom_vline(
+    dat = spike_thresh, aes(xintercept = spike_low), 
+    col = "#EDA247", linetype = 3
+  ) +
   geom_vline(
     dat = spike_thresh, aes(xintercept = spike_high), 
     col = "#DB4325", linetype = 3
   ) +
   scale_x_continuous("Salinity (PSU)\nSpike Value") +
-  theme(strip.background = element_rect(color = 1)) +
   theme_facet_plotly
 
 ggplotly(p, tooltip = "text")
@@ -280,38 +266,39 @@ spike_thresh %>%
 
 # Rolling Standard Deviation Test
 
-The distribution of rolling standard deviation is skewed right (@fig-do-roll-sd-dist), and so several upper quartile values were evaluated to use as the $rolling\_sd\_max$. 
+The distribution of rolling standard deviation is skewed right (@fig-sal-roll-sd-dist), and so several upper quartile values were evaluated to use as the $rolling\_sd\_max$. 
 
-The 90th, 95th, and 99.7th quartile values were each applied to the the raw data (no preliminary QC) and the results inspected. The 90th quartile was determined to be too stringent, as it generated false positives, while The 99.7th quartile was determined to be too lenient, as it resulted in false negatives. The 95th quartile identified 23 % of the raw data (no preliminary QC) as [Suspect/Of Interest]{style="color: #EDA247;"} and was considered the most useful threshold.
+The 90th, 95th, and 99.7th quartile values were each applied to the the raw data (no preliminary QC) and the results inspected. The 90th quartile was determined to be too stringent, as it generated false positives, while The 99.7th quartile was determined to be too lenient, as it resulted in false negatives. The 95th quartile was considered the most useful threshold for both data groups.
 
-As discussed for salinity (percent saturation), this is a very high percent of observations to flag as [Suspect/Of Interest]{style="color: #EDA247;"}. However, it was anticipated that a large proportion of the salinity observations would be flagged by this test because there were substantial biofouling signals identified during the preliminary QC process. CMAR is currently assessing options to reduce biofouling on salinity sensors.
-
-There is no [Fail]{style="color: #DB4325;"} flag for the Rolling Standard Deviation Test because of the natural variability of the Water Quality variables. However, CMAR recommends that the salinity observations flagged as [Suspect/Of Interest]{style="color: #EDA247;"} should be considered [Suspect]{style="color: #EDA247;"}, and filtered out of most analyses. 
 
 ::: panel-tabset
 
 ### Figure 5
 ```{r}
 #| warning: false
-#| fig-height: 4
-#| fig-cap: Distribution of the 24-hour rolling standard deviation of salinity observations (binwidth = 0.1 PSU). Shaded green area shows observations that wil be flagged “Pass”, and shaded orange area shows observations that will be flagged as “Suspect / Of Interest" by the Rolling Standard Deviation Test.
-#| label: fig-do-roll-sd-dist
+#| fig-height: 6
+#| fig-cap: Distribution of the 24-hour rolling standard deviation of salinity observations (binwidth = 0.1 PSU). Dotted orange line indicates $rolling\_sd\_max$.
+#| label: fig-sal-roll-sd-dist
 
-do_roll_sd <- thresholds %>% 
-  filter(
-    variable == "salinity_psu",
-         qc_test == "rolling_sd"
-    ) %>% 
-  select(threshold, threshold_value) %>% 
-  pivot_wider(names_from = threshold, values_from = threshold_value) 
+sal_roll_sd <- thresholds %>% 
+  filter(variable == "salinity_psu", qc_test == "rolling_sd") %>% 
+  select(county, threshold, threshold_value) %>% 
+  pivot_wider(names_from = threshold, values_from = threshold_value) %>% 
+  mutate(county_sal = if_else(is.na(county), "Other", county))
 
 p <- dat_sal %>% 
   filter(!is.na(sd_roll)) %>% 
-    plot_histogram(
+  plot_histogram(
     hist_col = sd_roll, binwidth = 0.1, pal = hist_pal,
-    user_thresh = do_roll_sd$rolling_sd_max
   ) +
-  scale_x_continuous("Salinity (PSU)\nRolling Standard Deviation")
+  facet_wrap(~county_sal, ncol = 1) +
+  geom_vline(
+    dat = sal_roll_sd, aes(xintercept = rolling_sd_max), 
+    linetype = 3, col = "#EDA247"
+  ) +
+  scale_x_continuous("Salinity (PSU)\nRolling Standard Deviation") +
+  theme_facet_plotly
+
 
 ggplotly(p, tooltip = "text")
 
@@ -321,7 +308,7 @@ ggplotly(p, tooltip = "text")
 
 Table 5: Rolling standard deviation threshold for salinity.
 ```{r}
-do_roll_sd %>% 
+sal_roll_sd %>% 
   datatable(options = dt_options2, rownames = FALSE)
 ```
 :::
