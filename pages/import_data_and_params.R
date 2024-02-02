@@ -72,3 +72,9 @@ theme_set(theme_light())
 
 county_pal <- get_county_colour_palette(length(unique(st_locations$COUNTY)))
 
+theme_facet_plotly <- theme(
+  panel.spacing.y = unit(20, "lines"),
+  panel.spacing.x = unit(10, "lines")
+)
+
+hist_pal <- "grey50"
