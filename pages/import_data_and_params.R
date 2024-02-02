@@ -78,4 +78,10 @@ theme_facet_plotly <- theme(
 ) +
   theme(strip.background = element_rect(color = 1)) 
 
+theme_facet_plotly2 <- theme(
+  panel.spacing.y = unit(20, "lines"),
+  panel.spacing.x = unit(20, "lines")
+) +
+  theme(strip.background = element_rect(color = 1)) 
+
 hist_pal <- "grey50"

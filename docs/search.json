@@ -81,21 +81,21 @@
     "href": "pages/depth_thresholds.html",
     "title": "Thresholds",
     "section": "",
-    "text": "Separate thresholds were calculated for depth measured in units of percent saturation and depth measured in units of mg per L. This page describes the thresholds for mg per L. Click here for the thresholds for percent saturation.\nQC test thresholds for depth were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data. Obvious outliers, suspected biofouling, and freshwater stations were omitted.\nTo date, depth has only been measured in two counties[^1] in adjacent waterbodies[^2]. A single set of thresholds was determined for these counties."
+    "text": "QC test thresholds for depth were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data. Obvious outliers and freshwater stations were omitted.\nThe thresholds were calculated and applied to different groups for each QC test, as described below.\nThere was no seasonal trend, and\nThe user thresholds for the Gross Range Test were based on\nSeparate thresholds were calculated for each county to account for the substantial spatial differences in tidal range around the province."
   },
   {
     "objectID": "pages/depth_thresholds.html#sensor-thresholds",
     "href": "pages/depth_thresholds.html#sensor-thresholds",
     "title": "Thresholds",
     "section": "Sensor Thresholds",
-    "text": "Sensor Thresholds\nThe sensor thresholds were determined based on the manual for the aquaMeasure SAL (Table 1).\n\nTable 1\n\n\nTable 1: Depth sensor thresholds for the Gross Range Test."
+    "text": "Sensor Thresholds\nThe sensor thresholds were determined based on the manual for the aquaMeasure and VR2AR sensors (Table 1).\n\nTable 1\n\n\nTable 1: Depth sensor thresholds for the Gross Range Test."
   },
   {
     "objectID": "pages/depth_thresholds.html#user-thresholds",
     "href": "pages/depth_thresholds.html#user-thresholds",
     "title": "Thresholds",
     "section": "User Thresholds",
-    "text": "User Thresholds\nThe depth observations are relatively normally distributed (Figure 1), and so the mean and standard deviation were used to determine \\(user_{min}\\) and \\(user_{max}\\). The statistics and threshold values are shown in Table 2.\n\nFigure 1Table 2\n\n\n\n\n\n\n\nFigure 1: Distribution of depth observations (binwidth = 0.5 PSU). Dotted orange lines indicate the user thresholds.\n\n\n\n\n\nTable 2: Gross Range Test statistics and user thresholds for depth."
+    "text": "User Thresholds\nMeasured sensor depth is a function of where the sensor is located on the string, and is not necessarily related to the historical measurements (Figure 1). For example, in Antigonish County have typically been moored in relatively shallow depths, but deeper sensors could be deployed there in the future.\nTo avoid flagging future observations at unusual depths, a single set of user thresholds was manually selected and applied to the pooled data.\n\nFigure 1Table 2\n\n\n\n\n\n\n\nFigure 1: Distribution of depth observations (binwidth = 2 m). Dotted orange lines indicate the user thresholds.\n\n\n\n\n\nTable 2: Gross Range Test user thresholds for measured sensor depth."
   },
   {
     "objectID": "pages/do_measurements.html",

@@ -253,9 +253,9 @@ ggplotly(p, tooltip = "text")
 
 ```
 
-### Table 4
+### Table 3
 
-Table 4: Spike thresholds for salinity.
+Table 3: Spike thresholds for salinity.
 ```{r}
 spike_thresh %>% 
   select(spike_low, spike_high) %>% 
@@ -269,7 +269,6 @@ spike_thresh %>%
 The distribution of rolling standard deviation is skewed right (@fig-sal-roll-sd-dist), and so several upper quartile values were evaluated to use as the $rolling\_sd\_max$. 
 
 The 90th, 95th, and 99.7th quartile values were each applied to the the raw data (no preliminary QC) and the results inspected. The 90th quartile was determined to be too stringent, as it generated false positives, while The 99.7th quartile was determined to be too lenient, as it resulted in false negatives. The 95th quartile was considered the most useful threshold for both data groups.
-
 
 ::: panel-tabset
 
@@ -304,9 +303,9 @@ ggplotly(p, tooltip = "text")
 
 ```
 
-### Table 5
+### Table 4
 
-Table 5: Rolling standard deviation threshold for salinity.
+Table 4: Rolling standard deviation threshold for salinity.
 ```{r}
 sal_roll_sd %>% 
   datatable(options = dt_options2, rownames = FALSE)

@@ -39,21 +39,28 @@ dat_depth <- readRDS(here("pages/data/depth_rolling_sd_reprocessed.rds")) %>%
     !(station == "Tickle Island 1" &
         deployment_range == "2020-Oct-21 to 2021-Aug-25" & depth_log == 5)
   ) %>% 
-  mutate(month = month(timestamp_utc)) %>% 
+  mutate(month = month(timestamp_utc, label = TRUE)) %>% 
   ss_pivot_wider()
 ```
 
-**Separate thresholds were calculated for depth measured in units of percent saturation and depth measured in units of mg per L. This page describes the thresholds for mg per L. Click [here](../pages/do_thresholds.qmd) for the thresholds for percent saturation.**
 
-**QC test thresholds for depth were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data. Obvious outliers, suspected biofouling, and freshwater stations were omitted.**
+QC test thresholds for depth were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data. Obvious outliers and freshwater stations were omitted.
 
-**To date, depth has only been measured in two counties[^1] in adjacent waterbodies[^2]. A single set of thresholds was determined for these counties.**
+The thresholds were calculated and applied to different groups for each QC test, as described below.
+
+
+ There was no seasonal trend, and 
+
+
+The user thresholds for the Gross Range Test were based on 
+
+Separate thresholds were calculated for each county to account for the substantial spatial differences in tidal range around the province.
 
 # Gross Range Test
 
 ## Sensor Thresholds
 
-The sensor thresholds were determined based on the manual for the aquaMeasure SAL (Table 1).
+The sensor thresholds were determined based on the manual for the aquaMeasure and VR2AR sensors (Table 1).
 
 ::: panel-tabset
 
@@ -68,21 +75,24 @@ sensors %>%
       paste0('<a  target=_blank href=', url, '>', sensor_type,'</a>')
   ) %>%
   select(`Sensor (link to spec sheet)`, sensor_min, sensor_max) %>%
+  distinct() %>% 
   datatable(options = dt_options2, rownames = FALSE, escape = FALSE)
 ```
 :::
 
 ## User Thresholds
 
-The depth observations are relatively normally distributed (@fig-depth-hist), and so the mean and standard deviation were used to determine $user_{min}$ and $user_{max}$. The statistics and threshold values are shown in Table 2.
+Measured sensor depth is a function of where the sensor is located on the string, and is not necessarily related to the historical measurements (@fig-depth-hist). For example, in Antigonish County have typically been moored in relatively shallow depths, but deeper sensors could be deployed there in the future.
+
+To avoid flagging future observations at unusual depths, a single set of user thresholds was manually selected and applied to the pooled data.
 
 :::panel-tabset
 
 ### Figure 1
 ```{r}
 #| warning: false
-#| fig-height: 6
-#| fig-cap: Distribution of depth observations (binwidth = 0.5 PSU). Dotted orange lines indicate the user thresholds.
+#| fig-height: 10
+#| fig-cap: Distribution of depth observations (binwidth = 2 m). Dotted orange lines indicate the user thresholds.
 #| label: fig-depth-hist
 
 user_depth <- dat_depth %>% 
@@ -103,7 +113,6 @@ p <- plot_histogram(
   facet_wrap(~county, ncol = 2) +
   geom_vline(
     xintercept = c(0, 120), col = "#EDA247", linetype = 3) +
-  theme(strip.background = element_rect(color = 1)) +
   theme_facet_plotly
 
 ggplotly(p, tooltip = "text")
@@ -111,25 +120,26 @@ ggplotly(p, tooltip = "text")
 
 ### Table 2
 
-Table 2: Gross Range Test statistics and user thresholds for depth.
+Table 2: Gross Range Test user thresholds for measured sensor depth.
 ```{r}
-# user_depth %>% 
-#   rename(county = county_sal) %>% 
-#   datatable(options = dt_options2, rownames = FALSE)
+thresholds %>% 
+  filter(variable == "sensor_depth_measured_m", qc_test == "grossrange") %>% 
+  pivot_wider(names_from = threshold, values_from = threshold_value) %>% 
+  select(user_min, user_max) %>% 
+  na.omit() %>% 
+  datatable(options = dt_options2, rownames = FALSE)
 ```
 :::
 
 # Climatological Test
 
-**Didn't calculate these**
-
-**@fig-depth-clim shows the monthly mean and standard deviation of depth data. The observations are normally distributed within each month (@fig-depth-hist-clim), and so the mean and standard deviation were used to calculate the seasonal thresholds (Table 3).**
+The Climatological Test was not applied to the measured depth data because there was not an expected or observed seasonal cycle (@fig-depth-clim; fig-depth-hist-clim).
 
 ::: panel-tabset
 
 ### Figure 2
 ```{r}
-#| fig-height: 6
+#| fig-height: 10
 #| fig-cap: Mean +/- 3 standard deviations of the monthly depth observations.
 #| label: fig-depth-clim
 #| message: false
@@ -146,21 +156,12 @@ depth_clim <- dat_depth %>%
     season_max = round(mean + 3 * stdev, digits = 3)
   )
 
-# # quick check
-# do_thresh <- thresholds %>%
-#   filter(variable == "sensor_depth_measured_m", qc_test == "climatology") %>%
-#   pivot_wider(names_from = threshold, values_from = threshold_value)
-# 
-# all.equal(do_clim$season_min, do_thresh$season_min)
-# all.equal(do_clim$season_max, do_thresh$season_max)
-
-plot_mean_sd_season(depth_clim, n_sd = 3, facet_county = FALSE) +
+p <- plot_mean_sd_season(depth_clim, n_sd = 3, facet_county = FALSE) +
   scale_y_continuous("Measured Sensor Depth (m)") +
   facet_wrap(~county, ncol = 2) +
-  theme(strip.background = element_rect(color = 1)) +
   theme_facet_plotly
   
-ggplotly(p)
+ggplotly(p, tooltip = "text")
 
 ```
 
@@ -168,53 +169,38 @@ ggplotly(p)
 ```{r}
 #| warning: false
 #| fig-height: 10
-#| fig-cap:  Seasonal distribution of depth observations (binwidth = 0.5 PSU). Dotted orange lines indicate the user thresholds. 
+#| fig-cap:  Seasonal distribution of depth observations (binwidth = 2 m). Dotted orange lines indicate the user thresholds. 
 #| label: fig-depth-hist-clim
 #| message: false
 
-# # want this by county
-# p <- dat_depth %>%
-#   plot_histogram(
-#     hist_col = sensor_depth_measured_m, binwidth = 2,
-#     pal= hist_pal
-#   ) +
-#   scale_x_continuous("Measured Sensor Depth (m)") +
-#   facet_wrap(~month,  ncol = 3) +
-#   theme(strip.background = element_rect(color = 1)) #+
-#   theme_facet_plotly
-# 
-# ggplotly(p, tooltip = "text")
-```
+p <- dat_depth %>%
+  plot_histogram(
+    hist_col = sensor_depth_measured_m, binwidth = 2,
+    pal= hist_pal
+  ) +
+  scale_x_continuous("Measured Sensor Depth (m)") +
+  facet_wrap(~month,  ncol = 3) +
+  theme_facet_plotly
 
-### Table 3
-
-Table 2: Climatology statistics and thresholds for depth.
-```{r}
-# depth_clim %>% 
-#   mutate( 
-#     season_mean = round(mean, digits = 3), 
-#     season_stdev = round(stdev, digits = 3)
-#   ) %>% 
-#   select(month, season_mean, season_stdev, season_min, season_max) %>% 
-#   datatable(options = dt_options, rownames = FALSE)
+ggplotly(p, tooltip = "text")
 ```
 
 :::
 
 # Spike Test
 
-The distribution of the spike value is skewed right (@fig-depth-spike-dist), and so several upper quartile values (90th, 95th, and 99.7th quartile) were evaluated to use as the $spike_{low}$. 
+Because of the difference in precision between the types of sensors that record depth, the Spike Test thresholds were calculated by county and sensor type (@fig-depth-spike-dist-a; @fig-depth-spike-dist-b).
 
-There were relatively few large single-value spikes in the depth data, and so the 99.7th quartile was selected to avoid false positives. $spike_{high}$ was defined as 3 * $spike_{low}$ to identify especially egregious spike values.
+For all groups, the distribution of the spike value is skewed right, and so several upper quartile values (90th, 95th, and 99.7th quartile) were evaluated to use as the $spike_{low}$. There were relatively few large single-value spikes in the depth data, and so the 99.7th quartile was selected to avoid false positives. $spike_{high}$ was defined as 3 * $spike_{low}$ to identify especially egregious spike values.
 
 ::: panel-tabset
 
-### Figure 4
+### Figure 4A
 ```{r}
 #| warning: false
-#| fig-height: 6
-#| fig-cap: Distribution of the spike value of depth observations (binwidth = 0.1 m). Dotted orange line indicates $spike_{low}$; dotted red line indicates $spike_{high}$.
-#| label: fig-depth-spike-dist
+#| fig-height: 10
+#| fig-cap: Distribution of the spike value of depth observations measured by aquaMeasure sensors (binwidth = 0.1 m). Dotted orange line indicates $spike_{low}$; dotted red line indicates $spike_{high}$. Note difference in y-axis scale.
+#| label: fig-depth-spike-dist-a
 
 spike_thresh <- thresholds %>% 
   filter(variable == "sensor_depth_measured_m", qc_test == "spike") %>% 
@@ -229,22 +215,53 @@ dat_sp <- dat_depth %>%
     spike_ref = (lag_value + lead_value) / 2,
     spike_value = abs(sensor_depth_measured_m - spike_ref)  
   ) %>% 
+  ungroup() %>% 
   filter(!is.na(spike_value))
 
 p <- dat_sp %>% 
+  filter(sensor_type == "aquameasure", !is.na(spike_value)) %>%
   plot_histogram(hist_col = spike_value, binwidth = 0.1, pal = hist_pal) +
-  facet_wrap(~county + sensor_type, ncol = 1) +
+  facet_wrap(~county, ncol = 2, scales = "free_y") +
   geom_vline(
-    dat = spike_thresh, aes(xintercept = spike_low), 
+    dat = filter(spike_thresh, sensor_type == "aquameasure"),
+    aes(xintercept = spike_low), 
     col = "#EDA247", linetype = 3
   ) +
   geom_vline(
-    dat = spike_thresh, aes(xintercept = spike_high), 
+    dat = filter(spike_thresh, sensor_type == "aquameasure"), 
+    aes(xintercept = spike_high), 
     col = "#DB4325", linetype = 3
   ) +
-  scale_x_continuous("depth (PSU)\nSpike Value") +
-  theme(strip.background = element_rect(color = 1))# +
-  theme_facet_plotly
+  scale_x_continuous("Measured Sensor Depth (m)\nSpike Value") +
+  theme_facet_plotly2
+
+ggplotly(p, tooltip = "text")
+
+```
+
+### Figure 4B
+```{r}
+#| warning: false
+#| fig-height: 10
+#| fig-cap: Distribution of the spike value of depth observations (binwidth = 0.1 m) measured by VR2AR sensors. Dotted orange line indicates $spike_{low}$; dotted red line indicates $spike_{high}$. Note difference in y-axis scale.
+#| label: fig-depth-spike-dist-b
+
+p <- dat_sp %>% 
+  filter(sensor_type == "vr2ar") %>% 
+  plot_histogram(hist_col = spike_value, binwidth = 0.1, pal = hist_pal) +
+  facet_wrap(~county, ncol = 2, scales = "free_y") +
+  geom_vline(
+    dat = filter(spike_thresh, sensor_type == "vr2ar"),
+    aes(xintercept = spike_low), 
+    col = "#EDA247", linetype = 3
+  ) +
+  geom_vline(
+    dat = filter(spike_thresh, sensor_type == "vr2ar"), 
+    aes(xintercept = spike_high), 
+    col = "#DB4325", linetype = 3
+  ) +
+  scale_x_continuous("Measured Sensor Depth (m)\nSpike Value") +
+theme_facet_plotly2
 
 ggplotly(p, tooltip = "text")
 
@@ -255,61 +272,53 @@ ggplotly(p, tooltip = "text")
 Table 4: Spike thresholds for depth.
 ```{r}
 spike_thresh %>% 
-  select(spike_low, spike_high) %>% 
-  datatable(options = dt_options2, rownames = FALSE)
+  select(county, sensor_type, spike_low, spike_high) %>% 
+  datatable(options = dt_options, rownames = FALSE)
 ```
 
 :::
 
 # Rolling Standard Deviation Test
 
-**The distribution of rolling standard deviation is skewed right (@fig-depth-roll-sd-dist), and so several upper quartile values were evaluated to use as the $rolling\_sd\_max$.** 
+The Rolling Standard Deviation Test thresholds were calculated and applied separately for each county due to spatial differences in tidal range.
 
-**The 90th, 95th, and 99.7th quartile values were each applied to the the raw data (no preliminary QC) and the results inspected. The 90th quartile was determined to be too stringent, as it generated false positives, while The 99.7th quartile was determined to be too lenient, as it resulted in false negatives. The 95th quartile identified 23 % of the raw data (no preliminary QC) as [Suspect/Of Interest]{style="color: #EDA247;"} and was considered the most useful threshold.**
-
-**As discussed for depth (percent saturation), this is a very high percent of observations to flag as [Suspect/Of Interest]{style="color: #EDA247;"}. However, it was anticipated that a large proportion of the depth observations would be flagged by this test because there were substantial biofouling signals identified during the preliminary QC process. CMAR is currently assessing options to reduce biofouling on depth sensors.**
-
-**There is no [Fail]{style="color: #DB4325;"} flag for the Rolling Standard Deviation Test because of the natural variability of the Water Quality variables. However, CMAR recommends that the depth observations flagged as [Suspect/Of Interest]{style="color: #EDA247;"} should be considered [Suspect]{style="color: #EDA247;"}, and filtered out of most analyses. **
+The distribution of rolling standard deviation is relatively normal for each county (@fig-depth-roll-sd-dist), and so the mean and standard deviation were used to calculate $rolling\_sd\_max$.
 
 ::: panel-tabset
 
 ### Figure 5
 ```{r}
 #| warning: false
-#| fig-height: 6
-#| fig-cap: Distribution of the 24-hour rolling standard deviation of depth observations (binwidth = 0.1 PSU). Dotted orange line indicates $rolling\_sd\_max$.
+#| fig-height: 10
+#| fig-cap: Distribution of the 24-hour rolling standard deviation of depth observations (binwidth = 0.1 m). Dotted orange line indicates $rolling\_sd\_max$.
 #| label: fig-depth-roll-sd-dist
 
-sal_roll_sd <- thresholds %>% 
+depth_roll_sd <- thresholds %>% 
   filter(variable == "sensor_depth_measured_m", qc_test == "rolling_sd") %>% 
   select(county, threshold, threshold_value) %>% 
-  pivot_wider(names_from = threshold, values_from = threshold_value) %>% 
-  mutate(county_sal = if_else(is.na(county), "Other", county))
+  pivot_wider(names_from = threshold, values_from = threshold_value) 
 
 p <- dat_depth %>% 
   filter(!is.na(sd_roll)) %>% 
-  plot_histogram(
-    hist_col = sd_roll, binwidth = 0.1, pal = hist_pal,
-  ) +
-  facet_wrap(~county_sal, ncol = 1) +
+  plot_histogram(hist_col = sd_roll, binwidth = 0.1, pal = hist_pal) +
+  facet_wrap(~county, ncol = 2, scales = "free_y") +
   geom_vline(
-    dat = sal_roll_sd, aes(xintercept = rolling_sd_max), 
+    dat = depth_roll_sd, aes(xintercept = rolling_sd_max), 
     linetype = 3, col = "#EDA247"
   ) +
-  scale_x_continuous("depth (PSU)\nRolling Standard Deviation") +
-  theme(strip.background = element_rect(color = 1)) +
-  theme_facet_plotly
-
+  scale_x_continuous("Measured Sensor Depth (m)\nRolling Standard Deviation") +
+  theme_facet_plotly2
 
 ggplotly(p, tooltip = "text")
-
 ```
 
 ### Table 5
 
 Table 5: Rolling standard deviation threshold for depth.
 ```{r}
-sal_roll_sd %>% 
+depth_roll_sd %>% 
   datatable(options = dt_options2, rownames = FALSE)
 ```
 :::
+
+# Depth Crosscheck
