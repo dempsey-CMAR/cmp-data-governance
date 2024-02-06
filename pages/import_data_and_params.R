@@ -14,6 +14,16 @@ library(stringr)
 library(strings)
 library(tidyr)
 
+
+
+# resize interactive figures ----------------------------------------------
+
+# Get the current figure size in pixels:
+h_interactive <- function() 
+  with(knitr::opts_current$get(c("fig.height", "dpi", "fig.retina")),
+       fig.height*dpi/fig.retina)
+
+
 # datatable settings ------------------------------------------------------
 
 dt_options <- list(

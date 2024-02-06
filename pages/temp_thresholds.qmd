@@ -7,56 +7,67 @@ editor_options:
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
 
+library(dplyr)
 library(here)
+library(knitr)
+library(htmltools)
+library(lubridate)
+library(plotly)
+library(stringr)
+library(summaryplots)
 
 source(here("pages/import_data_and_params.R"))
 
-dat_filt <- dat_filt %>% filter(variable == "Temperature")
-```
-
-
-Most QC test thresholds for temperature were based on historical Coastal Monitoring Program data. Preliminary quality control was applied to this data[^1], leaving observations from `r length(na.omit(unique(dat_filt$station)))` stations in `r length(na.omit(unique(dat_filt$county)))` counties (@fig-temp-station-locations). 
-
-[^1]: e.g., obvious outliers and freshwater stations were omitted
-
-```{r}
-#| label: fig-temp-station-locations
-#| fig-height: 7
-#| fig-cap: Approximate location of stations with temperature data used to inform QC test thresholds. Marker size is proportional to the number of temperature observations within the county.
-
-# join the station locations dataset with the number of obs from each station
-st_locations <- st_locations %>% 
-  inner_join(
-    dat_filt %>% 
-      filter(group == "all_station", variable == "Temperature") %>% 
-      select(COUNTY = county, STATION = station, n),
-    by = c("COUNTY", "STATION") 
-  ) %>% 
-  group_by(COUNTY) %>% 
+dat_temp <- readRDS(here("pages/data/temp_rolling_sd_prelim_qc.rds")) %>%
+  select(
+    -c(sensor_type, int_sample, n_sample, rolling_sd_flag_temperature_degree_c)
+  ) %>%
   mutate(
-    n_tot = sum(n),
-    n_prop = round(n / sum(n), digits = 2),
-    popup = paste(COUNTY, STATION, n_prop, sep = "</br>")
-  ) %>% 
-  ungroup()
-
-# interactive map
-leaflet(st_locations) %>% 
-  addProviderTiles(providers$CartoDB.Positron) %>% 
-  add_circle_markers_county(
-    county_pal = county_pal, 
-    size =  ~n_prop * 25
-  ) %>% 
-  add_county_fill_legend(county_pal = county_pal)
-  
+    depth = factor(sensor_depth_at_low_tide_m),
+    month = month(timestamp_utc, label = TRUE)
+  ) %>%
+  rename(temperature_degree_c = value_temperature_degree_c) %>%
+  filter(
+    !(station %in% c("Piper Lake", "Hourglass Lake", "0193", "Sissiboo")),
+    !(county == "Inverness" & depth %in% c(18, 23, 26, 28, 36, 40))
+  )
 ```
 
-## Gross Range Test
+Temperature thresholds were calculated from the historical Coastal Monitoring Program data. Preliminary quality control was applied to this data. Obvious outliers and data from freshwater stations were omitted.
 
-### Sensor Thresholds
+Separate thresholds were calculated for each county due to expected and observed spatial differences in temperature (fig).
+
+
+Separate thresholds were calculated for each county from the historical Coastal Monitoring Program temperature data. Preliminary quality control was applied to this data. Obvious outliers and data from freshwater stations were omitted.
+
+Temperature thresholds were calculated by county because of expected and observed spatial differences, and because there .  is higher spatial resolution and more consisteent temporal data
+
+
+Most counties have substantially different number of observations for different seasons. Because temperature has a clear seasonal cycle , this can weight the average towards months with more observations. To give each month equal weight, the user thresholds were based on the monthly climatology[^3].
+
+[^3]: it was assumed that the different number of days per month was negligible
+
+
+
+
+User thresholds were calculated separately for each county due to expected and observed spatial differences in temperature (@fig-temp-mean-sd).
+
+
+The quality[^2] of these user thresholds may vary by county, depending on the number and distribution (in space and time) of observations. For example, there are relatively few observations for some counties compared to others (@fig-temp-n-obs). Cape Breton has the fewest observations at ~30,000 over 3 years and two stations, while Guysborough has the most at nearly 1 million over 7 years and 35 stations (@fig-temp-station-locations). Colchester and Queens counties only have one station each (@fig-temp-station-locations). For consistency, the counties with fewer observations were not pooled with counties with more observations. The user thresholds should be re-evaluated when more observations are collected.
+
+[^2]: e.g., how representative the thresholds are of "normal" conditions through the water column and county
+
+
+# Gross Range Test
+
+## Sensor Thresholds
 
 The sensor thresholds were determined based on the associated manual (Table 1).
 
+:::panel-tabset
+### Table 1
+
+Table 1: Temperature sensor thresholds for the Gross Range Test.
 ```{r}
 sensors %>% 
   filter(variable == "temperature_degree_c") %>%
@@ -72,202 +83,63 @@ sensors %>%
       searching = FALSE,
       columnDefs = list(list(className = 'dt-center', targets = "_all"))
     ), 
-    rownames = FALSE, escape = FALSE,
-    caption = "Table 1: Temperature sensor thresholds for the Gross Range Test."
+    rownames = FALSE, escape = FALSE
   )
 ```
+:::
 
-### User Thresholds
+## User Thresholds
 
-User thresholds were calculated separately for each county due to expected and observed spatial differences in temperature (@fig-temp-mean-sd).
+:::panel-tabset
 
+### Figure 1
 ```{r}
-#| label: fig-temp-mean-sd
-#| fig-height: 8
-#| fig-cap: The mean and standard deviation of temperature in each county.
+#| warning: false
+#| fig-height: 12
+#| fig-cap: Distribution of temperature observations (binwidth = 1 degree C). Dotted orange lines indicate the user thresholds.
+#| label: fig-temp-hist
 
-p <- dat_filt %>% 
-  filter(group == "county") %>% 
-  plot_mean_sd_county()
+user_temp <- dat_temp %>% 
+  group_by(county) %>% 
+  qc_calculate_user_thresholds(
+    var = "temperature_degree_c",
+    n_sd = 3, keep_stats = TRUE
+  ) %>% 
+  pivot_wider(names_from = threshold, values_from = threshold_value) %>% 
+  select(county, mean = mean_var, stdev = sd_var, user_min, user_max) 
+
+p <- plot_histogram(
+  dat_temp, hist_col = temperature_degree_c, binwidth = 2, pal= hist_pal) +
+  facet_wrap(~county, ncol = 2, scales = "free_y") +
+  geom_vline(
+    dat = user_temp, aes(xintercept = user_min), 
+    linetype = 3, col = "#EDA247"
+  ) +
+  geom_vline(
+    dat = user_temp, aes(xintercept = user_max),
+    linetype = 3, col = "#EDA247"
+  ) +
+  scale_x_continuous("Temperature (degree C)") +
+  theme_facet_plotly2
 
 ggplotly(p, tooltip = "text")
-
 ```
 
-Most counties have substantially different number of observations for different seasons (@fig-temp-n-obs-county-month). Because temperature has a clear seasonal cycle (@fig-temp-climatology), this can weight the average towards months with more observations. To give each month equal weight, the user thresholds were based on the monthly climatology[^3].
+### Table 2
 
-[^3]: it was assumed that the different number of days per month was negligible
-
-All temperature observations were first grouped by calendar month, and the average temperature for each month was calculated. The $avg_{Temp}$ was the average of these monthly averages, and $stdev_{Temp}$ was the standard deviation of the monthly averages (@eq-temp-avg, @eq-temp-stdev). With this approach, the mean for a given month will be weighted towards years with more observations than other years for that month. This is not expected to have a substantial influence on the calculated thresholds, but future iterations of this exercise could further standardize the data to account for this.
-
-$$
-avg_{temp} = sum(avg_{Jan} + avg_{Feb} + ... avg_{Dec}) / 12
-$$ {#eq-temp-avg}
-
-$$
-stdev_{temp} = sd(avg_{Jan}, avg_{Feb}, ... avg_{Dec})
-$$ {#eq-temp-stdev}
-
-County statistics and user thresholds are presented in Table 2.
-
-<br>
-
+Table 2: Gross Range Test statistics and user thresholds for temperature.
 ```{r}
-# calculate thresholds based on the climatology
-user_thresh <- dat_filt %>% 
-  filter(group == "county_month") %>% 
-  rename(mean_month = mean) %>% 
-  group_by(county) %>%
-  summarise(
-    mean = round(mean(mean_month), digits = 3),
-    stdev = round(sd(mean_month), digits = 3)
-  ) %>% 
-  mutate(
-    qc_test = "grossrange",
-    variable = "temperature_degree_c",
-    user_min = mean - 3 * stdev, 
-    user_max = mean + 3 * stdev
-  ) 
-
-user_thresh %>% 
-  select(county, mean, stdev, user_min, user_max) %>% 
-  datatable(
-    options = dt_options, extensions = 'Buttons', 
-    rownames = FALSE,
-    caption = "Table 2: Temperature statistics and user thresholds for the Gross Range Test."
-  )
+user_temp %>% 
+  datatable(options = dt_options, rownames = FALSE)
 ```
+:::
 
-<br>
-
-The quality[^2] of these user thresholds may vary by county, depending on the number and distribution (in space and time) of observations. For example, there are relatively few observations for some counties compared to others (@fig-temp-n-obs). Cape Breton has the fewest observations at ~30,000 over 3 years and two stations, while Guysborough has the most at nearly 1 million over 7 years and 35 stations (@fig-temp-station-locations). Colchester and Queens counties only have one station each (@fig-temp-station-locations). For consistency, the counties with fewer observations were not pooled with counties with more observations. The user thresholds should be re-evaluated when more observations are collected.
-
-[^2]: e.g., how representative the thresholds are of "normal" conditions through the water column and county
-
-```{r}
-#| label: fig-temp-n-obs
-#| fig-height: 8
-#| fig-cap: The number of dissolved oxygen observations in each county. (Note these numbers are not the same as on the CMAR measurements page because some outlier values and stations were omitted from the thresholds analysis.)
-
-p <- dat_filt %>%
-  filter(group == "county") %>% 
-  plot_n_obs_county()
-
-ggplotly(p)
-
-```
 
 Calculating thresholds at the county scale provides relatively coarse threshold values. Ideally, these would be resolved by depth and a smaller spatial scale (e.g., waterbody or station). However, calculating thresholds for each county and depth provides its own challenges. The data become very patchy when grouped by county, depth, and month (e.g., 169 month-county-depth combinations with 0 observations). Additionally, the same depth can represent a different part of the water column for different stations. At the Barren Island station in Guysborough county, the 15 m sensor is near the bottom. In contrast, 15 m is in the top 20 % of the water column at Tickle Island, also in Guysborough county. Finally, aggregating thresholds by county and depth would result in 141 user-defined temperature thresholds, which is more than the 2.5 person Data Governance team can reasonably manage.
 
 Because depth was not accounted for, it is expected that observations from very shallow sensors (e.g., <= 2 m) will be assigned the [Suspect/Of Interest]{style="color: #EDA247;"} flag, despite appearing reasonable in the context of the deployment. In this case, the flag should be interpreted as ["Of Interest"]{style="color: #EDA247;"}, for highlighting a relatively warm observation.
 
 The $user_{min}$ threshold is typically << 0 degrees Celsius (Table 2), and is therefore not expected to flag any observations. For most counties (all except Annapolis, Queens, Shelburne, and Digby), the $user_{min}$ is less than the $sensor_{min}$ for the aquameasure and vr2ar sensors. In this case, any observations less than the $sensor_{min}$ would [fail]{style="color: #DB4325;"} the Gross Range Test (i.e., the $user_{min}$ would be ignored). It may be useful for other users to apply their own $user_{min}$ threshold to highlight cold observations that are [Suspect/Of Interest]{style="color: #EDA247;"}. For example, those interested in salmonid aquaculture may wish to flag observations at or near the superchill threshold (-0.7 degree C).
-
-## Climatological Test
-
-The season thresholds were calculated separately for each county due to expected and observed spatial differences in temperature (@fig-temp-climatology).
-
-
-::: panel-tabset
-
-### A
-```{r}
-#| label: fig-temp-climatology
-#| fig-height: 10
-#| fig-cap: The monthly mean and standard deviation of temperature in each county.
-
-county_month <- dat_filt %>% 
-  filter(group == "county_month") %>% 
-  mutate(month = month(month, label = TRUE)) %>% 
-  select(-c(units, group, year, station, depth))
-
-p <- plot_mean_sd_season(county_month, facet_county = TRUE) +
-  theme(panel.spacing.y = unit(15, "lines"))
-
-ggplotly(p)
-
-```
-
-### B
-
-```{r}
-#| fig-height: 8
-#| fig-cap: The monthly mean and standard deviation of temperature in each county.
-
-p <- plot_mean_sd_season_ribbon(county_month, group = "county", facet_county = FALSE)
-
-ggplotly(p, tooltip = "text")
-```
-:::
-
-Seasonal statistics and thresholds are presented in Table 3. The quality[^2] of these thresholds may vary by county and month, depending on the number and distribution (in space and time) of observations. There were no county-month groups with zero observations, although some groups had relatively few observations for many or all months (@fig-temp-n-obs-county-month; e.g., Cape Breton).
-
-<br>
-
-```{r}
-clim_thresholds <- county_month %>% 
-  mutate(
-    season_min = round((mean - 3 * stdev), digits = 3),
-    season_max = round((mean + 3 * stdev), digits = 3)
-  ) %>% 
-  select(county, month, mean, stdev, season_min, season_max) %>% 
-  arrange(county, month)  
-
-datatable(
-  clim_thresholds, extensions = 'Buttons', 
-  options = dt_options, rownames = FALSE,
-  caption = "Table 3: Seasonal statistics and thresholds by county and month."
-)
-```
-
-<br>
-
-### Spatial & Temporal Resolution
-
-The length of the time series varied among counties, from approximately 1 year (e.g., Cape Breton, Colchester) to over 7 years (select stations in Guysborough, Richmond, and Yarmouth counties; @fig-temp-n-years). This means that the monthly average for some county-month groups is based on only 1 year of data. 
-
-The number of stations varied by county, from a single station each in Colchester and Queens counties, to `r nrow(dat_filt[which(dat_filt$group == "all_station" & dat_filt$county == "Guysborough"),"station"])` stations in Guysborough (@fig-temp-station-locations).
-
-The seasonal thresholds for counties with limited years, number of observations, and/or number of stations are likely not representative of inter-annual or spatial variability in the county; however, they are adequate for this quality control exercise. These thresholds *are* representative of normal conditions of the observed deployments, and so outlying values will be flagged. If new deployments are added to these counties, it is recommended that the seasonal thresholds be re-evaluated and re-calculated if necessary. It is strongly recommended that all seasonal thresholds be re-calculated after several more years of data have been collected through the Coastal Monitoring Program.
-
-
-::: panel-tabset
-
-### Figure 5
-```{r}
-#| label: fig-temp-n-obs-county-month
-#| fig-height: 12
-#| fig-cap: The number of temperature observations in each month for each county.
-
- p <- plot_n_obs_month(county_month, text_size = 12) +
-  theme(panel.spacing.y = unit(15, "lines"))
-
-ggplotly(p)
-
-```
-
-### Figure 6
-```{r}
-#| label: fig-temp-n-years
-#| fig-height: 12
-#| fig-cap: The number of years of temperature data for each month and county.
-#| message: false
-
-p <- dat_filt %>%
-  filter(group == "county_month_year") %>%
-  group_by(county, month) %>%
-  summarise(n = n()) %>%
-  mutate(month = month(month, label = TRUE)) %>% 
-  ungroup() %>% 
-  plot_n_obs_month(text_size = 12, fill = "#CCCCFF") +
-  scale_x_continuous("Number of Years", expand = expansion(mult = c(0, 0.1))) +
-  theme(panel.spacing.y = unit(15, "lines"))
-
-ggplotly(p)
-
-```
-:::
-
 
 ### Depth & Stratification
 
@@ -279,7 +151,7 @@ The standard deviations for July through October in Inverness are the four highe
 -   0814x East (September to December 2020)
 -   0814x West (September to December 2020)
 
-These stations had sensors deployed above and below the thermocline. Temperatures below the thermocline, near the bottom, were typically very cold (about zero degrees for the whole Deep Basin deployment). Temperatures above the thermocline, closer to the surface, were typically much warmer, up to 25 °C in the summer (**link to Inverness report here**). The high standard deviation results in a very wide range of temperature values that would be flagged [Pass]{style="color: #009200;"}: e.g., from `r clim_thresholds[which(clim_thresholds$county == "Inverness" & clim_thresholds$month == "Aug"), "season_min"]$season_min` °C to `r clim_thresholds[which(clim_thresholds$county == "Inverness" & clim_thresholds$month == "Aug"), "season_max"]$season_max` °C in August.
+These stations had sensors deployed above and below the thermocline. Temperatures below the thermocline, near the bottom, were typically very cold (about zero degrees for the whole Deep Basin deployment). Temperatures above the thermocline, closer to the surface, were typically much warmer, up to 25 °C in the summer (**link to Inverness report here**). The high standard deviation results in a very wide range of °C in August.
 
 The temperatures below the thermocline could be considered anomalous and removed prior to calculating the thresholds. These temperatures would then be flagged [Of Interest]{style="color: #EDA247;"}. However, the temperatures were included in the current thresholds analysis for several reasons:
 
@@ -289,56 +161,241 @@ The temperatures below the thermocline could be considered anomalous and removed
 
 There are stations withe notable depth stratification in other counties, including Guysborough, Halifax, and Lunenburg. This is reflected in the relatively high standard deviation in the summer months for these counties (@fig-temp-climatology; Table 3). Future iterations of this threshold analysis could consider resolving the seasonal thresholds by depth; however it is beyond the scope of the current exercise.
 
-### User vs. Seasonal Thresholds
 
+# Climatological Test
 
+The season thresholds were calculated separately for each county due to expected and observed spatial differences in temperature (@fig-temp-climatology).
+
+::: panel-tabset
+
+### Figure 2
 ```{r}
-#| label: fig-climatology-thresh
-#| fig-cap: Monthly dissolved oxygen mean +/- 1 standard deviation. Solid orange lines indicate the climatology thresholds; dashed organge lines indicate the grossrange user thresholds.
+#| fig-height: 12
+#| fig-cap: Mean +/- 3 standard deviations of the monthly depth observations.
+#| label: fig-temp-clim
+#| message: false
 
-# user_col <- "#EDA247"
-# season_col <- 1
-# 
-# x <- county_month %>% 
-#   left_join(
-#     user_thresh %>% 
-#       select(-c(variable, qc_test, mean, stdev)), 
-#     by = "county") %>%
-#   left_join()
-# 
-# plot_mean_sd_season(x, facet_county = TRUE) +
-#   geom_ribbon(
-#     data = x,
-#     aes(month, 
-#         ymin = mean - 3 * stdev,
-#         ymax = mean + 3 * stdev)
-#   )
-# 
-#     geom_hline(data = x, aes(yintercept = user_min), col = 2)
-#   
-#   
-#   
-# ggplot(x, aes(month, mean)) +
-#     geom_point(size = 1) +
-#     geom_errorbar(
-#       aes(ymin = mean - stdev, ymax = mean + stdev), width = 0
-#     ) +
-#     scale_x_discrete(
-#       name = "", breaks = c("Jan", "Mar", "May", "Jul", "Sep", "Nov")
-#     ) +
-#   facet_wrap(~county, ncol = 3) +
-#   geom_hline(data = x, aes(yintercept = user_min))
+temp_clim <- dat_temp %>% 
+  group_by(county, month) %>% 
+  summarise(
+    mean = mean(temperature_degree_c), 
+    stdev = sd(temperature_degree_c)
+  ) %>% 
+  ungroup() %>% 
+  mutate(
+    variable = "temperature_degree_c",
+    season_min = round(mean - 3 * stdev, digits = 3),
+    season_max = round(mean + 3 * stdev, digits = 3)
+  )
 
-  
+p <- plot_mean_sd_season(temp_clim, n_sd = 3, facet_county = TRUE, ncol = 2) +
+  scale_y_continuous("Temperature (degree C)") +
+  theme_facet_plotly
+
+ggplotly(p)
+
 ```
 
+:::
+
+### Figure 3
+
+Seasonal distribution of depth observations (binwidth = 2 degree C). Dotted orange lines indicate the user thresholds.
+
+::: panel-tabset
+
+```{r}
+#| warning: false
+#| message: false
+#| results: asis
+#| fig-height: 1.5
+
+plot_ly()
+
+counties <- unique(user_temp$county)
+
+for(i in seq_along(counties)) {
+  
+  county_i <- counties[i]
+  temp_clim_i <- temp_clim %>% filter(county == county_i)
+  
+  cat(paste("### ", county_i, "\n \n"))
+  
+  p_i <- dat_temp %>%
+    filter(county == county_i) %>% 
+    plot_histogram(
+      hist_col = temperature_degree_c, binwidth = 1, pal= hist_pal
+    ) +
+    scale_x_continuous("Temperature (degree C)") +
+    facet_wrap(~month, ncol = 3) +
+    geom_vline(
+      dat = temp_clim_i, aes(xintercept = season_min), 
+      linetype = 3, col = "#EDA247"
+    ) +
+    geom_vline(
+      dat = temp_clim_i, aes(xintercept = season_max), 
+      linetype = 3, col = "#EDA247"
+    ) +
+    theme(strip.background = element_rect(color = 1)) 
+  
+  print(
+    htmltools::tagList(
+      ggplotly(p_i, tooltip = "text", height = h_interactive())
+    ))
+  
+  cat("\n\n")
+}
+```
+:::
+
+# Spike Test
+
+Because of the difference in precision between the types of sensors that record depth, the Spike Test thresholds were calculated by county and sensor type (@fig-depth-spike-dist-a; @fig-depth-spike-dist-b).
+
+For all groups, the distribution of the spike value is skewed right, and so several upper quartile values (90th, 95th, and 99.7th quartile) were evaluated to use as the $spike_{low}$. There were relatively few large single-value spikes in the depth data, and so the 99.7th quartile was selected to avoid false positives. $spike_{high}$ was defined as 3 * $spike_{low}$ to identify especially egregious spike values.
+
+Distribution of the spike value of depth observations measured by aquaMeasure sensors (binwidth = 0.1 degree C). Dotted orange line indicates $spike_{low}$; dotted red line indicates $spike_{high}$. Note difference in y-axis scale.
+
+### Figure 4
+
+::: panel-tabset
+
+```{r}
+#| warning: false
+#| message: false
+#| results: asis
+#| fig-height: 1
+
+spike_thresh <- thresholds %>% 
+  filter(variable == "temperature_degree_c", qc_test == "spike") %>% 
+  pivot_wider(names_from = threshold, values_from = threshold_value) 
+
+dat_sp <- dat_temp %>% 
+  group_by(county, station, deployment_range, sensor_serial_number) %>%
+  dplyr::arrange(timestamp_utc, .by_group = TRUE) %>%
+  mutate(
+    lag_value = lag(temperature_degree_c),
+    lead_value = lead(temperature_degree_c),
+    spike_ref = (lag_value + lead_value) / 2,
+    spike_value = abs(temperature_degree_c - spike_ref)  
+  ) %>% 
+  ungroup() %>% 
+  filter(!is.na(spike_value))
+
+plot_ly()
+
+for(i in seq_along(counties)) {
+  
+  county_i <- counties[i]
+  spike_thresh_i <- spike_thresh %>% filter(county == county_i)
+  
+  cat(paste("### ", county_i, "\n \n"))
+  
+  p_i <- dat_sp %>% 
+    filter(county == county_i) %>% 
+    plot_histogram(hist_col = spike_value, binwidth = 0.1, pal = hist_pal) +
+    geom_vline(
+      dat = filter(spike_thresh, county == county_i), 
+      aes(xintercept = spike_low), 
+      col = "#EDA247", linetype = 3
+    ) +
+    geom_vline(
+      dat = filter(spike_thresh, county == county_i), 
+      aes(xintercept = spike_high), 
+      col = "#DB4325", linetype = 3
+    ) +
+    scale_x_continuous("Temperature (degree C)\nSpike Value") +
+    theme(strip.background = element_rect(color = 1)) 
+  
+  print(
+    htmltools::tagList(
+      ggplotly(p_i, tooltip = "text", height = h_interactive())
+    ))
+  
+  cat("\n\n")
+}
+
+```
+:::
+
+::: panel-tabset
+
+### Table 4
+
+Table 4: Spike thresholds for temperature.
+```{r}
+spike_thresh %>% 
+  select(county, spike_low, spike_high) %>% 
+  datatable(options = dt_options, rownames = FALSE)
+```
+:::
+  
+  
+# Rolling Standard Deviation Test
+
+The distribution of rolling standard deviation is skewed right (@fig-do-roll-sd-dist), and so several upper quartile values were evaluated to use as the $rolling\_sd\_max$. 
+
+The 90th, 95th, and 99.7th quartile values were each applied to the the raw data (no preliminary QC) and the results inspected. The 90th quartile was determined to be too stringent, as it flagged 31 % of the observations and generated false positives. The 99.7th quartile was determined to be too lenient, as only about 11 % of the observations were flagged, and visual inspection identified false negatives. The 95th quartile, which flagged 24 % of the observations, was considered the most useful threshold.
+
+CMAR acknowledges that this is a very high percent of observations to flag as 
+[Suspect/Of Interest]{style="color: #EDA247;"}. However, it was anticipated that a large proportion of the dissolved oxygen observations would be flagged by this test because there were substantial biofouling signals identified during the preliminary QC process. CMAR is currently assessing options to reduce biofouling on dissolved oxygen sensors.
+
+There is no [Fail]{style="color: #DB4325;"} flag for the Rolling Standard Deviation Test because of the natural variability of the Water Quality variables. However, CMAR recommends that the dissolved oxygen observations flagged as [Suspect/Of Interest]{style="color: #EDA247;"} should be considered [Suspect]{style="color: #EDA247;"}, and filtered out of most analyses. 
+
+::: panel-tabset
+
+### Figure 5
+```{r}
+#| warning: false
+#| message: false
+#| results: asis
+#| fig-height: 1
+
+temp_roll_sd <- thresholds %>% 
+  filter(
+    variable == "temperature_degree_c", qc_test == "rolling_sd"
+  ) %>% 
+  select(county, threshold, threshold_value) %>% 
+  pivot_wider(names_from = threshold, values_from = threshold_value) 
 
 
+plot_ly()
 
+for(i in seq_along(counties)) {
+  
+  county_i <- counties[i]
+  roll_sd_i <- temp_roll_sd %>% filter(county == county_i)
+  
+  cat(paste("### ", county_i, "\n \n"))
+  
+  p_i <- dat_temp %>% 
+    filter(!is.na(sd_roll), county == county_i) %>% 
+    plot_histogram(
+      hist_col = sd_roll, binwidth = 0.25, pal = hist_pal,
+      user_thresh = roll_sd_i$rolling_sd_max
+    ) +
+    scale_x_continuous(
+      "Temperature (degree C)\nRolling Standard Deviation")
+  
+   print(
+    htmltools::tagList(
+      ggplotly(p_i, tooltip = "text", height = h_interactive())
+    ))
+  
+  cat("\n\n")
+}
+```
 
+:::
 
+::: panel-tabset
 
+### Table 5
 
+Table 5: Rolling standard deviation threshold for temperature.
+```{r}
+temp_roll_sd %>% 
+  datatable(options = dt_options, rownames = FALSE)
+```
 
-
-
+:::

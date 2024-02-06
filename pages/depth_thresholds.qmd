@@ -48,14 +48,6 @@ QC test thresholds for depth were based on historical Coastal Monitoring Program
 
 The thresholds were calculated and applied to different groups for each QC test, as described below.
 
-
- There was no seasonal trend, and 
-
-
-The user thresholds for the Gross Range Test were based on 
-
-Separate thresholds were calculated for each county to account for the substantial spatial differences in tidal range around the province.
-
 # Gross Range Test
 
 ## Sensor Thresholds
@@ -161,7 +153,7 @@ p <- plot_mean_sd_season(depth_clim, n_sd = 3, facet_county = FALSE) +
   facet_wrap(~county, ncol = 2) +
   theme_facet_plotly
   
-ggplotly(p, tooltip = "text")
+ggplotly(p)
 
 ```
 
@@ -188,6 +180,8 @@ ggplotly(p, tooltip = "text")
 :::
 
 # Spike Test
+
+Separate thresholds were calculated for each county to account for the substantial spatial differences in tidal range around the province.
 
 Because of the difference in precision between the types of sensors that record depth, the Spike Test thresholds were calculated by county and sensor type (@fig-depth-spike-dist-a; @fig-depth-spike-dist-b).
 
