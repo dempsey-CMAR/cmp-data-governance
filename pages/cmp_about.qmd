@@ -1,0 +1,13 @@
+---
+title: "About"
+---
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+knitr::include_graphics("figures/under-construction.png")
+```
+
+The CMAR Data Governance Website is under development. Content is being added and revised daily.
+
