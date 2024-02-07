@@ -170,7 +170,7 @@ ggplotly(p, tooltip = "text")
 
 ### Table 3
 
-Table 2: Climatology statistics and thresholds for dissolved oxygen (percent saturation).
+Table 3: Climatology statistics and thresholds for dissolved oxygen (percent saturation).
 ```{r}
 do_clim %>% 
   mutate( 

@@ -1,5 +1,5 @@
 ---
-title: "Water Quality"
+title: "Water Quality Data"
 ---
 
 Through the Water Quality branch of the Coastal Monitoring Program, CMAR collects high resolution temperature, dissolved oxygen, and salinity data.

@@ -2,8 +2,6 @@
 title: "Overview"
 ---
 
-*could use an image here*
-
 Salinity impacts both biological and physical components of the ocean ecosystem, including growth rates of marine organisms and vertical stratification [@RN13951, @RN14209]. 
 
 Salinity has direct impacts on marine organisms. Different species and life stages have preferred salinity conditions, outside of which they experience deleterious physiological effects, including mortality [@RN7554; @RN14209]. It is expected that many organisms shift their spatial distribution to avoid poor environmental conditions [@RN13620], although sessile and cultured organisms have limited to no ability to do so. Salinity is of particular concern for shellfish aquaculture. For example, two cultured species in Nova Scotia (blue mussels and oysters) can tolerate a wide range of salinity for short periods of time, but prolonged exposure to low salinity[^1] can result in reduced growth and reproduction, higher disease prevalence, and eventually death [@RN14209; @RN14690]. 

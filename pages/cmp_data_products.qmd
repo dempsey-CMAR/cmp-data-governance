@@ -1,0 +1,54 @@
+---
+title: "Data Products"
+---
+
+CMAR Water Quality data is available through several data products. Summary reports are available on the [CMAR Website](https://cmar.ca/reports/). Full datasets can be downloaded from the [Nova Scotia Open Data Portal](https://data.novascotia.ca/browse?tags=coastal+monitoring+program) and the [CIOOS Atlantic](https://catalogue.cioosatlantic.ca/organization/cmar).
+
+This page describes the structure of the data that can be downloaded from the Nova Scotia Open Data Portal. More information on CIOOS data can be found **here**.
+
+# County
+
+The Water Quality datasets are organized by county on the Nova Scotia Open Data Portal. The are large datasets, and it is highly recommended that users filter the data for the station(s), variable(s), and flag(s) of interest before downloading the data.
+
+Note that Excel files (.xlsx) have a limit of [1,048,576 rows per sheet](https://support.microsoft.com/en-us/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3?ui=en-us&rs=en-us&ad=us). CSV files can hold more rows, but may not display them all. Please use caution when downloading and analysiing the data.
+
+# Data Format
+
+There are 22 columns in each dataset (data dictionary).
+
+## Deployment Columns
+The first 7 columns provide information on the deployment, including the location[^1], the deployment dates, and the sensor string configuration.
+
+The string configuration indicates how the sensors were deployed, e.g., are they at a fixed vertical locations, or do they float with the tide. Configuration options are: sub-surface buoy, surface buoy, attached to gear, attached to fixed structure, floating dock, or unknown[^2].
+
+## Sensor Columns
+The `sensor_*` columns provide information on the sensor the made the measurement, including the model, serial number, and the estimated depth below the surface at low tide. The `depth_crosscheck` column
+checks whether this estimated sensor depthaligns with measured sensor depth (if sensor depth was measured).
+
+## Measurement Columns
+The `timestamp_utc` column indicates the time the measurement(s) was recorded, in the UTC (Coordinated Universal Time) time zone. This time zone does not observe daylight savings time, so users should take care if converting to Atlantic Standard Time (AST; UTC-4 hours) or Atlantic Daylight Time (ADT; UTC-3 hours) is required.
+
+There is a measurement value column for each variable (and unit). The measurement columns are named in the format `variable_unit`, e.g., `temperature_degree_c`. If a sensor records more than one variable per timestamp, both measurements will be in the same row. Otherwise, there will be an `NA` value in the measurement column. This results in many `NA` values per data set, and these should be dealt with appropriately prior to analysis.
+
+## Summary Flag Columns
+The remaining columns are for summary quality control flags. These are named in the format `qc_flag_variable_unit`, e.g., `qc_flag_temperature_degree_c`. These columns hold the **worst** flag value assigned to the corresponding observation. Because measurements are recorded by row, there will be many `NA` values in these columns.
+
+Recall that the Spike Test and Rolling Standard Deviation Test inherently assign a flag of "Not Evaluated" to observations at the beginning and end of each deployment. Following QARTOD, this corresponds to a numeric value of 2, while "Pass" corresponds to a numeric value of 1. Therefore, many observations are expected to be assigned a flag of "Not Evaluated". These are typically safe to include in an analysis.
+
+## Additional Flag Columns
+Internal CMAR datasets hold a separate flag column for each variable and QC test; however, these were not published to keep the datasets more manageable for users[^3]. If it is crucial for a user to understand which test resulted in a specific flag value for an observation, they can contact CMAR using the information on the [website footer](https://cmar.ca/).
+
+[^1]: waterbody, station name, coordinates, and lease if applicable
+[^2]: e.g., historical deployments where configuration was not recorded
+[^3]: including the results of all tests and summary flags results in 42 columns.
+
+
+# Data Dictionary
+
+
+
+
+
+
+
+

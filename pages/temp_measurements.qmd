@@ -14,7 +14,11 @@ source(here("pages/import_data_and_params.R"))
 dat <- dat %>% filter(variable == "Temperature")
 ```
 
-## Locations
+This page provides an overview of where and how dissolved oxygen is measured through the CMAR Coastal Monitoring Program.
+
+These figures include data up to the end of the 2022 field season.
+
+# Locations
 
 CMAR has collected temperature data from `r length(na.omit(unique(dat$station)))` stations in `r length(na.omit(unique(dat$county)))` counties (@fig-temp-station-locations). 
 
@@ -23,29 +27,15 @@ CMAR has collected temperature data from `r length(na.omit(unique(dat$station)))
 #| fig-height: 7
 #| fig-cap: Approximate location of stations with temperature data. 
 
-# interactive map
 leaflet(st_locations) %>% 
   addProviderTiles(providers$CartoDB.Positron) %>% 
   add_circle_markers_county(county_pal = county_pal, size = 6) %>% 
   add_county_fill_legend(county_pal = county_pal)
   
-  # addCircleMarkers(
-  #   lng = ~LONGITUDE, lat = ~LATITUDE, weight = 1,
-  #   color = ~map_pal(COUNTY),
-  #   fillColor =  ~map_pal(COUNTY),
-  #   popup = ~popup,
-  #   fillOpacity = alpha,
-  #   radius = size
-  # ) %>%
-  # addLegend(
-  #   "bottomright", pal = map_pal, values = ~COUNTY,
-  #   title = "County",
-  #   opacity = alpha
-  # )
 ```
 
+# Number of Observations
 ```{r}
-
 n_county_obs <- dat %>% 
   filter(group == "county") %>% 
   group_by(county) %>%  
@@ -70,7 +60,7 @@ ggplotly(p)
 
 ```
 
-## Depth
+# Depth
 
 The placement of the temperature sensors depends on the depth of the water at each station. Typically, sensors are fastened 2, 5, 10, 15, and 20 m below the surface at low tide. At deeper stations, additional sensors are added every 5 - 10 m. At shallow stations, sensors maybe be attached nearer to the surface (@fig-temp-n-obs-depth).
 
@@ -79,19 +69,18 @@ Sensors may be placed at other depths for technical reasons or specific research
 ```{r}
 #| label: fig-temp-n-obs-depth
 #| fig-height: 10
-#| fig-cap: Number of temperature observations at each depth (rounded to nearest whole number). Note that only depths with measurements are shown.
+#| fig-cap: Number of temperature observations at each depth (rounded to nearest whole number). 
 
 p <- dat %>%
   filter(group == "all_depth") %>%
   group_by(depth) %>%
   summarise(n = sum(n)) %>%
-  plot_n_obs_depth(text_size = 12)
+  plot_n_obs_depth(text_size = 12, facet_county = FALSE)
 
 ggplotly(p, tooltip = "text")
-
 ```
 
-## Sensors
+# Sensors
 
 CMAR uses several types of sensors to measure temperature (Table 1):  
 

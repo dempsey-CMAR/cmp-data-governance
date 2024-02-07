@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "Data Governance"
 ---
 
 ```{r}
@@ -10,4 +10,47 @@ knitr::include_graphics("figures/under-construction.png")
 ```
 
 The CMAR Data Governance Website is under development. Content is being added and revised daily.
+
+Welcome to the Centre for Marine Applied Research's (CMAR) Coastal Monitoring Program Data Governance Website. This website provides technical details on the automated Quality Control tests applied to the Water Quality data collected through the Program.
+
+To return to CMAR's main Coastal Monitoring Program website page, click [here](https://cmar.ca/coastal-monitoring-program/).
+
+# Coastal Monitoring Program
+
+The Centre for Marine Applied Research's (CMAR) Coastal Monitoring Program is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia's marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change. 
+
+
+# Water Quality Data
+
+Through the Water Quality Branch of the Program, CMAR collects temperature, dissolved oxygen, salinity, and depth data using sensors deployed on “sensor strings”. Click [here](../pages/cmp_water_quality.qmd) for more information on data collection, sensor calibration and validation, and data access.
+
+Click on a variable in the menu above for more detailed information about the variable, CMAR measurements, and quality control thresholds. 
+
+
+# Quality Control
+
+Automated Quality Control tests have been applied to the data to identify outlying and unexpected observations. **directions here**
+
+# Data Products
+
+Coastal Monitoring Program Water Quality Data can be accessed from several platforms. Summary reports are available on the [CMAR Website](https://cmar.ca/reports/). Full datasets can be downloaded from the [Nova Scotia Open Data Portal](https://data.novascotia.ca/browse?tags=coastal+monitoring+program) and the [CIOOS Atlantic](https://catalogue.cioosatlantic.ca/organization/cmar).
+
+Click [here](../pages/cmp_data_products.qmd) for more detail about the datasets that can be downloaded from the Nova Scotia Open Data Portal.
+
+
+# Code
+
+CMAR has developed and maintains a suite of packages in R (free, open-source statistical software) to facilitate processing Coastal Monitoring Program data. Water Quality data is compiled using the [`sensorstrings`](https://github.com/dempsey-CMAR/sensorstrings) package. Quality Control flags were applied using the [`qaqcmar`](https://github.com/dempsey-CMAR/qaqcmar) package. Both packages can be viewed or installed from [GitHub](https://github.com/dempsey-CMAR).
+
+
+```{r}
+#| echo: false
+#| fig-align: center
+
+knitr::include_graphics("figures/hex_stickers2.png")
+```
+
+
+
+
 

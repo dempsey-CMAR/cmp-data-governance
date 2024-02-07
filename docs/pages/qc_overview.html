@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Coastal Monitoring Program - Overview</title>
+<title>Coastal Monitoring Program - Quality Control Tests</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -109,15 +109,15 @@ div.csl-indent {
     <ul class="dropdown-menu" aria-labelledby="nav-menu-about">    
         <li>
     <a class="dropdown-item" href="../pages/cmp_about.html">
- <span class="dropdown-text">About</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../pages/cmp_overview.html">
- <span class="dropdown-text">Coastal Monitoring Program</span></a>
+ <span class="dropdown-text">Data Governance</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../pages/cmp_water_quality.html">
- <span class="dropdown-text">Water Quality</span></a>
+ <span class="dropdown-text">Water Quality Data</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../pages/cmp_data_products.html">
+ <span class="dropdown-text">Data Products</span></a>
   </li>  
     </ul>
   </li>
@@ -128,11 +128,7 @@ div.csl-indent {
     <ul class="dropdown-menu" aria-labelledby="nav-menu-quality-control">    
         <li>
     <a class="dropdown-item" href="../pages/qc_overview.html">
- <span class="dropdown-text">Overview</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../pages/qc_thresholds.html">
- <span class="dropdown-text">QC Thresholds</span></a>
+ <span class="dropdown-text">Quality Control Tests</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../pages/qc_tests.html">
@@ -220,17 +216,6 @@ div.csl-indent {
   </li>  
     </ul>
   </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-products" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Data Products</span>
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-products">    
-        <li>
-    <a class="dropdown-item" href="../pages/data_output.html">
- <span class="dropdown-text">Data Products</span></a>
-  </li>  
-    </ul>
-  </li>
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
@@ -246,14 +231,10 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#quality-control" id="toc-quality-control" class="nav-link active" data-scroll-target="#quality-control">Quality Control</a>
-  <ul class="collapse">
-  <li><a href="#quality-control-tests" id="toc-quality-control-tests" class="nav-link" data-scroll-target="#quality-control-tests">Quality Control Tests</a></li>
-  <li><a href="#qartod-guidance" id="toc-qartod-guidance" class="nav-link" data-scroll-target="#qartod-guidance">QARTOD Guidance</a></li>
+  <li><a href="#qartod-guidance" id="toc-qartod-guidance" class="nav-link active" data-scroll-target="#qartod-guidance">QARTOD Guidance</a></li>
   <li><a href="#flag-scheme" id="toc-flag-scheme" class="nav-link" data-scroll-target="#flag-scheme">Flag Scheme</a></li>
   <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests">Tests</a></li>
   <li><a href="#thresholds" id="toc-thresholds" class="nav-link" data-scroll-target="#thresholds">Thresholds</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -262,7 +243,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Overview</h1>
+<h1 class="title">Quality Control Tests</h1>
 </div>
 
 
@@ -277,55 +258,57 @@ div.csl-indent {
 
 </header>
 
-<section id="quality-control" class="level1">
-<h1>Quality Control</h1>
-<p>CMAR applies automated and “human in the loop” quality control (QC) processes to the Coastal Monitoring Program Water Quality data.</p>
+<p>CMAR applies automated Quality Control (QC) tests and “human in the loop” QC processes to the Coastal Monitoring Program Water Quality data.</p>
+<p>An automated QC test is an algorithm that evaluates each data observation and assigns a flag to the observation indicating the test results. These flags are typically reviewed by human experts, which is referred to as “human in the loop” QC. End users can then filter the data set for records that meet their quality criteria <span class="citation" data-cites="RN26831">(<a href="#ref-RN26831" role="doc-biblioref">UNESCO 2013</a>)</span>.</p>
+<p>Numerous QC flagging schemes and tests exist and have been applied to oceanographic data sets <span class="citation" data-cites="RN26831">(e.g., Appendix A in <a href="#ref-RN26831" role="doc-biblioref">UNESCO 2013</a>)</span>. CMAR has adopted the well-known QARTOD flag scheme and several QARTOD tests.</p>
 <p>Note that it is beyond the scope of the Program to produce analysis-ready data products for all potential users, and some users may wish to apply additional QC.</p>
-<section id="quality-control-tests" class="level2">
-<h2 class="anchored" data-anchor-id="quality-control-tests">Quality Control Tests</h2>
-<p>An automated QC test is an algorithm that evaluates each data record and assigns a flag to the record indicating the test results. These flags are typically reviewed by human experts, which is referred to as “human in the loop” QC. End users can then filter the data set for records that meet their quality criteria <span class="citation" data-cites="RN26831">(<a href="#ref-RN26831" role="doc-biblioref">UNESCO 2013</a>)</span>.</p>
-<p>Numerous QC flagging schemes and tests exist and have been applied to oceanographic data sets <span class="citation" data-cites="RN26831">(e.g., Appendix A in <a href="#ref-RN26831" role="doc-biblioref">UNESCO 2013</a>)</span>. CMAR has adopted the well-known QARTOD flag scheme and several QARTOD tests, which are applied by the U.S. Integrated Ocean Observing System (IOOS) and other ocean observing entities <span class="citation" data-cites="RN25921">(see Table 1 of <a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
-</section>
 <section id="qartod-guidance" class="level2">
 <h2 class="anchored" data-anchor-id="qartod-guidance">QARTOD Guidance</h2>
-<p>QARTOD stands for the <a href="https://ioos.noaa.gov/project/qartod/">“Quality Assurance / Quality Control of Real-Time Oceanographic Data”</a>. It is a project that grew from a 2003 effort to develop guidelines for high-quality oceanographic data. QARTOD has developed 13 Quality Control manuals covering 14 ocean variables, plus additional supporting materials <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>. Each QC manual is subjected to three iterations of formal review by subject-matter experts, with the final round soliciting international reviews. Published manuals are updated as needed to reflect new technology, additional knowledge, or growth of the Project <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
-<p>QARTOD manuals focus on QC of real-time data<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, but acknowledge that other data types may also benefit from these flags and tests <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>. The CMAR Coastal Monitoring Program data is not processed in real-time<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Instead, data is logged and offloaded from the sensors for processing every 6 - 12 months. Some QARTOD guidance was therefore not applicable to this data, and procedures were adapted to reflect the nature of CMAR data and processing.</p>
+<p>QARTOD stands for the <a href="https://ioos.noaa.gov/project/qartod/">“Quality Assurance / Quality Control of Real-Time Oceanographic Data”</a>. It is a project led by U.S. Integrated Ocean Observing System (IOOS) that aims to develop guidelines for producing high-quality oceanographic data. QARTOD has developed Quality Control manuals for core ocean variables that outline best practices and describe Quality Control tests with codable instructions. QC manuals go through formal reviews by subject-matter experts, and are updated as needed to reflect new technology, additional knowledge, or growth of the Project <span class="citation" data-cites="RN25921">(<a href="#ref-RN25921" role="doc-biblioref">IOOS 2020a</a>)</span>.</p>
+<p>QARTOD manuals focus on QC of real-time data<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, but acknowledge that other data types may also benefit from these flags and tests <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>. The CMAR Water Quality data is not processed in real-time<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Instead, data is logged and offloaded from the sensors for processing every 6 - 12 months. Some QARTOD guidance was therefore not applicable to this data, and procedures were adapted to reflect the nature of CMAR data and processing.</p>
 </section>
-<section id="flag-scheme" class="level2">
-<h2 class="anchored" data-anchor-id="flag-scheme">Flag Scheme</h2>
-<p>CMAR has adopted the QARTOD flag scheme (<a href="#tbl-qartod-flags">Table&nbsp;1</a>) with minor adaptations. Details on how the QARTOD flag scheme was developed is provided in <span class="citation" data-cites="RN26831">UNESCO (<a href="#ref-RN26831" role="doc-biblioref">2013</a>)</span>.</p>
+<section id="flag-scheme" class="level1">
+<h1>Flag Scheme</h1>
+<p>CMAR has adopted the QARTOD flag scheme (<a href="#tbl-qartod-flags">Table&nbsp;1</a>) with some adaptations. The QARTOD flag scheme provides information to data users on the expected quality of the data. This means that even “bad” data observations may be published, and it is up to the user to determine which records to include in their application. Details on how the QARTOD flag scheme was developed is provided in <span class="citation" data-cites="RN26831">UNESCO (<a href="#ref-RN26831" role="doc-biblioref">2013</a>)</span>.</p>
 <div id="tbl-qartod-flags" class="anchored">
 <table class="table">
-<caption>Table&nbsp;1: QARTOD flag scheme <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>.</caption>
+<caption>Table&nbsp;1: QARTOD flag scheme. Modified from <span class="citation" data-cites="RN25922">IOOS (<a href="#ref-RN25922" role="doc-biblioref">2020b</a>)</span>.</caption>
 <colgroup>
-<col style="width: 14%">
-<col style="width: 85%">
+<col style="width: 21%">
+<col style="width: 19%">
+<col style="width: 59%">
 </colgroup>
 <thead>
 <tr class="header">
-<th><strong>Flag</strong></th>
+<th><strong>Flag Label</strong></th>
+<th style="text-align: center;"><strong>Flag Value</strong></th>
 <th><strong>Description</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span style="color: #009200;">Pass - 1</span></td>
+<td><span style="color: #009200;">Pass</span></td>
+<td style="text-align: center;"><span style="color: #009200;">1</span></td>
 <td><span style="color: #009200;">Data have passed critical real-time quality control tests and are deemed adequate for use as preliminary data.</span></td>
 </tr>
 <tr class="even">
-<td><span style="color: #c4c1a5;">Not evaluated - 2</span></td>
+<td><span style="color: #c4c1a5;">Not Evaluated</span></td>
+<td style="text-align: center;"><span style="color: #c4c1a5;">2</span></td>
 <td><span style="color: #c4c1a5;">Data have not been QC-tested, or the information on quality is not available.</span></td>
 </tr>
 <tr class="odd">
-<td><span style="color: #EDA247;">Suspect or Of High Interest- 3</span></td>
+<td><span style="color: #EDA247;">Suspect/Of Interest</span></td>
+<td style="text-align: center;"><span style="color: #EDA247;">3</span></td>
 <td><span style="color: #EDA247;">Data are considered to be either suspect or of high interest to data providers and users. They are flagged suspect to draw further attention to them by operators.</span></td>
 </tr>
 <tr class="even">
-<td><span style="color: #DB4325;">Fail - 4</span></td>
+<td><span style="color: #DB4325;">Fail</span></td>
+<td style="text-align: center;"><span style="color: #DB4325;">4</span></td>
 <td><span style="color: #DB4325;">Data are considered to have failed one or more critical real-time QC checks. If they are disseminated at all, it should be readily apparent that they are not of acceptable quality.</span></td>
 </tr>
 <tr class="odd">
-<td><span style="color: #5A5A5A;">Missing data - 9</span></td>
+<td><span style="color: #5A5A5A;">Missing Data</span></td>
+<td style="text-align: center;"><span style="color: #5A5A5A;">9</span></td>
 <td><span style="color: #5A5A5A;">Data are missing; used as a placeholder.</span></td>
 </tr>
 </tbody>
@@ -334,9 +317,10 @@ div.csl-indent {
 <p>The main CMAR adaptation to this flag scheme is that the <span style="color: #5A5A5A;">Missing data</span> flag is not used. This flag is meant to alert real-time operators that an expected observation was not received, and may trigger efforts to fix recording and transmission issues. Since CMAR does not receive real-time data, this placeholder flag was deemed unnecessary. Note that data gaps may still occur due to sensor failure, delays between retrieval and re-deployment, and vandalism. It is the responsibility of the data users to identify and address these data gaps if required.</p>
 <p>Note that QARTOD uses a flag of <span style="color: #EDA247;">3</span> to denote observations that are <span style="color: #EDA247;">Suspect</span> (e.g., of dubious quality) <strong>or</strong> <span style="color: #EDA247;">Of High Interest</span> (e.g., an unusual event). This is meant to encourage human in the loop decisions making <span class="citation" data-cites="RN25922">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>)</span>. Where possible, CMAR has defined when these test results are likely <span style="color: #EDA247;">Suspect</span> vs.&nbsp;<span style="color: #EDA247;">Of High Interest</span>, although data users should inspect these records carefully before deciding how to use (or discard) them.</p>
 </section>
-<section id="tests" class="level2">
-<h2 class="anchored" data-anchor-id="tests">Tests</h2>
-<p>As of February 2024, CMAR applies 5 QC tests to the Coastal Monitoring Program Water Quality data (<a href="#tbl-cmar_tests">Table&nbsp;2</a>). Click <a href="../pages/qc_tests.html">here</a> for more detail on each test,</p>
+<section id="tests" class="level1">
+<h1>Tests</h1>
+<p>As of February 2024, CMAR applies 5 QC tests to the Coastal Monitoring Program Water Quality data (<a href="#tbl-cmar_tests">Table&nbsp;2</a>). Three are QARTOD tests (Gross Range, Climatological, and Spike), and the remaining two were developed by CMAR to address specific data quality concerns.</p>
+<p>Click <a href="../pages/qc_tests.html">here</a> for more detail on each test.</p>
 <div id="tbl-cmar_tests" class="anchored">
 <table class="table">
 <caption>Table&nbsp;2: Automated Quality Control tests applied to Water Quality Data.</caption>
@@ -354,7 +338,7 @@ div.csl-indent {
 <td><span class="citation" data-cites="RN26562">IOOS (<a href="#ref-RN26562" role="doc-biblioref">2018</a>)</span>, <span class="citation" data-cites="RN24432">IOOS (<a href="#ref-RN24432" role="doc-biblioref">2020c</a>)</span></td>
 </tr>
 <tr class="even">
-<td>Climatology</td>
+<td>Climatological</td>
 <td>Flags observations that are statistical outliers for a given month.</td>
 <td><span class="citation" data-cites="RN26562">IOOS (<a href="#ref-RN26562" role="doc-biblioref">2018</a>)</span>, <span class="citation" data-cites="RN24432">IOOS (<a href="#ref-RN24432" role="doc-biblioref">2020c</a>)</span>, <span class="citation" data-cites="RN26877">OOI (<a href="#ref-RN26877" role="doc-biblioref">2022</a>)</span></td>
 </tr>
@@ -377,13 +361,12 @@ div.csl-indent {
 </table>
 </div>
 </section>
-<section id="thresholds" class="level2">
-<h2 class="anchored" data-anchor-id="thresholds">Thresholds</h2>
-<p>Each QC test requires threshold(s) that determine the results of the test. Choosing appropriate thresholds for each test and variable is a key part of the QC effort. Following best practices, CMAR has developed thresholds based on historical data where possible <span class="citation" data-cites="RN25922 RN15382 RN26877">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>; <a href="#ref-RN15382" role="doc-biblioref">Taylor and Loescher 2013</a>; <a href="#ref-RN26877" role="doc-biblioref">OOI 2022</a>)</span>. The <a href="../pages/qc_tests.html">QC Tests</a> page provides an overview of each QC test and how the associated thresholds were calculated. The Thresholds page under each variable in the menu above provides additional details on how the threshold(s) were determined.</p>
+<section id="thresholds" class="level1">
+<h1>Thresholds</h1>
+<p>Each QC test requires threshold(s) that determine the results of the test. Choosing appropriate thresholds for each test and variable is a considerable part of the QC effort <span class="citation" data-cites="RN26562">(<a href="#ref-RN26562" role="doc-biblioref">IOOS 2018</a>)</span>. Following best practices, CMAR has developed thresholds based on historical data where possible <span class="citation" data-cites="RN25922 RN15382 RN26877">(<a href="#ref-RN25922" role="doc-biblioref">IOOS 2020b</a>; <a href="#ref-RN15382" role="doc-biblioref">Taylor and Loescher 2013</a>; <a href="#ref-RN26877" role="doc-biblioref">OOI 2022</a>)</span>. The <a href="../pages/qc_tests.html">QC Tests</a> page provides an overview of each QC test and how the associated thresholds were calculated. The Thresholds page under each variable in the menu above provides additional details on how the threshold(s) were determined.</p>
 
 
 
-</section>
 </section>
 
 

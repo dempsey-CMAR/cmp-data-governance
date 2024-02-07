@@ -1,6 +1,90 @@
 ---
 title: "CMAR Measurements"
+editor_options: 
+  chunk_output_type: console
 ---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, dpi = 600, fig.width = 8)
+
+library(here)
+
+source(here("pages/import_data_and_params.R"))
+
+dat <- dat %>% filter(variable == "Salinity")
+
+st_locations <- st_locations %>% 
+  filter(STATION %in% unique(dat$station))
+  
+```
+
 
 - Inverness county
 - The lake is connected to the North Atlantic by two natural channels; the Great and Little Bras d'Or Channels which pass on either side of Boularderie Island.
+
+This page provides an overview of where and how dissolved oxygen is measured through the CMAR Coastal Monitoring Program.
+
+These figures include data up to the end of the 2022 field season.
+
+# Locations
+
+CMAR has collected salinity data from `r length(na.omit(unique(dat$station)))` stations in `r length(na.omit(unique(dat$county)))` counties (@fig-sal-station-locations). 
+
+```{r, fig-sal-station-units}
+#| label: fig-sal-station-locations
+#| fig-height: 7
+#| fig-cap: Approximate location of stations with temperature data. 
+
+leaflet(st_locations) %>% 
+  addProviderTiles(providers$CartoDB.Positron) %>% 
+  add_circle_markers_county(county_pal = county_pal, size = 6) %>% 
+  add_county_fill_legend(county_pal = county_pal)
+  
+```
+
+# Number of Observations
+```{r}
+n_county_obs <- dat %>% 
+  filter(group == "county") %>% 
+  group_by(county) %>%  
+  summarise(n = sum(n)) %>% 
+  mutate(n_percent = round(100 * n / sum(n), digits = 2)) %>% 
+  arrange(desc(n_percent))
+```
+
+A large proportion of these records are from `r n_county_obs[1, "county"]$county` County
+(`r n_county_obs[1, "n_percent"]$n_percent` %), while a small proportion are from `r n_county_obs[nrow(n_county_obs), "county"]$county` (`r n_county_obs[nrow(n_county_obs), "n_percent"]$n_percent` %) and `r n_county_obs[nrow(n_county_obs)-1, "county"]$county` (`r n_county_obs[nrow(n_county_obs)-1, "n_percent"]$n_percent` %) Counties (@fig-sal-n-obs). 
+
+```{r}
+#| label: fig-sal-n-obs
+#| fig-height: 8
+#| fig-cap: The number of temperature observations in each county. 
+
+p <- dat %>%
+  filter(group == "county") %>% 
+  plot_n_obs_county()
+
+ggplotly(p)
+```
+
+# Depth
+
+- mostly shallow
+- 10 m are from Whycocomagh
+
+```{r}
+#| label: fig-sal-n-obs-depth
+#| fig-height: 8
+#| fig-cap: Number of dissolved oxygen observations at each depth (rounded to nearest whole number).
+
+p <- dat %>%
+  filter(group == "all_depth") %>%
+  group_by(depth) %>%
+  summarise(n = sum(n)) %>%
+  plot_n_obs_depth(facet_county = FALSE)
+  
+ggplotly(p, tooltip = "text")
+
+```
+
+# Sensors

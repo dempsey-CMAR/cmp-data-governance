@@ -18,9 +18,11 @@ st_locations <- st_locations %>%
   
 ```
 
-**Update this with newest data???**
+This page provides an overview of where and how dissolved oxygen is measured through the CMAR Coastal Monitoring Program.
 
-## Locations
+These figures include data up to the end of the 2022 field season.
+
+# Locations
 
 CMAR has collected dissolved oxygen data from `r length(na.omit(unique(dat$station)))` stations in `r length(na.omit(unique(dat$county)))` counties (@fig-do-station-locations). 
 
@@ -56,6 +58,8 @@ leaflet(st_locations) %>%
 
 ```
 
+# Number of Observations
+
 ```{r}
 n_county_obs <- dat %>% 
   filter(group == "county") %>% 
@@ -63,12 +67,12 @@ n_county_obs <- dat %>%
   summarise(n = sum(n)) %>% 
   mutate(n_percent = round(100 * n / sum(n), digits = 2)) %>% 
   arrange(desc(n_percent))
+
 ```
 
-A large proportion of these records are from `r n_county_obs[1, "county"]$county` County
-(`r n_county_obs[1, "n_percent"]$n_percent` %) and `r n_county_obs[2, "county"]$county` County (`r n_county_obs[2, "n_percent"]$n_percent` %), while a small proportion are from `r n_county_obs[nrow(n_county_obs), "county"]$county` (`r n_county_obs[nrow(n_county_obs), "n_percent"]$n_percent` %) and `r n_county_obs[nrow(n_county_obs)-1, "county"]$county` (`r n_county_obs[nrow(n_county_obs)-1, "n_percent"]$n_percent` %) Counties (@fig-do-n-obs-sat). 
+A large proportion of dissolved oxygen records are from `r n_county_obs[1, "county"]$county` County (`r n_county_obs[1, "n_percent"]$n_percent` %) and `r n_county_obs[2, "county"]$county` County (`r n_county_obs[2, "n_percent"]$n_percent` %), while a small proportion are from `r n_county_obs[nrow(n_county_obs), "county"]$county` (`r n_county_obs[nrow(n_county_obs), "n_percent"]$n_percent` %) and `r n_county_obs[nrow(n_county_obs)-1, "county"]$county` (`r n_county_obs[nrow(n_county_obs)-1, "n_percent"]$n_percent` %) Counties (@fig-do-n-obs-sat). 
 
-Most observations to date have been measured in units of percent saturation. In 2021, CMAR began deploying several sensors that record in concentration (mg / L) (@fig-do-n-obs-sat; see the Sensors section for more information).
+Most observations to date have been measured in units of percent saturation. In 2021, CMAR began deploying several sensors that record in concentration (mg / L), and there are a growing number of observations recorded in these units (@fig-do-n-obs-sat).
 
 ```{r}
 #| label: fig-do-n-obs-sat
@@ -80,21 +84,20 @@ p <- dat %>%
   plot_n_obs_county()
 
 ggplotly(p)
-
 ```
 
-## Depth
+# Depth
 
-There is typically one DO sensor on each sensor string, usually attached 5 m below the surface (@fig-do-n-obs-depth). This choice of depth reflects the original Coastal Monitoring Program objective, which was to provide data to inform aquaculture site selection[^1]. As the Program and mandate expands, DO sensors continue to be deployed at this depth for consistency and longevity of the time series.
+There is typically one dissolved oxygen sensor on each sensor string, usually attached 5 m below the surface (@fig-do-n-obs-depth). This choice of depth reflects the original Coastal Monitoring Program objective, which was to provide data to inform aquaculture site selection[^1]. As the Program and mandate expands, DO sensors continue to be deployed at this depth for consistency and longevity of the time series.
 
-Dissolved oxygen has also been measured at other depths for specific research projects, particularly in Whycocomagh Basin, Inverness County (link to Inverness report) (@fig-do-n-obs-depth).
+Dissolved oxygen has also been measured at other depths for specific research projects, particularly in Whycocomagh Basin, [Inverness County](https://cmar.ca/wp-content/uploads/sites/22/2023/05/County_Report_Inverness.pdf) (@fig-do-n-obs-depth).
 
 [^1]: 5 m is approximately mid-cage depth for net pens in the region.
 
 ```{r}
 #| label: fig-do-n-obs-depth
 #| fig-height: 8
-#| fig-cap: Number of dissolved oxygen observations at each depth (rounded to nearest whole number). Note that only depths with measurements are shown.
+#| fig-cap: Number of dissolved oxygen observations at each depth (rounded to nearest whole number).
 
 p <- dat %>%
   filter(group == "all_depth") %>%
@@ -106,20 +109,19 @@ ggplotly(p, tooltip = "text")
 
 ```
 
-## Sensors
+# Sensors
 
-CMAR uses two types of sensors to measure DO: the [aquaMeasure DOT](https://rsaqua.co.uk/wp-content/uploads/2021/03/Innovasea_UserManual-2021_V1.5.pdf) [@RN25012] and [Onset HOBO U26](https://www.onsetcomp.com/sites/default/files/resources-documents/15603-K%20MAN-U26x.pdf) [@RN25011].  
+CMAR uses two types of sensors to measure dissolved oxygen: the [aquaMeasure DOT](https://rsaqua.co.uk/wp-content/uploads/2021/03/Innovasea_UserManual-2021_V1.5.pdf) [@RN25012] and [Onset HOBO U26](https://www.onsetcomp.com/sites/default/files/resources-documents/15603-K%20MAN-U26x.pdf) [@RN25011].  
 
 ### aquaMeasure DOT 
-CMAR has a large inventory of DOTs (71 in April 2023), which are used for most deployments with DO. The DOT measures temperature and partial pressure of oxygen, providing DO values in units of percent saturation. Partial pressure values are not affected by salinity [@RN13158], and so no correction factor is required for these measurements. For CMAR deployments, each DOT is programmed to measure and internally log at 10 minute intervals. CMAR typically retrieves sensors after ~1 year for data offload, cleaning, and calibration/validation.
+CMAR has a large inventory of DOTs (71 in April 2023), which are used for most deployments with dissolved oxygen. The DOT measures temperature and partial pressure of oxygen, providing dissolved oxygen values in units of percent saturation. Partial pressure values are not affected by salinity [@RN13158], and so no correction factor is required for these measurements. For CMAR deployments, each DOT is programmed to measure and internally log at 10 minute intervals. CMAR typically retrieves sensors after ~1 year for data offload, cleaning, and calibration/validation.
 
 ### HOBO U26
-CMAR supplemented their DO sensor inventory with 13 HOBO U26 sensors in 2021, and purchased an additional 10 in January 2023. The HOBO U26 measures concentration, and provides DO vales in units of mg / L. For CMAR deployments, each HOBO U26 is programmed to recorded temperature and dissolved oxygen every 10 minutes. These sensors have a sensor cap that needs to be replaced every 6 months. They are deployed in St. Margaret's Bay and Mahone Bay rather than more remote locations so that they can be serviced twice a year with minimal travel requirements (@fig-do-station-locations).
+CMAR added 13 HOBO U26 sensors to the inventory in 2021, and purchased an additional 10 in January 2023. The HOBO U26 measures temperature the concentration of dissolved oxygen (in units of mg / L). For CMAR deployments, each HOBO U26 is programmed to measure and internally log at 10 minute intervals. These sensors have a sensor cap that needs to be replaced every 6 months. They are deployed in St. Margaret's Bay and Mahone Bay rather than more remote locations so that they can be serviced twice a year with minimal travel requirements (@fig-do-station-locations).
 
-The HOBO U26 sensor does not account for salinity, so the measurements should be adjusted based on a salinity correction factor before analysis. The [HOBOware software](https://www.onsetcomp.com/products/software/hoboware) can apply this salinity correction if salinity conditions are provided. [HOBOware](https://www.onsetcomp.com/products/software/hoboware) can also convert measured concentration values to percent saturation if salinity and pressure conditions are provided. The CMAR R package `docalcs` provides functions for those calculations; however, CMAR does not have consistent salinity or pressure measurements, and so the uncorrected data are provided. 
+The HOBO U26 sensor does not account for salinity, so the measurements should be adjusted based on a salinity correction factor before analysis. The [HOBOware software](https://www.onsetcomp.com/products/software/hoboware) can apply this salinity correction if salinity conditions are provided. The software can also convert measured concentration values to percent saturation if salinity and pressure conditions are provided. CMAR does not have consistent salinity or pressure measurements, and so the uncorrected data are provided. 
 
 ### Biofouling
 
-The DOT and HOBO U26 do not have any anti-fouling mechanisms, and so measurements can be susceptible to biofouling. Ideally, sensors would be cleaned every 2 - 4 weeks to remove fouling, but this is not feasible due to logistical and financial constraints. Significant effort was made to identify and flag possible biofouling signals, although this is challenging for the reasons noted [here](../pages/do_overview.qmd).
-
+The DOT and HOBO U26 do not have any anti-fouling mechanisms, and so measurements are susceptible to biofouling. Ideally, sensors would be cleaned every 2 - 4 weeks to remove fouling, but this is not feasible due to logistical and financial constraints. Significant effort was made to flag possible biofouling signals, and CMAR is evaluating potential anti-fouling strategies.
 
