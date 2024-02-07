@@ -1,0 +1,14 @@
+{
+  "hash": "5aaf9e61e035bc5cd9813eb045d78238",
+  "result": {
+    "markdown": "---\ntitle: \"About\"\n---\n\n::: {.cell layout-align=\"center\"}\n::: {.cell-output-display}\n![](figures/under-construction.png){fig-align='center' width=960}\n:::\n:::\n\n\nThe CMAR Data Governance Website is under development. Content is being added and revised daily.\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

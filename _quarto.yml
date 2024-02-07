@@ -8,8 +8,9 @@ website:
   navbar:
     logo: "pages/figures/cmar3.png"
     left:
-      - text: "Program Overview"
+      - text: "About"
         menu:
+          - pages/cmp_about.qmd
           - pages/cmp_overview.qmd
           - pages/cmp_water_quality.qmd
       - text: "Quality Control"
