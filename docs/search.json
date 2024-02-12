@@ -1,9 +1,352 @@
 [
   {
+    "objectID": "pages/cmp_about.html",
+    "href": "pages/cmp_about.html",
+    "title": "Data Governance",
+    "section": "",
+    "text": "The CMAR Data Governance Website is under development. Content is being added and revised daily.\nWelcome to the Centre for Marine Applied Research’s (CMAR) Coastal Monitoring Program Data Governance Website. This website provides technical details on the automated Quality Control tests applied to the Water Quality data collected through the Program.\nTo return to CMAR’s main Coastal Monitoring Program website page, click here.\n\nCoastal Monitoring Program\nThe Centre for Marine Applied Research’s (CMAR) Coastal Monitoring Program is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia’s marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change.\n\n\nWater Quality Data\nThrough the Water Quality Branch of the Program, CMAR collects temperature, dissolved oxygen, salinity, and depth data using sensors deployed on “sensor strings”. Click here for more information on data collection, sensor calibration and validation, and data access.\nClick on a variable in the menu above for more detailed information about the variable, CMAR measurements, and quality control thresholds.\n\n\nQuality Control\nAutomated Quality Control tests have been applied to the data to identify outlying and unexpected observations. directions here\n\n\nData Products\nCoastal Monitoring Program Water Quality Data can be accessed from several platforms. Summary reports are available on the CMAR Website. Full datasets can be downloaded from the Nova Scotia Open Data Portal and the CIOOS Atlantic.\nClick here for more detail about the datasets that can be downloaded from the Nova Scotia Open Data Portal.\n\n\nCode\nCMAR has developed and maintains a suite of packages in R (free, open-source statistical software) to facilitate processing Coastal Monitoring Program data. Water Quality data is compiled using the sensorstrings package. Quality Control flags were applied using the qaqcmar package. Both packages can be viewed or installed from GitHub."
+  },
+  {
+    "objectID": "pages/cmp_data_products.html",
+    "href": "pages/cmp_data_products.html",
+    "title": "Data Products",
+    "section": "",
+    "text": "CMAR Water Quality data is available through several data products. Summary reports are available on the CMAR Website. Full datasets can be downloaded from the Nova Scotia Open Data Portal and the CIOOS Atlantic.\nThis page describes the structure of the data that can be downloaded from the Nova Scotia Open Data Portal. More information on CIOOS data can be found here."
+  },
+  {
+    "objectID": "pages/cmp_data_products.html#deployment-columns",
+    "href": "pages/cmp_data_products.html#deployment-columns",
+    "title": "Data Products",
+    "section": "Deployment Columns",
+    "text": "Deployment Columns\nThe first 7 columns provide information on the deployment, including the location1, the deployment dates, and the sensor string configuration.\nThe string configuration indicates how the sensors were deployed, e.g., are they at a fixed vertical locations, or do they float with the tide. Configuration options are: sub-surface buoy, surface buoy, attached to gear, attached to fixed structure, floating dock, or unknown2."
+  },
+  {
+    "objectID": "pages/cmp_data_products.html#sensor-columns",
+    "href": "pages/cmp_data_products.html#sensor-columns",
+    "title": "Data Products",
+    "section": "Sensor Columns",
+    "text": "Sensor Columns\nThe sensor_* columns provide information on the sensor the made the measurement, including the model, serial number, and the estimated depth below the surface at low tide. The depth_crosscheck column checks whether this estimated sensor depthaligns with measured sensor depth (if sensor depth was measured)."
+  },
+  {
+    "objectID": "pages/cmp_data_products.html#measurement-columns",
+    "href": "pages/cmp_data_products.html#measurement-columns",
+    "title": "Data Products",
+    "section": "Measurement Columns",
+    "text": "Measurement Columns\nThe timestamp_utc column indicates the time the measurement(s) was recorded, in the UTC (Coordinated Universal Time) time zone. This time zone does not observe daylight savings time, so users should take care if converting to Atlantic Standard Time (AST; UTC-4 hours) or Atlantic Daylight Time (ADT; UTC-3 hours) is required.\nThere is a measurement value column for each variable (and unit). The measurement columns are named in the format variable_unit, e.g., temperature_degree_c. If a sensor records more than one variable per timestamp, both measurements will be in the same row. Otherwise, there will be an NA value in the measurement column. This results in many NA values per data set, and these should be dealt with appropriately prior to analysis."
+  },
+  {
+    "objectID": "pages/cmp_data_products.html#summary-flag-columns",
+    "href": "pages/cmp_data_products.html#summary-flag-columns",
+    "title": "Data Products",
+    "section": "Summary Flag Columns",
+    "text": "Summary Flag Columns\nThe remaining columns are for summary quality control flags. These are named in the format qc_flag_variable_unit, e.g., qc_flag_temperature_degree_c. These columns hold the worst flag value assigned to the corresponding observation. Because measurements are recorded by row, there will be many NA values in these columns.\nRecall that the Spike Test and Rolling Standard Deviation Test inherently assign a flag of “Not Evaluated” to observations at the beginning and end of each deployment. Following QARTOD, this corresponds to a numeric value of 2, while “Pass” corresponds to a numeric value of 1. Therefore, many observations are expected to be assigned a flag of “Not Evaluated”. These are typically safe to include in an analysis."
+  },
+  {
+    "objectID": "pages/cmp_data_products.html#additional-flag-columns",
+    "href": "pages/cmp_data_products.html#additional-flag-columns",
+    "title": "Data Products",
+    "section": "Additional Flag Columns",
+    "text": "Additional Flag Columns\nInternal CMAR datasets hold a separate flag column for each variable and QC test; however, these were not published to keep the datasets more manageable for users3. If it is crucial for a user to understand which test resulted in a specific flag value for an observation, they can contact CMAR using the information on the website footer."
+  },
+  {
+    "objectID": "pages/cmp_water_quality.html",
+    "href": "pages/cmp_water_quality.html",
+    "title": "Water Quality Data",
+    "section": "",
+    "text": "Through the Water Quality branch of the Coastal Monitoring Program, CMAR collects high resolution temperature, dissolved oxygen, and salinity data.\n\nData Collection\nWater Quality data is collected using “sensor strings”. Each string is attached to the seafloor by an anchor and suspended by a sub-surface buoy, with sensors attached at various depths (Figure). Most strings deployed since 2018 are attached to the anchor by an acoustic receiver with a release mechanism. The receiver also logs detections of tagged animals including great white sharks, sturgeon, and tuna for the Ocean Tracking Network.\n\n\n\n\n\nSensor string diagram (not to scale).\n\n\n\n\nCharacteristics of the station location (e.g., depth, bottom type, and currents) and stakeholder needs dictate the string configuration (e.g., anchor weight, and number/type of sensors). Sensor strings are generally deployed 200 m to 1000 m from shore, in depths up to 75 m. Historically, strings were deployed with only temperature sensors, but in more recent years at least one dissolved oxygen sensor is included (typically at 5 m). At the request of industry, salinity sensors are also included at stations near proposed and existing shellfish aquaculture leases.\n\n\nCalibration & Validation\nText to come\n\n\nData Access\nCoastal Monitoring Program Water Quality Data can be accessed from several platforms. Summary reports are available on the CMAR Website. Full datasets can be downloaded from the Nova Scotia Open Data Portal and the CIOOS Atlantic."
+  },
+  {
+    "objectID": "pages/data_output.html",
+    "href": "pages/data_output.html",
+    "title": "Data Products",
+    "section": "",
+    "text": "CMAR Water Quality data is available through several data products. Summary reports are available on the CMAR Website. Full datasets can be downloaded from the Nova Scotia Open Data Portal and the CIOOS Atlantic.\nThis page describes the structure of the data that can be downloaded from the Nova Scotia Open Data Portal. More information on CIOOS data can be found here."
+  },
+  {
+    "objectID": "pages/data_output.html#deployment-columns",
+    "href": "pages/data_output.html#deployment-columns",
+    "title": "Data Products",
+    "section": "Deployment Columns",
+    "text": "Deployment Columns\nThe first 7 columns provide information on the deployment, including the location1, the deployment dates, and the sensor string configuration.\nThe string configuration indicates how the sensors were deployed, e.g., are they at a fixed vertical locations, or do they float with the tide. Configuration options are: sub-surface buoy, surface buoy, attached to gear, attached to fixed structure, floating dock, or unknown2."
+  },
+  {
+    "objectID": "pages/data_output.html#sensor-columns",
+    "href": "pages/data_output.html#sensor-columns",
+    "title": "Data Products",
+    "section": "Sensor Columns",
+    "text": "Sensor Columns\nThe sensor_* columns provide information on the sensor the made the measurement, including the model, serial number, and the estimated depth below the surface at low tide. The depth_crosscheck column checks whether this estimated sensor depthaligns with measured sensor depth (if sensor depth was measured)."
+  },
+  {
+    "objectID": "pages/data_output.html#measurement-columns",
+    "href": "pages/data_output.html#measurement-columns",
+    "title": "Data Products",
+    "section": "Measurement Columns",
+    "text": "Measurement Columns\nThe timestamp_utc column indicates the time the measurement(s) was recorded, in the UTC (Coordinated Universal Time) time zone. This time zone does not observe daylight savings time, so users should take care if converting to Atlantic Standard Time (AST; UTC-4 hours) or Atlantic Daylight Time (ADT; UTC-3 hours) is required.\nThere is a measurement value column for each variable (and unit). The measurement columns are named in the format variable_unit, e.g., temperature_degree_c. If a sensor records more than one variable per timestamp, both measurements will be in the same row. Otherwise, there will be an NA value in the measurement column. This results in many NA values per data set, and these should be dealt with appropriately prior to analysis."
+  },
+  {
+    "objectID": "pages/data_output.html#summary-flag-columns",
+    "href": "pages/data_output.html#summary-flag-columns",
+    "title": "Data Products",
+    "section": "Summary Flag Columns",
+    "text": "Summary Flag Columns\nThe remaining columns are for summary quality control flags. These are named in the format qc_flag_variable_unit, e.g., qc_flag_temperature_degree_c. These columns hold the worst flag value assigned to the corresponding observation. Because measurements are recorded by row, there will be many NA values in these columns.\nThe Spike Test and Rolling Standard Deviation Test inherently assign a flag of “Not Evaluated” to observations at the beginning and end of each deployment. Following QARTOD, this corresponds to a numeric value of 2, while “Pass” corresponds to a numeric value of 1. Therefore, many observations are expected to be assigned a flag of “Not Evaluated”. These are typically safe to include in an analysis.\nNote that it is beyond the scope of the Program to produce analysis-ready data products for all potential users, and some users may wish to apply additional QC."
+  },
+  {
+    "objectID": "pages/data_output.html#additional-flag-columns",
+    "href": "pages/data_output.html#additional-flag-columns",
+    "title": "Data Products",
+    "section": "Additional Flag Columns",
+    "text": "Additional Flag Columns\nInternal CMAR datasets hold a separate flag column for each variable and QC test; however, these were not published to keep the datasets more manageable for users3. If it is crucial for a user to understand which test resulted in a specific flag value for an observation, they can contact CMAR using the information on the website footer."
+  },
+  {
     "objectID": "pages/depth_measurements.html",
     "href": "pages/depth_measurements.html",
     "title": "CMAR Measurements",
     "section": "",
     "text": "This page provides an overview of where and how sensor depth is measured through the CMAR Coastal Monitoring Program.\nThese figures include data up to the end of the 2022 field season.\n\nLocations\nCMAR has collected depth data from 68 stations in 12 counties (Figure 1).\n\n\n\n\n\nFigure 1: Approximate location of stations with temperature data.\n\n\n\n\n\nNumber of Observations\n\n\n\nA large proportion of dissolved oxygen records are from Guysborough County (38.68 %) and Shelburne County (14.65 %), while a small proportion are from Colchester (0.43 %) and Annapolis (0.92 %) Counties (Figure 2).\nMost observations to date have been measured in units of percent saturation. In 2021, CMAR began deploying several sensors that record in concentration (mg / L), and there are a growing number of observations recorded in these units (Figure 2).\n\n\n\n\n\nFigure 2: The number of dissolved oxygen observations in each county.\n\n\n\n\n\nSensors\nCMAR does not deploy sensors specifically to measure depth; however, some of the sensors used to measure other variables also measure depth. Most VR2AR units and some aquaMeasure units (DOTs and SALs) provide depth measurements.\nThe aquaMeasure sensors are programmed to record depth every 10 minutes, and have a precision of 0. 1 m. this typically results in a clear sinusoidal signal that would be expected from tidal changes (Figure 3).\n\n\n\n\n\nFigure 3: Measured depth observations from an aquaMeasure sensor deployed in January 2020 at Beaver Point.\n\n\n\nIn contrast, the VR2AR units only record depth every hour and have a resolution of 1 m. This results in very coarse depth measurements that don’t clearly show a sinusoidal signal, and can result in apparent spikes (Figure 4).\n\n\n\n\n\nFigure 4: Measured depth observations from a VR2AR sensor deployed in January 2020 at Beaver Point.\n\n\n\n\n\nApplications\nCMAR takes advantage of the opportunistic depth sampling to verify the estimated depth of sensors on the string in the Depth Crosscheck Test. Abrupt changes in measured depth can indicate that a sensor string was moved during or between deployments. Measured depth that increases over the deployment could indicate substantial biofouling causing the sensors to sink below the intended depth. Measured depth can also provide an estimate of the tidal range in an area."
+  },
+  {
+    "objectID": "pages/depth_overview.html",
+    "href": "pages/depth_overview.html",
+    "title": "Overview",
+    "section": "",
+    "text": "could use an image here\nText here"
+  },
+  {
+    "objectID": "pages/depth_thresholds.html",
+    "href": "pages/depth_thresholds.html",
+    "title": "Thresholds",
+    "section": "",
+    "text": "QC test thresholds for depth were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data. Obvious outliers and freshwater stations were omitted.\nThe thresholds were calculated and applied to different groups for each QC test, as described below."
+  },
+  {
+    "objectID": "pages/depth_thresholds.html#sensor-thresholds",
+    "href": "pages/depth_thresholds.html#sensor-thresholds",
+    "title": "Thresholds",
+    "section": "Sensor Thresholds",
+    "text": "Sensor Thresholds\nThe sensor thresholds were determined based on the manual for the aquaMeasure and VR2AR sensors (Table 1).\n\nTable 1\n\n\nTable 1: Depth sensor thresholds for the Gross Range Test."
+  },
+  {
+    "objectID": "pages/depth_thresholds.html#user-thresholds",
+    "href": "pages/depth_thresholds.html#user-thresholds",
+    "title": "Thresholds",
+    "section": "User Thresholds",
+    "text": "User Thresholds\nMeasured sensor depth is a function of where the sensor is located on the string, and is not necessarily related to the historical measurements (Figure 1). For example, in Antigonish County have typically been moored in relatively shallow depths, but deeper sensors could be deployed there in the future.\nTo avoid flagging future observations at unusual depths, a single set of user thresholds was manually selected and applied to the pooled data.\n\nFigure 1Table 2\n\n\n\n\n\n\n\nFigure 1: Distribution of depth observations (binwidth = 2 m). Dotted orange lines indicate the user thresholds.\n\n\n\n\n\nTable 2: Gross Range Test user thresholds for measured sensor depth."
+  },
+  {
+    "objectID": "pages/do_measurements.html",
+    "href": "pages/do_measurements.html",
+    "title": "CMAR Measurements",
+    "section": "",
+    "text": "This page provides an overview of where and how dissolved oxygen is measured through the CMAR Coastal Monitoring Program.\nThese figures include data up to the end of the 2022 field season.\n\nLocations\nCMAR has collected dissolved oxygen data from 63 stations in 13 counties (Figure 1).\n\n\n\n\n\nFigure 1: Approximate location of stations with dissolved oxygen data. At most stations, dissolved oxygen is measured in units of percent saturation. For several stations in Halifax and Lunenburg counties, dissolved oxygen is now recorded in units of concentration.\n\n\n\n\n\nNumber of Observations\n\n\n\nA large proportion of dissolved oxygen records are from Guysborough County (23.37 %) and Shelburne County (20.58 %), while a small proportion are from Antigonish (0.53 %) and Pictou (1.1 %) Counties (Figure 2).\nMost observations to date have been measured in units of percent saturation. In 2021, CMAR began deploying several sensors that record in concentration (mg / L), and there are a growing number of observations recorded in these units (Figure 2).\n\n\n\n\n\nFigure 2: The number of dissolved oxygen observations in each county.\n\n\n\n\n\nDepth\nThere is typically one dissolved oxygen sensor on each sensor string, usually attached 5 m below the surface (Figure 3). This choice of depth reflects the original Coastal Monitoring Program objective, which was to provide data to inform aquaculture site selection1. As the Program and mandate expands, DO sensors continue to be deployed at this depth for consistency and longevity of the time series.\nDissolved oxygen has also been measured at other depths for specific research projects, particularly in Whycocomagh Basin, Inverness County (Figure 3).\n\n\n\n\n\nFigure 3: Number of dissolved oxygen observations at each depth (rounded to nearest whole number).\n\n\n\n\n\nSensors\nCMAR uses two types of sensors to measure dissolved oxygen: the aquaMeasure DOT (InnovaSea 2021) and Onset HOBO U26 (Onset 2012).\n\naquaMeasure DOT\nCMAR has a large inventory of DOTs (71 in April 2023), which are used for most deployments with dissolved oxygen. The DOT measures temperature and partial pressure of oxygen, providing dissolved oxygen values in units of percent saturation. Partial pressure values are not affected by salinity (Bittig et al. 2018), and so no correction factor is required for these measurements. For CMAR deployments, each DOT is programmed to measure and internally log at 10 minute intervals. CMAR typically retrieves sensors after ~1 year for data offload, cleaning, and calibration/validation.\n\n\nHOBO U26\nCMAR added 13 HOBO U26 sensors to the inventory in 2021, and purchased an additional 10 in January 2023. The HOBO U26 measures temperature the concentration of dissolved oxygen (in units of mg / L). For CMAR deployments, each HOBO U26 is programmed to measure and internally log at 10 minute intervals. These sensors have a sensor cap that needs to be replaced every 6 months. They are deployed in St. Margaret’s Bay and Mahone Bay rather than more remote locations so that they can be serviced twice a year with minimal travel requirements (Figure 1).\nThe HOBO U26 sensor does not account for salinity, so the measurements should be adjusted based on a salinity correction factor before analysis. The HOBOware software can apply this salinity correction if salinity conditions are provided. The software can also convert measured concentration values to percent saturation if salinity and pressure conditions are provided. CMAR does not have consistent salinity or pressure measurements, and so the uncorrected data are provided.\n\n\nBiofouling\nThe DOT and HOBO U26 do not have any anti-fouling mechanisms, and so measurements are susceptible to biofouling. Ideally, sensors would be cleaned every 2 - 4 weeks to remove fouling, but this is not feasible due to logistical and financial constraints. Significant effort was made to flag possible biofouling signals, and CMAR is evaluating potential anti-fouling strategies.\n\n\n\n\n\n\n\nReferences\n\nBittig, Henry C., Arne Körtzinger, Craig Neill, Eikbert van Ooijen, Joshua N. Plant, Johannes Hahn, Kenneth S. Johnson, Bo Yang, and Steven R. Emerson. 2018. “Oxygen Optode Sensors: Principle, Characterization, Calibration, and Application in the Ocean.” Journal Article. Frontiers in Marine Science 4 (429). https://doi.org/10.3389/fmars.2017.00429.\n\n\nInnovaSea. 2021. “Realtime Monitoring Product Manual.” https://rsaqua.co.uk/wp-content/uploads/2021/03/Innovasea_UserManual-2021_V1.5.pdf.\n\n\nOnset. 2012. “HOBO® Water Temp Pro V2 (U22-001) Manual.” https://www.onsetcomp.com/files/manual_pdfs/10366-F-MAN-U22-001.pdf.\n\nFootnotes\n\n\n5 m is approximately mid-cage depth for net pens in the region.↩︎"
+  },
+  {
+    "objectID": "pages/do_overview.html",
+    "href": "pages/do_overview.html",
+    "title": "Overview",
+    "section": "",
+    "text": "Dissolved oxygen (DO) is a measure of the amount of gaseous oxygen dissolved in water, which is a key water quality parameter for much aquatic life (Santana et al. 2017). There are many drivers of DO variability, including biological activity (e.g., photosynthesis, respiration, plankton blooms), physical processes (e.g., air-sea exchange, tidal events, meteorology, seasonal stratification), and chemical reactions (e.g., oxidation of organic material) (Santana et al. 2017; IOOS 2018). DO is typically higher near the surface, where it is produced by photosynthetic organisms and is in flux to maintain equilibrium with the atmosphere. DO is distributed to deeper waters by vertical mixing and diffusion."
+  },
+  {
+    "objectID": "pages/do_overview.html#units",
+    "href": "pages/do_overview.html#units",
+    "title": "Overview",
+    "section": "Units",
+    "text": "Units\nDissolved oxygen can be measured in different units, including concentration and percent saturation (Bittig 2018). For fisheries and aquaculture applications, concentration is often reported in milligrams of gaseous oxygen per litre of water (mg / L) (Bittig et al. 2018), which is equivalent to parts per million (ppm).\nPercent saturation describes how “full” of oxygen the water is (Equation 1). The maximum amount of oxygen that can be dissolved depends on the water temperature, salinity, and barometric pressure (Figure 1, Figure 2). For units of concentration, this theoretical maximum is called the DO solubility, and is typically calculated from equations based on those developed by Benson and Krause (1980, 1984) and Garcia and Gordon (1992)1 Cloern (1999). The percent saturation is the measured DO concentration as fraction of the DO solubility (Equation 1).\n\\[\nDO_{\\%saturation} = 100 * DO_{concentration}/DO_{solubility}\n\\tag{1}\\]\nPercent saturation can also be calculated from partial pressures, although DO is not typically expressed in pressure units (Equation 2). In this case, the maximum amount of DO that can be dissolved is the partial pressure of oxygen in the air (\\(pO_{2, air}\\)), as calculated in SCOR WG 142 (Bittig 2018). The actual amount of DO in the water is measured by the sensor in corresponding pressure units (\\(pO_2\\)).\n\\[\nDO_{\\%saturation} = 100 * pO_2 / pO_{2, air}\n\\tag{2}\\]\n\n\n\n\n\nFigure 1: Relationship between DO solubility and temperature at five values of salinity (pressure = 1 atm). Note that DO solubility decreases with increasing temperature and salinity.\n\n\n\n\n\n\n\n\n\nFigure 2: Relationship between DO solubility and temperature at three values of barometric pressure (in freshwater). Note that DO solubility increases with increasing pressure.\n\n\n\n\nConversion between DO units can be non-trivial (Bittig 2018). DO solubility is used to convert between units of concentration and percent saturation, which means estimates of temperature, salinity, and pressure are required. For the most accurate conversion, each DO observation should have a corresponding observation of these water properties. However, this is not always feasible, particularly for long deployments. Single value estimates can be used to convert data from the whole deployment (Onset 2014)."
+  },
+  {
+    "objectID": "pages/do_overview.html#supersaturation",
+    "href": "pages/do_overview.html#supersaturation",
+    "title": "Overview",
+    "section": "Supersaturation",
+    "text": "Supersaturation\nWhen the measured DO concentration is greater than the DO solubility (\\(DO_{\\%saturation} > 100 \\%\\)), the water is considered “supersaturated”. Supersaturated water is typically caused by photosynthetic organisms, which are a large source of pure oxygen to the water column (YSI 2019; Craig and Hayward 1987) 2. Additionally, a rapid increase in temperature can decrease the DO solubility without altering the measured DO concentration, resulting in saturation values greater than 100 %3. The excess DO will eventually diffuse into the atmosphere, but this process is not instantaneous."
+  },
+  {
+    "objectID": "pages/do_overview.html#biofouling",
+    "href": "pages/do_overview.html#biofouling",
+    "title": "Overview",
+    "section": "Biofouling",
+    "text": "Biofouling\nA major challenge of accurately measuring DO near the surface4 is the growth of aquatic organisms on and around the sensor, called biofouling (OOI 2022). Biofouling can range from a small film of algae, to large colonies/growths of seaweed, to colonies of mollusks (Figure 3). The daily cycle of photosynthesis (oxygen production during the day) and respiration (oxygen consumption, relatively higher at night) of these organisms can cause extreme variability in the DO measurements. The recorded DO therefore reflects the microcosm growing on the sensor, but not the ambient environment. This signal can occur within a month or two of deployment (OOI 2022), depending on time time of year and location. Other impacts of biofouling can include signal attenuation, sensor drift, and decreased mooring depth from the additional weight (IOOS 2018).\n\n\n\nFigure 3: Examples of biofouling on CMAR sensor strings.\n\n\n\n\n\nAnti-fouling strategies can be employed to reduce fouling and improve data quality, although these present other challenges. Sensors can be cleaned regularly to remove growth (e.g., every 2 - 4 weeks), although this may not be feasible for many reasons (e.g., cost and time constraints). Some sensors have built-in anti-fouling mechanisms such as wipers (PME 2023) or UV light (Mariscope 2020) to reduce growth, but these sensors tend to be expensive and have reduced battery life. Copper (a natural biocide) tape, wire, or screens around the sensor can reduce fouling for several weeks, although this can also become expensive and may not be sufficient for longer deployments (YSI 2023)."
+  },
+  {
+    "objectID": "pages/do_overview.html#other-challenges",
+    "href": "pages/do_overview.html#other-challenges",
+    "title": "Overview",
+    "section": "Other Challenges",
+    "text": "Other Challenges\nQuality control of DO data can also be challenging and time consuming. There is a broad range of “reasonable” DO values, depending on the location, depth, season, oceanographic conditions, etc. Rapid and extreme variability may reflect the natural processes that are of interest to the monitoring program, including phytoplankton blooms, storms, and upwelling. However, this signal could also be a result of biofouling. To identify the most likely driver, further investigation is required. For example, the timing of the variability with respect to sensor deployment, time of year, and co-located variables could provide insight into the reliability of the measurements. It is also difficult to detect and quantify sensor drift over time for a single deployment. Consecutive deployments at the same station can highlight drift (IOOS 2018)."
+  },
+  {
+    "objectID": "pages/do_thresholds.html",
+    "href": "pages/do_thresholds.html",
+    "title": "Thresholds (% saturation)",
+    "section": "",
+    "text": "Separate thresholds were calculated for dissolved oxygen measured in units of percent saturation and dissolved oxygen measured in units of mg per L. This page describes the thresholds for percent saturation. Click here for the thresholds for mg per L.\nQC test thresholds for dissolved oxygen (percent saturation) were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data. Obvious outliers, suspected biofouling, and freshwater stations were omitted. Three deployments in Whycocomagh Basin (Inverness County) measured data near or below the oxycline. This data was also omitted from the thresholds analysis because it is not representative of typical conditions measured by the Program.\nThe observations were pooled to calculate a single set of thresholds for all counties because there were limited observations for several counties1. This analysis could be revisited and thresholds revised when there is more consistent data."
+  },
+  {
+    "objectID": "pages/do_thresholds.html#sensor-thresholds",
+    "href": "pages/do_thresholds.html#sensor-thresholds",
+    "title": "Thresholds (% saturation)",
+    "section": "Sensor Thresholds",
+    "text": "Sensor Thresholds\nThe sensor thresholds were determined based on the manual for the aquaMeasure DOT (Table 1).\n\nTable 1\n\n\nTable 1: Dissolved oxygen (percent saturation) sensor thresholds for the Gross Range Test."
+  },
+  {
+    "objectID": "pages/do_thresholds.html#user-thresholds",
+    "href": "pages/do_thresholds.html#user-thresholds",
+    "title": "Thresholds (% saturation)",
+    "section": "User Thresholds",
+    "text": "User Thresholds\nThe dissolved oxygen (percent saturation) observations are relatively normally distributed (Figure 1), and so the mean and standard deviation were used to determine \\(user_{min}\\) and \\(user_{max}\\). The statistics and threshold values are shown in Table 2.\n\nFigure 1Table 2\n\n\n\n\n\n\n\nFigure 1: Distribution of dissolved oxygen (percent saturation) observations (binwidth = 2 %). Dotted orange lines indicate the user thresholds.\n\n\n\n\n\nTable 2: Gross Range Test statistics and user thresholds for dissolved oxygen (percent saturation)."
+  },
+  {
+    "objectID": "pages/do_thresholds_mg_per_l.html",
+    "href": "pages/do_thresholds_mg_per_l.html",
+    "title": "Thresholds (mg/L)",
+    "section": "",
+    "text": "Separate thresholds were calculated for dissolved oxygen measured in units of percent saturation and dissolved oxygen measured in units of mg per L. This page describes the thresholds for mg per L. Click here for the thresholds for percent saturation.\nQC test thresholds for dissolved oxygen (mg/L) were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data. Obvious outliers, suspected biofouling, and freshwater stations were omitted.\nTo date, dissolved oxygen (mg/L) has only been measured in two counties1 in adjacent waterbodies2. A single set of thresholds was determined for these counties.\nThe dissolved oxygen (mg/L) data has not been corrected for salinity. The threshold were calculated from and applied to the uncorrected data."
+  },
+  {
+    "objectID": "pages/do_thresholds_mg_per_l.html#sensor-thresholds",
+    "href": "pages/do_thresholds_mg_per_l.html#sensor-thresholds",
+    "title": "Thresholds (mg/L)",
+    "section": "Sensor Thresholds",
+    "text": "Sensor Thresholds\nThe sensor thresholds were determined based on the manual for the HOBO DO (Table 1).\n\nTable 1\n\n\nTable 1: Dissolved oxygen (mg/L) sensor thresholds for the Gross Range Test."
+  },
+  {
+    "objectID": "pages/do_thresholds_mg_per_l.html#user-thresholds",
+    "href": "pages/do_thresholds_mg_per_l.html#user-thresholds",
+    "title": "Thresholds (mg/L)",
+    "section": "User Thresholds",
+    "text": "User Thresholds\nThe dissolved oxygen (mg/L) observations are relatively normally distributed (Figure 1), and so the mean and standard deviation were used to determine \\(user_{min}\\) and \\(user_{max}\\). The statistics and threshold values are shown in Table 2.\n\nFigure 1Table 2\n\n\n\n\n\n\n\nFigure 1: Distribution of dissolved oxygen (mg/L) observations (binwidth = 0.5 mg/L). Dotted orange lines indicate the user thresholds.\n\n\n\n\n\nTable 2: Gross Range Test statistics and user thresholds for dissolved oxygen (mg/L)."
+  },
+  {
+    "objectID": "pages/qc_overview.html",
+    "href": "pages/qc_overview.html",
+    "title": "Quality Control Tests",
+    "section": "",
+    "text": "CMAR applies automated Quality Control (QC) tests and “human in the loop” QC processes to the Coastal Monitoring Program Water Quality data.\nAn automated QC test is an algorithm that evaluates each data observation and assigns a flag to the observation indicating the test results. These flags are typically reviewed by human experts, which is referred to as “human in the loop” QC. End users can then filter the data set for records that meet their quality criteria (UNESCO 2013).\nNumerous QC flagging schemes and tests exist and have been applied to oceanographic data sets (e.g., Appendix A in UNESCO 2013). CMAR has adopted the well-known QARTOD flag scheme and several QARTOD tests.\nNote that it is beyond the scope of the Program to produce analysis-ready data products for all potential users, and some users may wish to apply additional QC."
+  },
+  {
+    "objectID": "pages/qc_overview.html#qartod-guidance",
+    "href": "pages/qc_overview.html#qartod-guidance",
+    "title": "Quality Control Tests",
+    "section": "QARTOD Guidance",
+    "text": "QARTOD Guidance\nQARTOD stands for the “Quality Assurance / Quality Control of Real-Time Oceanographic Data”. It is a project led by U.S. Integrated Ocean Observing System (IOOS) that aims to develop guidelines for producing high-quality oceanographic data. QARTOD has developed Quality Control manuals for core ocean variables that outline best practices and describe Quality Control tests with codable instructions. QC manuals go through formal reviews by subject-matter experts, and are updated as needed to reflect new technology, additional knowledge, or growth of the Project (IOOS 2020a).\nQARTOD manuals focus on QC of real-time data1, but acknowledge that other data types may also benefit from these flags and tests (IOOS 2020b). The CMAR Water Quality data is not processed in real-time2. Instead, data is logged and offloaded from the sensors for processing every 6 - 12 months. Some QARTOD guidance was therefore not applicable to this data, and procedures were adapted to reflect the nature of CMAR data and processing."
+  },
+  {
+    "objectID": "pages/qc_tests.html",
+    "href": "pages/qc_tests.html",
+    "title": "QC Tests",
+    "section": "",
+    "text": "This page describes the QC tests applied to the Coastal Monitoring Program Water Quality data, and the general methods for selecting the most appropriate thresholds for each test."
+  },
+  {
+    "objectID": "pages/qc_tests.html#gross-range-test",
+    "href": "pages/qc_tests.html#gross-range-test",
+    "title": "QC Tests",
+    "section": "Gross Range Test",
+    "text": "Gross Range Test\nFollowing QARTOD, the Gross Range Test aims to identify observations that fall outside of the sensor measurement range (flagged Fail) and observations that are statistical outliers (flagged Suspect/Of Interest).\nThresholds for failed observations are named \\(sensor_{min}\\) and \\(sensor_{max}\\), and are determined by the sensor specifications. CMAR assigned these thresholds for each variable and sensor based on information in the associated manuals.\nThresholds for suspect/of interest observations are named \\(user_{min}\\) and \\(user_{max}\\). CMAR assigned these thresholds based on historical Coastal Monitoring Program data.\nFollowing the OOI Biogeochemical Sensor Data: Best Practices & User Guide, these thresholds were calculated from historical data as the mean +/- three standard deviations (Equation 1, Equation 2):\n\\[\nuser_{min} = avg_{var} - 3 * stdev_{var}  \n\\tag{1}\\]\n\\[\nuser_{max} = avg_{var} + 3 * stdev_{var}\n\\tag{2}\\]\nwhere \\(avg_{var}\\) is average of the variable of interest, and \\(stdev_{var}\\) is the standard deviation of the variable of interest."
+  },
+  {
+    "objectID": "pages/qc_tests.html#climatological-test",
+    "href": "pages/qc_tests.html#climatological-test",
+    "title": "QC Tests",
+    "section": "Climatological Test",
+    "text": "Climatological Test\nThe Climatological Test is a variation of the Gross Range Test that accounts for seasonal variability. Under QARTOD, there is no Fail flag associated with this test for temperature, salinity, or dissolved oxygen due to the dynamic nature of these variables (IOOS 2020, 2018). Following this guidance, CMAR chose to assign the flag Suspect/Of Interest to seasonal outliers for all variables.\nThe Climatological thresholds are named \\(season_{min}\\) and \\(season_{max}\\). Following the OOI Biogeochemical Sensor Data: Best Practices & User Guide, seasons were defined based on the calendar month, and the thresholds were based on historical data. The monthly thresholds were defined similar to the Gross Range Test:\n\\[\nseason_{min} = avg_{season} - 3 * stdev_{season}  \n\\tag{3}\\]\n\\[\nseason_{max} = avg_{season} + 3 * stdev_{season}  \n\\tag{4}\\]\nThe \\(avg_{season}\\) was calculated as the average of all observations for a given month, and \\(stdev_{season}\\) was the associated standard deviation.\nNote that OOI used a more complex method (harmonic analysis, as described here) to estimate \\(avg_{season}\\) to account for spurious values. This was beyond the current scope of the CMAR Coastal Monitoring Program, but could be applied in future iterations of this threshold analysis."
+  },
+  {
+    "objectID": "pages/qc_tests.html#spike-test",
+    "href": "pages/qc_tests.html#spike-test",
+    "title": "QC Tests",
+    "section": "Spike Test",
+    "text": "Spike Test\nThe Spike Test identifies single observations that are unexpectedly high (or low) based on the previous and following observations.\nFor each observation, a \\(spike_{value}\\) is calculated based on a spike reference (\\(spike_{ref}\\)). The \\(spike_{value}\\) is compared to the Spike Test thresholds and the appropriate flag is assigned.\n\\[spike_{value} = abs(value - spike_{ref})\\] \\[spike_{ref} = (lead_{value} - lag_{value}) / 2\\]\nDue to the dependence on \\(lead_{value}\\) and \\(lag_{value}\\), the first and last observations in each sensor deployment will be flagged as “Not Evaluated” because the \\(spike_{ref}\\) cannot be calculated.\nAs a simple example, consider several observations that increase linearly over time (Example 1: Figure). Here, the \\(spike_{ref}\\) is always equal to the observed value, and so the \\(spike_{value}\\) is zero, indicating no spike detected (Example 1: Table).\n\nExample 1: FigureExample 1: Table\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNow consider that the value of one of these observations lies above or below the linear pattern (Example 2: Figure). This value will have a relatively high \\(spike_{value}\\), and may be flagged, depending on the threshold values. Note that the observations on either side of the spike may also be flagged.\n\nExample 2: FigureExample 2: Table\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCMAR uses two Spike Test thresholds: \\(spike_{low}\\) and \\(spike_{high}\\). Observations greater than \\(spike_{low}\\) but less than or equal to \\(spike_{high}\\) are assigned a flag of Suspect/Of Interest. Values greater than \\(spike_{high}\\) are assigned a flag of Fail.\nValues for \\(spike_{low}\\) were selected based on the 99.7th quartile of the \\(spike_{value}\\) for each variable. The quartile was used instead of the mean and standard deviation because the distribution of \\(spike_{value}\\) skews right for each variable. The value for \\(spike_{high}\\) was set to be 3 * \\(spike_{low}\\)."
+  },
+  {
+    "objectID": "pages/qc_tests.html#rolling-standard-deviation",
+    "href": "pages/qc_tests.html#rolling-standard-deviation",
+    "title": "QC Tests",
+    "section": "Rolling Standard Deviation",
+    "text": "Rolling Standard Deviation\nThe Rolling Standard Deviation test was developed by CMAR to identify suspected biofouling in the dissolved oxygen data. The test assumes that there is a 24-hour oxygen cycle, with net oxygen production during the day, and net oxygen consumption during the night. Biofouling is suspected when the amplitude of this cycle, as measured by the standard deviation, increases above a threshold (Figure 1).\nThe rolling standard deviation, \\(sd_{roll}\\), was calculated from a 24-hour centered rolling window of observations, i.e., \\(T_{n-m/2}\\), … \\(T_{n-1}\\), \\(T_{n}\\), \\(T_{n+1}\\), … \\(T_{n+m/2}\\).1 The number of observations in each window depends on the sample interval, which is typically 10 minutes.\nAlthough this test was designed to identify suspected biofouling, it was also applied to the other Water Quality variables as a general test of the standard deviation. In particular, it is expected to flag rapid changes in temperature due to fall storms and upwelling.\nThe Rolling Standard Deviation Test threshold is called \\(rolling\\_sd\\_max\\). Observations greater than this threshold are flagged as Suspect/Of Interest. This test does not flag any observations as fail because of the high natural variability in the Water Quality variables. Observations at the beginning and end of the deployment for which the rolling standard deviation cannot be calculated (i.e, observations less than 12 hours from the start or end of deployment) are flagged Not evaluated.\nValues for \\(rolling\\_sd\\_max\\) were selected based on the mean and standard deviation or an upper quartile \\(sd_{roll}\\), depending on the distribution of the variable observations.\n\n\n\n\n\nFigure 1: Simulated dissolved oxygen data and associated flags from the rolling standard deviation test."
+  },
+  {
+    "objectID": "pages/qc_tests.html#depth-crosscheck",
+    "href": "pages/qc_tests.html#depth-crosscheck",
+    "title": "QC Tests",
+    "section": "Depth Crosscheck",
+    "text": "Depth Crosscheck\nThe Depth Crosscheck Test was developed by CMAR to flag deployments where the measured sensor depth does not align with the estimated sensor depth in the sensor_depth_at_low_tide_m column.\nFor this test, the difference between the minimum value of measured depth and the estimated depth is calculated. If the absolute difference (\\(abs_{diff}\\)) between the two is greater than the threshold \\(depth\\_diff\\_max\\), then test results in a flag of Suspect/Of Interest.\n\\[abs_{diff} = abs(sensor\\_depth\\_at\\_low\\_tide\\_m - min\\_measured\\_depth\\_m) \\]\n\\(depth\\_diff\\_max\\) was determined based on the 95th percentile of the \\(abs_{diff}\\) from all deployments with measured depth data.\nNote that all observations from a deployment will have the same depth crosscheck flag. If there is more than one sensor on the string that measures depth, the worst (highest) flag will be assigned to the deployment.\nThis is because a Suspect/Of Interest flag for the Depth Crosscheck test is an indication that the sensor string was moored in an area deeper (or shallower) than expected. For example, if the string was moored in an area 10 m deeper than anticipated, all sensors will likely be 10 m deeper than recorded in the sensor_depth_at_low_tide_m column."
+  },
+  {
+    "objectID": "pages/qc_thresholds.html",
+    "href": "pages/qc_thresholds.html",
+    "title": "QC Thresholds",
+    "section": "",
+    "text": "Where possible, the thresholds for each QC test and variable were determined from historical data, which provide a baseline of “normal” and “outlying” conditions. The historical data used here was the Coastal Monitoring Program Water Quality data sets submitted to the Nova Scotia Open Data Portal in December 2022. Preliminary quality control measures (e.g., obvious outliers and suspected biofouling removed) were applied to these datasets before submission. Additional QC was applied where required throughout the thresholds analysis. For example, freshwater and other outlier stations were excluded to provide a better representation of “normal” coastal ocean conditions.\nThe historical data was reviewed carefully prior to calculating thresholds. Depending on the number of observations and the spatial and temporal resolution of observations, data was pooled together or separated by county. Other grouping variables (e.g., sensor type) were also used when applicable.\nThe distribution of observations was reviewed to determined which statistics to use to determine outlying conditions. Mean and 3 * standard deviation was used for relatively normally distributed variables, while upper quartiles were used for skewed distributions. The final decisions for each QC test, variable, group, and statistic is recorded in Table X. See the individual variable tabs for more details.\nThese thresholds should be re-evaluated and re-calculated if necessary in several years, when more data is available.\n\nTable 1\n\n\n\n\n\n\n\n\nDownload thresholds\nblank spaces mean NA\n\n\nTable 2"
+  },
+  {
+    "objectID": "pages/sal_measurements.html",
+    "href": "pages/sal_measurements.html",
+    "title": "CMAR Measurements",
+    "section": "",
+    "text": "Inverness county\nThe lake is connected to the North Atlantic by two natural channels; the Great and Little Bras d’Or Channels which pass on either side of Boularderie Island.\n\nThis page provides an overview of where and how dissolved oxygen is measured through the CMAR Coastal Monitoring Program.\nThese figures include data up to the end of the 2022 field season.\n\nLocations\nCMAR has collected salinity data from 14 stations in 7 counties (Figure 1).\n\n\n\n\n\nFigure 1: Approximate location of stations with temperature data.\n\n\n\n\n\nNumber of Observations\n\n\n\nA large proportion of these records are from Guysborough County (34.48 %), while a small proportion are from Annapolis (0.75 %) and Lunenburg (1.49 %) Counties (Figure 2).\n\n\n\n\n\nFigure 2: The number of temperature observations in each county.\n\n\n\n\n\nDepth\n\nmostly shallow\n10 m are from Whycocomagh\n\n\n\n\n\n\nFigure 3: Number of dissolved oxygen observations at each depth (rounded to nearest whole number).\n\n\n\n\n\nSensors"
+  },
+  {
+    "objectID": "pages/sal_overview.html",
+    "href": "pages/sal_overview.html",
+    "title": "Overview",
+    "section": "",
+    "text": "Salinity impacts both biological and physical components of the ocean ecosystem, including growth rates of marine organisms and vertical stratification Feindel et al. (2013).\nSalinity has direct impacts on marine organisms. Different species and life stages have preferred salinity conditions, outside of which they experience deleterious physiological effects, including mortality (Brennan, Blanchard, and Fennel 2016; Feindel et al. 2013). It is expected that many organisms shift their spatial distribution to avoid poor environmental conditions (Nye et al. 2009), although sessile and cultured organisms have limited to no ability to do so. Salinity is of particular concern for shellfish aquaculture. For example, two cultured species in Nova Scotia (blue mussels and oysters) can tolerate a wide range of salinity for short periods of time, but prolonged exposure to low salinity1 can result in reduced growth and reproduction, higher disease prevalence, and eventually death (Feindel et al. 2013; Howarth, Coughlin, and Reid 2021).\nLike temperature, salinity is directly related to seasonal ocean stratification. Freshwater inputs in the spring and summer contribute to a fresh, warm surface layer that disappears in the fall and winter from wind-driven mixing. In turn, salinity is impacted by rates of evaporation and precipitation, freshwater inputs, melting and freezing of sea ice, and ocean circulation (Environment and Canada 2019). Remote sensing observations of salinity, along with temperature and chlorophyll-a, can also be used to estimate ocean acidification (Land et al. 2015; Salisbury et al. 2015).\nSurface waters around Canada, including off the coast of Nova Scotia, are generally becoming fresher due to climate change and natural variability (Environment and Canada 2019). This trend is expected to continue as a result of the projected increase in precipitation and ice melt (Environment and Canada 2019; Howarth, Coughlin, and Reid 2021). In contrast, deep waters in the Gulf of St. Lawrence are becoming more saline as a result of the northward shift in subtropical currents bringing in saltier waters (Environment and Canada 2019; Howarth, Coughlin, and Reid 2021).\n\n\n\n\n\nReferences\n\nBrennan, Catherine E., Hannah Blanchard, and Katja Fennel. 2016. “Putting Temperature and Oxygen Thresholds of Marine Animals in Context of Environmental Change: A Regional Perspective for the Scotian Shelf and Gulf of St. Lawrence.” Journal Article. PLOS ONE 11 (12): e0167411. https://doi.org/10.1371/journal.pone.0167411.\n\n\nEnvironment, and Climate Change Canada. 2019. “Canada’s Changing Climate Report.” Report. Government of Canada. https://www.nrcan.gc.ca/sites/www.nrcan.gc.ca/files/energy/Climate-change/pdf/CCCR_FULLREPORT-EN-FINAL.pdf.\n\n\nFeindel, N, L Cooper, E Trippel, and T Blair. 2013. “Climate Change and Marine Aquaculture in Atlantic Canada and Quebec.” Book Section. In Climate Change Impacts, Vulnerabilities and Opportunities Analysis of the Marine Atlantic Basin. Vol. 3012 of Canadian Manuscript Reports of Fisheries and Aquatic Sciences, edited by N. L Shackell, B Greenan, P Pepin, D Chabot, and A Warburton, 3012:195–255. Fisheries; Oceans Canada (DFO), Ocean; Ecosystem Sciences Division, Bedford Institute of Oceanography, Nova Scotia. https://waves-vagues.dfo-mpo.gc.ca/Library/350962.pdf.\n\n\nHowarth, L. M., M. Coughlin, and G. K. Reid. 2021. “Assessing Climate Change Vulnerability of Seafood Industry-Dependent Communities in Nova Scotia.” Report. Centre for Marine Applied Research (CMAR), Dartmouth, Nova Scotia, Canada. https://cmar.ca/2021/01/25/assessing-climate-change-vulnerability-of-seafood-dependent-communities-in-nova-scotia/.\n\n\nLand, Peter E., Jamie D. Shutler, Helen S. Findlay, Fanny Girard-Ardhuin, Roberto Sabia, Nicolas Reul, Jean-Francois Piolle, et al. 2015. “Salinity from Space Unlocks Satellite-Based Assessment of Ocean Acidification.” Journal Article. Environmental Science & Technology 49 (4): 1987–94. https://doi.org/10.1021/es504849s.\n\n\nNye, Janet A., Jason S. Link, Jonathan A. Hare, and William J. Overholtz. 2009. “Changing Spatial Distribution of Fish Stocks in Relation to Climate and Population Size on the Northeast United States Continental Shelf.” Journal Article. Marine Ecology Progress Series 393: 111–29. WOS:000272187800010.\n\n\nSalisbury, J., D. Vandemark, B. W. Jönsson, W. Balch, S. S. Chakraborty, S. Lohrenz, B. Chapron, et al. 2015. “How Can Present and Future Satellite Missions Support Scientific Studies That Address Ocean Acidification?” Journal Article. Oceanography 28 (2): 108–21. https://doi.org/http://dx.doi.org/10.5670/oceanog.2015.35.\n\nFootnotes\n\n\ne.g., from freshwater pulses↩︎"
+  },
+  {
+    "objectID": "pages/sal_thresholds.html",
+    "href": "pages/sal_thresholds.html",
+    "title": "Thresholds",
+    "section": "",
+    "text": "QC test thresholds for salinity were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data, when obvious outliers and observations impacted by suspected sensor drift (due to biofouling) were omitted.\nSeparate thresholds were calculated for salinity measured in Inverness County, and salinity measured elsewhere. add to this"
+  },
+  {
+    "objectID": "pages/sal_thresholds.html#sensor-thresholds",
+    "href": "pages/sal_thresholds.html#sensor-thresholds",
+    "title": "Thresholds",
+    "section": "Sensor Thresholds",
+    "text": "Sensor Thresholds\nThe sensor thresholds were determined based on the manual for the aquaMeasure SAL (Table 1).\n\nTable 1\n\n\nTable 1: Salinity sensor thresholds for the Gross Range Test."
+  },
+  {
+    "objectID": "pages/sal_thresholds.html#user-thresholds",
+    "href": "pages/sal_thresholds.html#user-thresholds",
+    "title": "Thresholds",
+    "section": "User Thresholds",
+    "text": "User Thresholds\nThe salinity observations are relatively normally distributed for both groups of data (Figure 1), and so the mean and standard deviation were used to determine \\(user_{min}\\) and \\(user_{max}\\). The statistics and threshold values are shown in Table 2.\n\nFigure 1Table 2\n\n\n\n\n\n\n\nFigure 1: Distribution of salinity observations (binwidth = 0.5 PSU). Dotted orange lines indicate the user thresholds.\n\n\n\n\n\nTable 2: Gross Range Test statistics and user thresholds for salinity."
+  },
+  {
+    "objectID": "pages/temp_measurements.html",
+    "href": "pages/temp_measurements.html",
+    "title": "CMAR Measurements",
+    "section": "",
+    "text": "This page provides an overview of where and how dissolved oxygen is measured through the CMAR Coastal Monitoring Program.\nThese figures include data up to the end of the 2022 field season.\n\nLocations\nCMAR has collected temperature data from 126 stations in 15 counties (Figure 1).\n\n\n\n\n\nFigure 1: Approximate location of stations with temperature data.\n\n\n\n\n\nNumber of Observations\n\n\n\nA large proportion of these records are from Guysborough County (37.24 %), while a small proportion are from Cape Breton (0.11 %) and Colchester (0.6 %) Counties (Figure 2).\n\n\n\n\n\nFigure 2: The number of temperature observations in each county.\n\n\n\n\n\nDepth\nThe placement of the temperature sensors depends on the depth of the water at each station. Typically, sensors are fastened 2, 5, 10, 15, and 20 m below the surface at low tide. At deeper stations, additional sensors are added every 5 - 10 m. At shallow stations, sensors maybe be attached nearer to the surface (Figure 3).\nSensors may be placed at other depths for technical reasons or specific research projects (e.g., investigation of the oxycline in Whycocomagh Basin).\n\n\n\n\n\nFigure 3: Number of temperature observations at each depth (rounded to nearest whole number).\n\n\n\n\n\nSensors\nCMAR uses several types of sensors to measure temperature (Table 1):\n\n\n\n\n\n\n\n\nSome of these sensors also measure other variables including dissolved oxygen, salinity, depth, and acoustic detections.\nThe Vemco VR2AR is typically the deepest sensor, anchored about 0.5 m above the sea floor. It has an acoustic release that is triggered to retrieve the sensor string. Deployments without VR2AR sensors are usually accessible from the surface, but some are retrieved by dragging or divers."
+  },
+  {
+    "objectID": "pages/temp_overview.html",
+    "href": "pages/temp_overview.html",
+    "title": "Overview",
+    "section": "",
+    "text": "could use an image here\nTemperature is a key driver of biological and physical components of the marine ecosystem.\nOcean temperature is a critical parameter for marine life, influencing physiological processes, species distribution, and species abundance (Canada 2016). Warming temperatures have been linked to individual and population-level changes in fish species, including decreased body size (Baudron et al. 2013) and population expansion or shifts towards cooler, deeper waters (Nye et al. 2009; Shackell, Ricard, and Stortini 2014). For example, several species typically associated with warm waters south of Nova Scotia are now considered “well established” on the Scotian Shelf (e.g., the blackbelly rosefish; Helicolenus dactylopterus), and it is expected that more warm water species will become established as temperatures increase (Fisheries and Canada 2020).\nTemperature is directly related to ocean stratification, which refers to vertical layers of water with similar properties (e.g., temperature and salinity). Upper ocean stratification is seasonal, with a warm fresh layer developing in the spring and summer1 and disappearing in the fall and winter2. This process brings heat and carbon dioxide into deeper waters, and transports nutrients from deep waters to the euphotic zone, supporting the base of the food web (Environment and Canada 2019). There is evidence that stratification in some regions of Atlantic Canada is increasing due to changes in temperature and salinity (Hebert et al. 2021). Increased stratification has implications for climate change (e.g., reduced ability to absorb carbon dioxide) and the ecosystem (e.g., fewer nutrients available for phytoplankton).\n\n\n\n\n\nReferences\n\nBaudron, Alan, Coby Needle, Adriaan Rijnsdorp, and C. Marshall. 2013. “Warming Temperatures and Smaller Body Sizes: Synchronous Changes in Growth of North Sea Fishes.” Journal Article. Global Change Biology 20. https://doi.org/10.1111/gcb.12514.\n\n\nCanada, Government of. 2016. “Canada’s Marine Coasts in a Changing Climate.” Report.\n\n\nEnvironment, and Climate Change Canada. 2019. “Canada’s Changing Climate Report.” Report. Government of Canada. https://www.nrcan.gc.ca/sites/www.nrcan.gc.ca/files/energy/Climate-change/pdf/CCCR_FULLREPORT-EN-FINAL.pdf.\n\n\nFisheries, and Oceans Canada. 2020. “Maritimes Research Vessel Survey Trends on the Scotian Shelf and Bay of Fundy.” Report.\n\n\nHebert, D., C. Layton, D. Brickman, and P. S. Galbraith. 2021. “Physical Oceanographic Conditions on the Scotian Shelf and in the Gulf of Maine During 2019.” https://www.dfo-mpo.gc.ca/csas-sccs/Publications/ResDocs-DocRech/2021/2021_040-eng.html.\n\n\nNye, Janet A., Jason S. Link, Jonathan A. Hare, and William J. Overholtz. 2009. “Changing Spatial Distribution of Fish Stocks in Relation to Climate and Population Size on the Northeast United States Continental Shelf.” Journal Article. Marine Ecology Progress Series 393: 111–29. WOS:000272187800010.\n\n\nShackell, Nancy L., Daniel Ricard, and Christine Stortini. 2014. “Thermal Habitat Index of Many Northwest Atlantic Temperate Species Stays Neutral Under Warming Projected for 2030 but Changes Radically by 2060.” Journal Article. PLOS ONE 9 (3): e90662. https://doi.org/10.1371/journal.pone.0090662.\n\nFootnotes\n\n\ne.g., from surface warming and freshwater inputs↩︎\ne.g., from wind-driven mixing↩︎"
+  },
+  {
+    "objectID": "pages/temp_thresholds.html",
+    "href": "pages/temp_thresholds.html",
+    "title": "Thresholds",
+    "section": "",
+    "text": "Temperature thresholds were calculated from the historical Coastal Monitoring Program data. Preliminary quality control was applied to this data, and obvious outliers and data from freshwater stations were omitted.\nSeparate thresholds were calculated for each county due to expected and observed spatial differences in temperature (Figure 1; Figure 2).\nIn the future, it may be useful to resolve temperature thresholds by depth as well as county (or smaller spatial scales). However, the data become very patchy when grouped by depth, which could result in less useful thresholds values. Additionally, the same depth can represent a different part of the water column for different stations. For example, at the Barren Island station in Guysborough County, the 15 m sensor is near the bottom. In contrast, 15 m is in the top 20 % of the water column at Tickle Island, another station in Guysborough County."
+  },
+  {
+    "objectID": "pages/temp_thresholds.html#sensor-thresholds",
+    "href": "pages/temp_thresholds.html#sensor-thresholds",
+    "title": "Thresholds",
+    "section": "Sensor Thresholds",
+    "text": "Sensor Thresholds\nThe sensor thresholds were determined based on the associated manual (Table 1).\n\nTable 1\n\n\nTable 1: Temperature sensor thresholds for the Gross Range Test."
+  },
+  {
+    "objectID": "pages/temp_thresholds.html#user-thresholds",
+    "href": "pages/temp_thresholds.html#user-thresholds",
+    "title": "Thresholds",
+    "section": "User Thresholds",
+    "text": "User Thresholds\nThe mean and standard deviation were used to determine \\(user_{min}\\) and \\(user_{max}\\). This provided useful thresholds, although different statistics may be more representative based on the distribution of the observations for some counties (Figure 1). The statistics and threshold values are shown in Table 2.\nThe \\(user_{min}\\) threshold is typically << 0 °C (Table 2), and is therefore not expected to flag any observations. For most counties (all except Annapolis, Queens, Shelburne, and Digby), the \\(user_{min}\\) is less than the \\(sensor_{min}\\) for the aquameasure and vr2ar sensors. In this case, any observations less than the \\(sensor_{min}\\) would fail the Gross Range Test (i.e., the \\(user_{min}\\) would be ignored).\nIt may be useful for other users to apply their own \\(user_{min}\\) threshold to highlight cold observations that are Suspect/Of Interest. For example, those interested in salmonid aquaculture may wish to flag observations at or near the superchill threshold (-0.7 °C).\n\nFigure 1Table 2\n\n\n\n\n\n\n\nFigure 1: Distribution of temperature observations (binwidth = 1 °C). Dotted orange lines indicate the user thresholds.\n\n\n\n\n\nTable 2: Gross Range Test statistics and user thresholds for temperature."
   }
 ]
