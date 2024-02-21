@@ -212,7 +212,7 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#county" id="toc-county" class="nav-link active" data-scroll-target="#county">County</a></li>
+  <li><a href="#county-datasets" id="toc-county-datasets" class="nav-link active" data-scroll-target="#county-datasets">County Datasets</a></li>
   <li><a href="#data-format" id="toc-data-format" class="nav-link" data-scroll-target="#data-format">Data Format</a>
   <ul class="collapse">
   <li><a href="#deployment-columns" id="toc-deployment-columns" class="nav-link" data-scroll-target="#deployment-columns">Deployment Columns</a></li>
@@ -221,7 +221,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#summary-flag-columns" id="toc-summary-flag-columns" class="nav-link" data-scroll-target="#summary-flag-columns">Summary Flag Columns</a></li>
   <li><a href="#additional-flag-columns" id="toc-additional-flag-columns" class="nav-link" data-scroll-target="#additional-flag-columns">Additional Flag Columns</a></li>
   </ul></li>
-  <li><a href="#data-dictionary" id="toc-data-dictionary" class="nav-link" data-scroll-target="#data-dictionary">Data Dictionary</a></li>
   </ul>
 </nav>
     </div>
@@ -246,15 +245,15 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 <p>CMAR Water Quality data is available through several data products. Summary reports are available on the <a href="https://cmar.ca/reports/">CMAR Website</a>. Full datasets can be downloaded from the <a href="https://data.novascotia.ca/browse?tags=coastal+monitoring+program">Nova Scotia Open Data Portal</a> and the <a href="https://catalogue.cioosatlantic.ca/organization/cmar">CIOOS Atlantic</a>.</p>
-<p>This page describes the structure of the data that can be downloaded from the Nova Scotia Open Data Portal. More information on CIOOS data can be found <strong>here</strong>.</p>
-<section id="county" class="level1">
-<h1>County</h1>
-<p>The Water Quality datasets are organized by county on the Nova Scotia Open Data Portal. The are large datasets, and it is highly recommended that users filter the data for the station(s), variable(s), and flag(s) of interest before downloading the data.</p>
-<p>Note that Excel files (.xlsx) have a limit of <a href="https://support.microsoft.com/en-us/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3?ui=en-us&amp;rs=en-us&amp;ad=us">1,048,576 rows per sheet</a>. CSV files can hold more rows, but may not display them all. Please use caution when downloading and analysiing the data.</p>
+<p>This page describes the structure of the data that can be downloaded from the Nova Scotia Open Data Portal.</p>
+<section id="county-datasets" class="level1">
+<h1>County Datasets</h1>
+<p>The Water Quality datasets are organized by county. These are large datasets, and it is highly recommended that users filter the data for the station(s), variable(s), and quality control flag(s) of interest before downloading the data.</p>
+<p>Note that Excel files (.xlsx) have a limit of <a href="https://support.microsoft.com/en-us/office/excel-specifications-and-limits-1672b34d-7043-467e-8e27-269d656771c3?ui=en-us&amp;rs=en-us&amp;ad=us">1,048,576 rows per sheet</a>. CSV files can hold more rows, but may not display them all. Please use caution when downloading and analyzing the data.</p>
 </section>
 <section id="data-format" class="level1">
 <h1>Data Format</h1>
-<p>There are 22 columns in each dataset (data dictionary).</p>
+<p>There are 22 columns in each dataset, as described below.</p>
 <section id="deployment-columns" class="level2">
 <h2 class="anchored" data-anchor-id="deployment-columns">Deployment Columns</h2>
 <p>The first 7 columns provide information on the deployment, including the location<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, the deployment dates, and the sensor string configuration.</p>
@@ -262,27 +261,24 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="sensor-columns" class="level2">
 <h2 class="anchored" data-anchor-id="sensor-columns">Sensor Columns</h2>
-<p>The <code>sensor_*</code> columns provide information on the sensor the made the measurement, including the model, serial number, and the estimated depth below the surface at low tide. The <code>depth_crosscheck</code> column checks whether this estimated sensor depthaligns with measured sensor depth (if sensor depth was measured).</p>
+<p>The <code>sensor_*</code> columns provide information on the sensor the made the measurement, including the model, serial number, and the estimated depth below the surface at low tide. If sensor depth was measured, the <code>depth_crosscheck</code> column checks whether this estimated sensor depth aligns with measured depth.</p>
 </section>
 <section id="measurement-columns" class="level2">
 <h2 class="anchored" data-anchor-id="measurement-columns">Measurement Columns</h2>
 <p>The <code>timestamp_utc</code> column indicates the time the measurement(s) was recorded, in the UTC (Coordinated Universal Time) time zone. This time zone does not observe daylight savings time, so users should take care if converting to Atlantic Standard Time (AST; UTC-4 hours) or Atlantic Daylight Time (ADT; UTC-3 hours) is required.</p>
-<p>There is a measurement value column for each variable (and unit). The measurement columns are named in the format <code>variable_unit</code>, e.g., <code>temperature_degree_c</code>. If a sensor records more than one variable per timestamp, both measurements will be in the same row. Otherwise, there will be an <code>NA</code> value in the measurement column. This results in many <code>NA</code> values per data set, and these should be dealt with appropriately prior to analysis.</p>
+<p>There is a measurement value column for each variable (and unit). The measurement columns are named in the format <code>variable_unit</code>, e.g., <code>temperature_degree_c</code>. If a sensor records more than one variable per timestamp, both measurements will be in the same row. Otherwise, there will be an <code>NA</code> value in the measurement column. This results in many <code>NA</code> values per dataset, and these should be dealt with appropriately prior to analysis.</p>
 </section>
 <section id="summary-flag-columns" class="level2">
 <h2 class="anchored" data-anchor-id="summary-flag-columns">Summary Flag Columns</h2>
 <p>The remaining columns are for summary quality control flags. These are named in the format <code>qc_flag_variable_unit</code>, e.g., <code>qc_flag_temperature_degree_c</code>. These columns hold the <strong>worst</strong> flag value assigned to the corresponding observation. Because measurements are recorded by row, there will be many <code>NA</code> values in these columns.</p>
-<p>Recall that the Spike Test and Rolling Standard Deviation Test inherently assign a flag of “Not Evaluated” to observations at the beginning and end of each deployment. Following QARTOD, this corresponds to a numeric value of 2, while “Pass” corresponds to a numeric value of 1. Therefore, many observations are expected to be assigned a flag of “Not Evaluated”. These are typically safe to include in an analysis.</p>
+<p>The <a href="../pages/qc_tests.html">Spike Test</a> and <a href="../pages/qc_tests.html">Rolling Standard Deviation Test</a> inherently assign a flag of “Not Evaluated” to observations at the beginning and end of each deployment. Following QARTOD, this corresponds to a numeric value of 2, while “Pass” corresponds to a numeric value of 1. Therefore, many observations are expected to be assigned a flag of “Not Evaluated”. These are typically safe to include in an analysis. See the Quality Control section for more detail.</p>
 </section>
 <section id="additional-flag-columns" class="level2">
 <h2 class="anchored" data-anchor-id="additional-flag-columns">Additional Flag Columns</h2>
 <p>Internal CMAR datasets hold a separate flag column for each variable and QC test; however, these were not published to keep the datasets more manageable for users<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. If it is crucial for a user to understand which test resulted in a specific flag value for an observation, they can contact CMAR using the information on the <a href="https://cmar.ca/">website footer</a>.</p>
-</section>
-</section>
-<section id="data-dictionary" class="level1">
-<h1>Data Dictionary</h1>
 
 
+</section>
 </section>
 
 

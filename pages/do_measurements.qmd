@@ -18,9 +18,9 @@ st_locations <- st_locations %>%
   
 ```
 
-This page provides an overview of where and how dissolved oxygen is measured through the CMAR Coastal Monitoring Program.
+This page provides an overview of where and how dissolved oxygen is measured through the CMAR's Coastal Monitoring Program.
 
-These figures include data up to the end of the 2022 field season.
+These figures and values include data collected up to the end of the 2022 field season and subjected to preliminary Quality Control.
 
 # Locations
 

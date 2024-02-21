@@ -2,21 +2,40 @@
 title: "Water Quality Data"
 ---
 
-Through the Water Quality branch of the Coastal Monitoring Program, CMAR collects high resolution temperature, dissolved oxygen, and salinity data.
+CMAR collects high resolution temperature, dissolved oxygen, and salinity data through the Water Quality branch of the Coastal Monitoring Program.
 
 # Data Collection
 
-Water Quality data is collected using “sensor strings”. Each string is attached to the seafloor by an anchor and suspended by a sub-surface buoy, with sensors attached at various depths (Figure). Most strings deployed since 2018 are attached to the anchor by an acoustic receiver with a release mechanism. The receiver also logs detections of tagged animals including great white sharks, sturgeon, and tuna for the [Ocean Tracking Network](https://oceantrackingnetwork.org/).
+Water Quality data is collected using moorings referred to as “sensor strings”. A typical sensor string configuration consists of a rope attached to the seafloor by an anchor and suspended by a sub-surface buoy, with sensors attached at various depths (@fig-sensor-string). Most strings deployed since 2018 are attached to the anchor by an acoustic receiver with a release mechanism. The receiver also logs detections of tagged animals including great white sharks, sturgeon, and tuna for the [Ocean Tracking Network](https://oceantrackingnetwork.org/).
 
 ```{r}
 #| echo: false
 #| fig-align: center
-#| fig-cap: Sensor string diagram (not to scale).
+#| fig-cap: Diagram of a typical sensor string configuration (not to scale).
+#| label: fig-sensor-string
 
 knitr::include_graphics("figures/sensor_string.png")
 ```
 
-Characteristics of the station location (e.g., depth, bottom type, and currents) and stakeholder needs dictate the string configuration (e.g., anchor weight, and number/type of sensors). Sensor strings are generally deployed 200 m to 1000 m from shore, in depths up to 75 m. Historically, strings were deployed with only temperature sensors, but in more recent years at least one dissolved oxygen sensor is included (typically at 5 m). At the request of industry, salinity sensors are also included at stations near proposed and existing shellfish aquaculture leases.
+
+The different sensor string configurations are described in the table below:
+
+|  |  |
+|---|------------|
+|     sub-surface buoy    |     Attached to sub-surface buoy. Typically has an acoustic release, but sometimes retrieved by diver or drag line. Does not float with tide.    |
+|     surface buoy    |     Attached to surface buoy. Floats with tide.    |
+|     attached to gear    |     Typically attached to aquaculture gear, but may be attached to another structure. Floats with tide.    |
+|     attached to fixed structure    |     Attached to wharf, bridge, or pole. Does not float with tide.    |
+|     floating dock    |     Attached to a floating dock. Floats with tide.    |
+|     unknown    |     Configuration not indicated in deployment log.    |
+
+
+Characteristics of the station location[^1] and stakeholder needs dictate 
+the string design[^2]. Sensor strings are generally deployed 200 m to 1000 m from shore, in depths up to 75 m. Historically, strings were deployed with only temperature sensors, but in more recent years at least one dissolved oxygen sensor is included (typically at 5 m). At the request of industry, salinity sensors are also included at stations near proposed and existing shellfish aquaculture leases.
+
+[^1]: e.g., depth, bottom type, and currents
+[^2]: e.g., anchor weight, and number/type of sensors
+
 
 # Calibration & Validation
 

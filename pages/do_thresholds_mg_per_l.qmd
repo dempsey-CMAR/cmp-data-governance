@@ -65,10 +65,6 @@ The dissolved oxygen (mg/L) data has not been corrected for salinity. The thresh
 
 The sensor thresholds were determined based on the manual for the HOBO DO (Table 1).
 
-::: panel-tabset
-
-### Table 1
-
 Table 1: Dissolved oxygen (mg/L) sensor thresholds for the Gross Range Test.
 ```{r}
 sensors %>%
@@ -80,7 +76,6 @@ sensors %>%
   select(`Sensor (link to spec sheet)`, sensor_min, sensor_max) %>%
   datatable(options = dt_options2, rownames = FALSE, escape = FALSE)
 ```
-:::
 
 ## User Thresholds
 

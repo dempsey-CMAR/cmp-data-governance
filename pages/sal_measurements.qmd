@@ -24,11 +24,13 @@ st_locations <- st_locations %>%
 
 This page provides an overview of where and how dissolved oxygen is measured through the CMAR Coastal Monitoring Program.
 
-These figures include data up to the end of the 2022 field season.
+These figures and values include data collected up to the end of the 2022 field season and subjected to preliminary Quality Control.
 
 # Locations
 
 CMAR has collected salinity data from `r length(na.omit(unique(dat$station)))` stations in `r length(na.omit(unique(dat$county)))` counties (@fig-sal-station-locations). 
+
+The stations in Inverness county are in the Bras d'Or Lake, which is a brackish estuary. The salinity measured at these stations is expected to be substantially different from salinity measured at marine stations.
 
 ```{r, fig-sal-station-units}
 #| label: fig-sal-station-locations
@@ -69,8 +71,8 @@ ggplotly(p)
 
 # Depth
 
-- mostly shallow
-- 10 m are from Whycocomagh
+The salinity sensors are typically placed in relatively shallow positions on the string (@fig-sal-n-obs-depth).
+All of the salinity measurements recorded at 10 m were collected for a specific project from the two Inverness stations.
 
 ```{r}
 #| label: fig-sal-n-obs-depth
@@ -88,3 +90,8 @@ ggplotly(p, tooltip = "text")
 ```
 
 # Sensors
+
+CMAR uses the [aquaMeasure SAL](https://www.innovasea.com/wp-content/uploads/2021/07/Innovasea-Aquaculture-Intelligence-Spec-Sheet-062221.pdf) to measure salinity in practical salinity units (PSU).
+
+These sensors can be susceptible to biofouling, which results in substantial drift in the measured data over time. Sensor drift is difficult to detect with Quality Control tests [@RN24432], and CMAR does not currently test for sensor drift. It is recommended that users evaluate salinity data carefully before analysis. It may be beneficial to compare measurements from consecutive deployments (e.g., the end of one deployment and the beginning of the next) to highlight potential drift in the salinity sensors.
+

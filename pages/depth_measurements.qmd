@@ -51,8 +51,7 @@ beaver <- readRDS(here("pages/data-reprocessed/beaver_point_2019-10-20.rds")) %>
 
 This page provides an overview of where and how sensor depth is measured through the CMAR Coastal Monitoring Program.
 
-These figures include data up to the end of the 2022 field season.
-
+These figures and values include data collected up to the end of the 2022 field season and subjected to preliminary Quality Control.
 
 # Locations
 
@@ -77,7 +76,6 @@ st_locations %>%
   
 ```
 
-
 # Number of Observations
 
 ```{r}
@@ -92,9 +90,8 @@ n_county_obs <- dat_depth_raw %>%
 
 ```
 
-A large proportion of dissolved oxygen records are from `r n_county_obs[1, "county"]$county` County (`r n_county_obs[1, "n_percent"]$n_percent` %) and `r n_county_obs[2, "county"]$county` County (`r n_county_obs[2, "n_percent"]$n_percent` %), while a small proportion are from `r n_county_obs[nrow(n_county_obs), "county"]$county` (`r n_county_obs[nrow(n_county_obs), "n_percent"]$n_percent` %) and `r n_county_obs[nrow(n_county_obs)-1, "county"]$county` (`r n_county_obs[nrow(n_county_obs)-1, "n_percent"]$n_percent` %) Counties (@fig-depth-n-obs). 
+A large proportion of depth records are from `r n_county_obs[1, "county"]$county` County (`r n_county_obs[1, "n_percent"]$n_percent` %) and `r n_county_obs[2, "county"]$county` County (`r n_county_obs[2, "n_percent"]$n_percent` %), while a small proportion are from `r n_county_obs[nrow(n_county_obs), "county"]$county` (`r n_county_obs[nrow(n_county_obs), "n_percent"]$n_percent` %) and `r n_county_obs[nrow(n_county_obs)-1, "county"]$county` (`r n_county_obs[nrow(n_county_obs)-1, "n_percent"]$n_percent` %) Counties (@fig-depth-n-obs). 
 
-Most observations to date have been measured in units of percent saturation. In 2021, CMAR began deploying several sensors that record in concentration (mg / L), and there are a growing number of observations recorded in these units (@fig-depth-n-obs).
 
 ```{r}
 #| label: fig-depth-n-obs
@@ -110,7 +107,7 @@ ggplotly(p)
 
 CMAR does not deploy sensors specifically to measure depth; however, some of the sensors used to measure other variables also measure depth. Most VR2AR units and some aquaMeasure units (DOTs and SALs) provide depth measurements.
 
-The aquaMeasure sensors are programmed to record depth every 10 minutes, and have a precision of 0. 1 m. this typically results in a clear sinusoidal signal that would be expected from tidal changes (@fig-aquameasure).
+The aquaMeasure sensors are programmed to record depth every 10 minutes, and have a precision of 0.1 m. this typically results in a clear sinusoidal signal that would be expected from tidal changes (@fig-aquameasure).
 
 ```{r}
 #| fig-height: 4

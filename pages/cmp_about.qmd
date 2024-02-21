@@ -9,15 +9,15 @@ title: "Data Governance"
 knitr::include_graphics("figures/under-construction.png")
 ```
 
-The CMAR Data Governance Website is under development. Content is being added and revised daily.
+The CMAR Data Governance Website is under development. Content is being added and revised.
 
-Welcome to the Centre for Marine Applied Research's (CMAR) Coastal Monitoring Program Data Governance Website. This website provides technical details on the automated Quality Control tests applied to the Water Quality data collected through the Program.
+Welcome to the Centre for Marine Applied Research's (CMAR) Data Governance Website. This website provides technical details on the automated Quality Control tests applied to Water Quality data collected through CMAR's Coastal Monitoring Program.
 
 To return to CMAR's main Coastal Monitoring Program website page, click [here](https://cmar.ca/coastal-monitoring-program/).
 
 # Coastal Monitoring Program
 
-The Centre for Marine Applied Research's (CMAR) Coastal Monitoring Program is an ongoing data collection effort that aims to support and inform science-based development of Nova Scotia's marine coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change. 
+The Centre for Marine Applied Research's Coastal Monitoring Program is an ongoing data collection effort that aims to inform science-based development of Nova Scotia's coastal industry, guide government policy and management decisions, encourage environmental stewardship, and ensure preparedness for climate change. 
 
 
 # Water Quality Data
@@ -29,7 +29,7 @@ Click on a variable in the menu above for more detailed information about the va
 
 # Quality Control
 
-Automated Quality Control tests have been applied to the data to identify outlying and unexpected observations. **directions here**
+Automated Quality Control tests have been applied to the data to identify outlying and unexpected observations. Click [here](../pages/qc_tests.qmd) to learn more about the Quality Control tests applied to the Water Quality data.
 
 # Data Products
 

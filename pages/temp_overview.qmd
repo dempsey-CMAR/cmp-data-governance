@@ -2,8 +2,6 @@
 title: "Overview"
 ---
 
-*could use an image here*
-
 Temperature is a key driver of biological and physical components of the marine ecosystem. 
 
 Ocean temperature is a critical parameter for marine life, influencing physiological processes, species distribution, and species abundance [@RN12876]. Warming temperatures have been linked to individual and population-level changes in fish species, including decreased body size [@RN13690] and population expansion or shifts towards cooler, deeper waters [@RN13620; @RN7236]. For example, several species typically associated with warm waters south of Nova Scotia are now considered “well established” on the Scotian Shelf (e.g., the blackbelly rosefish; *Helicolenus dactylopterus*), and it is expected that more warm water species will become established as temperatures increase [@RN15387].
