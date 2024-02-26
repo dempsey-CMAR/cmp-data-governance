@@ -2,6 +2,29 @@
 title: "Overview"
 ---
 
-*could use an image here*
+Ocean properties including temperature, salinity, oxygen and nutrient availability, circulation, and primary production are linked to depth [@RN29156]. The water column becomes stratified when layers of water with different densities (e.g., temperature, salinity) form on top of each other and limit mixing. Typically, less dense water layers sit on top of more dense layers.
 
-Text here
+Light availability is one of the primary drivers for photosynthesis in the ocean. As depth increases, light availability decreases and photosynthetic rates decline [@RN15404]. The ocean can be coarsely divided into three depth zones characterized by how much light they receive [@RN29163]:
+
+  - Euphotic Zone (0 - 200 m depth): Sunlight penetrates to sufficiently support growth of phytoplankton and/or macro algae and provide the majority of the ocean primary production.
+  - Dysphotic Zone (200 - 1,000 m depth): Also known as the twilight zone, the light penetration is minimal. Biomass density is lower than the Euphotic Zone.
+  - Aphotic Zone (1,000+ m depth): Sunlight does not penetrate. Low biomass, food is generally scarce. 
+
+Coastal ocean depth at a given location depends on seafloor bathymetry, the tidal cycle,
+and storm surges from extreme events. While bathymetric changes for a given
+location typically only occur on a larger geologic time scale, the tidal cycle
+and storm surges have more short-term impacts on depth. The tidal influence on
+depth varies by location. For example, the Bay of Fundy in Nova Scotia is home
+to the largest tides in the world, with a 14.5 metre depth difference between
+high and low tide at the head of the bay [@RN29156]. On the eastern shore of the
+Province, the tidal range is closer to 1-2 meters [@RN29156]. Storm surges and
+wind-driven waves from extreme weather events in Nova Scotia can add an
+additional 2 meters or more of depth in the short term [@RN29157; @RN29158].
+
+Ocean depth can be measured in a variety of ways. Sonar (SOund NAvigation and Ranging) uses sound waves [@RN29162], while lidar (LIght Detection and Ranging) uses lasers to create high-resolution images of the seafloor [@RN29161]. Many oceanographic sensors can measure depth using a pressure sensor. Pressure is recorded and then converted to depth using sensor software [e.g., @RN29160].
+
+
+
+
+
+

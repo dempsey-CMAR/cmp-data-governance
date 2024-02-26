@@ -1,0 +1,14 @@
+{
+  "hash": "d7c1dce34cb166482630cb4813e9b285",
+  "result": {
+    "markdown": "---\ntitle: \"Overview\"\n---\n\n\nOcean properties including temperature, salinity, oxygen and nutrient availability, circulation, and primary production are linked to depth [@RN29156]. The water column becomes stratified when layers of water with different densities (e.g., temperature, salinity) form on top of each other and limit mixing. Typically, less dense water layers sit on top of more dense layers.\n\nLight availability is one of the primary drivers for photosynthesis in the ocean. As depth increases, light availability decreases and photosynthetic rates decline [@RN15404]. The ocean can be coarsely divided into three depth zones characterized by how much light they receive:\n\n  - Euphotic Zone (0 - 200 m depth): Sunlight penetrates to sufficiently support growth of phytoplankton and/or macro algae and provide the majority of the ocean primary production.\n  - Dysphotic Zone (200 - 1,000 m depth): Also known as the twilight zone, the light penetration is minimal. Biomass density is lower than the Euphotic Zone.\n  - Aphotic Zone (1,000+ m depth): Sunlight does not penetrate. Low biomass, food is generally scarce. \n\n\n\n\nCMAR is interested in coastal ocean\nCoastal ocean, typically depths < 100 m\n\nOcean depth at a given location depends on seafloor bathymetry, the tidal cycle,\nand storm surges from extreme events. While bathymetric changes for a given\nlocation typically only occur on a larger geologic time scale, the tidal cycle\nand storm surges have more short-term impacts on depth. The tidal influence on\ndepth varies by location. For example, the Bay of Fundy in Nova Scotia is home\nto the largest tides in the world, with a 14.5 metre depth difference between\nhigh and low tide at the head of the bay [@RN29156]. On the eastern shore of the\nProvince, the tidal range is closer to 1-2 meters [@RN29156]. Storm surges and\nwind-driven waves from extreme weather events in Nova Scotia can add an\nadditional 2 meters or more of depth in the short term [@RN29157; @RN29158].\n\n\n::: {.cell layout-align=\"center\"}\n::: {.cell-output-display}\n![Sensor depth at low tide vs. high tide, when mooring is anchored to the seafloor.](figures/sensor_string_depth.png){#fig-sensor-string fig-align='center' width=772}\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

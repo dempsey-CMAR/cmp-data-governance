@@ -31,7 +31,7 @@ The different sensor string configurations are described in the table below:
 
 
 Characteristics of the station location[^1] and stakeholder needs dictate 
-the string design[^2]. Sensor strings are generally deployed 200 m to 1000 m from shore, in depths up to 75 m. Historically, strings were deployed with only temperature sensors, but in more recent years at least one dissolved oxygen sensor is included (typically at 5 m). At the request of industry, salinity sensors are also included at stations near proposed and existing shellfish aquaculture leases.
+the string design[^2]. Sensor strings are generally deployed 200 m to 1000 m from shore, in depths up to 75 m. Historically, strings were deployed with only temperature sensors, but in more recent years at least one dissolved oxygen sensor is included (typically at 5 m). At the request of industry, salinity sensors are also included at stations near proposed and existing shellfish aquaculture leases. Some of the sensors used to measure these variables also measure sensor depth. CMAR has also processed and published this opportunistic depth data.
 
 [^1]: e.g., depth, bottom type, and currents
 [^2]: e.g., anchor weight, and number/type of sensors
@@ -39,7 +39,33 @@ the string design[^2]. Sensor strings are generally deployed 200 m to 1000 m fro
 
 # Calibration & Validation
 
-Text to come
+## Pre-Deployment Validation
+
+Prior to deployment, sensors that can be calibrated are calibrated according to their specific sensor manual. All sensors are then subjected to a Validation Test(s), which differ depending on the variables measured. 
+
+### Dissolved Oxygen (percent saturation)
+For a Validation Test of dissolved oxygen measured in units of percent saturation, sensors are set to record at 15 minute intervals and placed in an air-tight environment with water-saturated air at 100 % humidity. The sensors are left to record for roughly 24 hours (@fig-bucket).
+
+![Four aquaMeasure DOT sensors in a sealed dissolved oxygen validation test bucket.](figures/bucket2.jpg){#fig-bucket}
+
+The precision for these dissolved oxygen sensors is +/-5 % [@RN26880]. Since the the sensors in the bucket are in water-saturated air, they should measure 100 +/-5 % saturation. Any sensors outside of the acceptable 95 - 105 % range for more than 10 % of the test require re-calibration. 
+
+![Observations from a  dissolved oxygen (percent saturation) Validation Test of 4 sensors. The gray band indicates the acceptable range of values.](figures/do_calval.png){#fig-do_calval}
+
+@fig-do_calval shows the results of a dissolved oxygen Validation Test for four sensors. Sensor #675016 recorded outside of an acceptable range for 99.9% of the test period, and was therefore flagged for re-calibration.
+
+### Other Variables
+
+For Validation Tests of temperature and dissolved oxygen measured in mg/L, sensors are set to record at 10 - 15 minute intervals and submerged in a well insulated, circulating tank of fresh water for roughly 24 hours. The same procedure is used for the salinity Validation Tests, except seawater is used instead of fresh water. 
+
+Upon completion of the Validation Tests, data from each sensor is offloaded and evaluated to ensure all sensors are recording within an appropriate manufacturer-specified range of each other. Sensors that pass the tests are cleared for deployment. Any sensor that records outside of the acceptable range for ≥ 10 % of the test will be re-calibrated (if applicable) and re-validated. If a sensor fails more than 2 consecutive validation tests it will be sent back to the manufacturer.
+
+All code used to evaluate sensor validation test status are published in CMAR’s R package [calval](https://github.com/ntorrie/calval).
+
+## Post-Deployment Validation
+
+After sensors are retrieved from deployment, they undergo post-deployment validation testing following the same procedures as the pre-deployment validation test. Results from the post-deployment validation tests indicate whether the sensor data retrieved during the sensor deployment may have been impacted by sensor drift or biofouling. 
+
 
 # Data Access
 

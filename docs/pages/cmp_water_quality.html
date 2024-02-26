@@ -20,6 +20,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -213,7 +232,15 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#data-collection" id="toc-data-collection" class="nav-link active" data-scroll-target="#data-collection">Data Collection</a></li>
-  <li><a href="#calibration-validation" id="toc-calibration-validation" class="nav-link" data-scroll-target="#calibration-validation">Calibration &amp; Validation</a></li>
+  <li><a href="#calibration-validation" id="toc-calibration-validation" class="nav-link" data-scroll-target="#calibration-validation">Calibration &amp; Validation</a>
+  <ul class="collapse">
+  <li><a href="#pre-deployment-validation" id="toc-pre-deployment-validation" class="nav-link" data-scroll-target="#pre-deployment-validation">Pre-Deployment Validation</a>
+  <ul class="collapse">
+  <li><a href="#dissolved-oxygen-percent-saturation" id="toc-dissolved-oxygen-percent-saturation" class="nav-link" data-scroll-target="#dissolved-oxygen-percent-saturation">Dissolved Oxygen (percent saturation)</a></li>
+  <li><a href="#other-variables" id="toc-other-variables" class="nav-link" data-scroll-target="#other-variables">Other Variables</a></li>
+  </ul></li>
+  <li><a href="#post-deployment-validation" id="toc-post-deployment-validation" class="nav-link" data-scroll-target="#post-deployment-validation">Post-Deployment Validation</a></li>
+  </ul></li>
   <li><a href="#data-access" id="toc-data-access" class="nav-link" data-scroll-target="#data-access">Data Access</a></li>
   </ul>
 </nav>
@@ -285,11 +312,42 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p>Characteristics of the station location<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and stakeholder needs dictate the string design<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Sensor strings are generally deployed 200 m to 1000 m from shore, in depths up to 75 m. Historically, strings were deployed with only temperature sensors, but in more recent years at least one dissolved oxygen sensor is included (typically at 5 m). At the request of industry, salinity sensors are also included at stations near proposed and existing shellfish aquaculture leases.</p>
+<p>Characteristics of the station location<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and stakeholder needs dictate the string design<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Sensor strings are generally deployed 200 m to 1000 m from shore, in depths up to 75 m. Historically, strings were deployed with only temperature sensors, but in more recent years at least one dissolved oxygen sensor is included (typically at 5 m). At the request of industry, salinity sensors are also included at stations near proposed and existing shellfish aquaculture leases. Some of the sensors used to measure these variables also measure sensor depth. CMAR has also processed and published this opportunistic depth data.</p>
 </section>
 <section id="calibration-validation" class="level1">
 <h1>Calibration &amp; Validation</h1>
-<p>Text to come</p>
+<section id="pre-deployment-validation" class="level2">
+<h2 class="anchored" data-anchor-id="pre-deployment-validation">Pre-Deployment Validation</h2>
+<p>Prior to deployment, sensors that can be calibrated are calibrated according to their specific sensor manual. All sensors are then subjected to a Validation Test(s), which differ depending on the variables measured.</p>
+<section id="dissolved-oxygen-percent-saturation" class="level3">
+<h3 class="anchored" data-anchor-id="dissolved-oxygen-percent-saturation">Dissolved Oxygen (percent saturation)</h3>
+<p>For a Validation Test of dissolved oxygen measured in units of percent saturation, sensors are set to record at 15 minute intervals and placed in an air-tight environment with water-saturated air at 100 % humidity. The sensors are left to record for roughly 24 hours (<a href="#fig-bucket">Figure&nbsp;2</a>).</p>
+<div id="fig-bucket" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/bucket2.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: Four aquaMeasure DOT sensors in a sealed dissolved oxygen validation test bucket.</figcaption><p></p>
+</figure>
+</div>
+<p>The precision for these dissolved oxygen sensors is +/-5 % <span class="citation" data-cites="RN26880">(<a href="#ref-RN26880" role="doc-biblioref">InnovaSea 2021</a>)</span>. Since the the sensors in the bucket are in water-saturated air, they should measure 100 +/-5 % saturation. Any sensors outside of the acceptable 95 - 105 % range for more than 10 % of the test require re-calibration.</p>
+<div id="fig-do_calval" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="figures/do_calval.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3: Observations from a dissolved oxygen (percent saturation) Validation Test of 4 sensors. The gray band indicates the acceptable range of values.</figcaption><p></p>
+</figure>
+</div>
+<p><a href="#fig-do_calval">Figure&nbsp;3</a> shows the results of a dissolved oxygen Validation Test for four sensors. Sensor #675016 recorded outside of an acceptable range for 99.9% of the test period, and was therefore flagged for re-calibration.</p>
+</section>
+<section id="other-variables" class="level3">
+<h3 class="anchored" data-anchor-id="other-variables">Other Variables</h3>
+<p>For Validation Tests of temperature and dissolved oxygen measured in mg/L, sensors are set to record at 10 - 15 minute intervals and submerged in a well insulated, circulating tank of fresh water for roughly 24 hours. The same procedure is used for the salinity Validation Tests, except seawater is used instead of fresh water.</p>
+<p>Upon completion of the Validation Tests, data from each sensor is offloaded and evaluated to ensure all sensors are recording within an appropriate manufacturer-specified range of each other. Sensors that pass the tests are cleared for deployment. Any sensor that records outside of the acceptable range for ≥ 10 % of the test will be re-calibrated (if applicable) and re-validated. If a sensor fails more than 2 consecutive validation tests it will be sent back to the manufacturer.</p>
+<p>All code used to evaluate sensor validation test status are published in CMAR’s R package <a href="https://github.com/ntorrie/calval">calval</a>.</p>
+</section>
+</section>
+<section id="post-deployment-validation" class="level2">
+<h2 class="anchored" data-anchor-id="post-deployment-validation">Post-Deployment Validation</h2>
+<p>After sensors are retrieved from deployment, they undergo post-deployment validation testing following the same procedures as the pre-deployment validation test. Results from the post-deployment validation tests indicate whether the sensor data retrieved during the sensor deployment may have been impacted by sensor drift or biofouling.</p>
+</section>
 </section>
 <section id="data-access" class="level1">
 <h1>Data Access</h1>
@@ -305,10 +363,15 @@ ul.task-list li input[type="checkbox"] {
 </div>
 
 
+
 </section>
 
 
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-RN26880" class="csl-entry" role="doc-biblioentry">
+InnovaSea. 2021. <span>“Firmware Update Improves Accuracy of aquaMeasure Dissolved Oxygen Sensors.”</span> <a href="https://storage.googleapis.com/innovasea-staging/uploads/2021/03/6d174318-firmware-do-wp-012021-2-1.pdf">https://storage.googleapis.com/innovasea-staging/uploads/2021/03/6d174318-firmware-do-wp-012021-2-1.pdf</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
 <li id="fn1"><p>e.g., depth, bottom type, and currents<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
