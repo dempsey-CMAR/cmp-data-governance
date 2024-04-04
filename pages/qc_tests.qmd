@@ -48,15 +48,15 @@ Where possible, the thresholds for each QC test and variable were determined fro
 
 The historical data was reviewed carefully prior to calculating thresholds. Depending on the number of observations and the spatial and temporal resolution of observations, data was pooled together or separated into different groups (e.g., county, sensor type). 
 
-The distribution of observations was then reviewed to determined which statistics to use to determine outlying conditions. The mean and 3 * standard deviation was used for relatively normally distributed variables [@RN26877], while upper quartiles were used for skewed distributions. 
+The distribution of observations was then reviewed to determined which statistics to use to quantify outlying conditions. The mean plus/minus 3 standard deviations was used for relatively normally distributed variables [@RN26877], while upper quartiles were used for skewed distributions. 
 
 These thresholds may be re-evaluated in several years, when more data is available.
 
 # QC Tests
 
-Three QARTOD tests and two-developed tests were applied to the CMAR Water Quality data/
+Three QARTOD tests, two CMAR-developed tests, and a human in the loop test were applied to the CMAR Water Quality data.
 
-QC tests were applied to each deployment using CMAR-developed R package `qaqcmar`, which is available to view and install from [GitHub](https://github.com/dempsey-CMAR/qaqcmar).
+Automated QC tests were applied to each sensor string deployment using CMAR-developed R package [`qaqcmar`](https://github.com/dempsey-CMAR/qaqcmar), which is available to view and install from GitHub. The human in the loop test was applied during data review using the [qc_tests_water_quality](https://github.com/dempsey-CMAR/qc_tests_water_quality) R project, which is also available on GitHub.
 
 ## Gross Range Test
 
@@ -107,7 +107,7 @@ For each observation, a $spike_{value}$ is calculated based on a spike reference
 $$spike_{value} = abs(value - spike_{ref})$$
 $$spike_{ref} = (lead_{value} - lag_{value}) / 2$$
 
-Due to the dependence on $lead_{value}$ and $lag_{value}$, the first and last observations in each sensor deployment will be flagged as "Not Evaluated" because the $spike_{ref}$ cannot be calculated.
+Due to the dependence on $lead_{value}$ and $lag_{value}$, the first and last observations in each sensor deployment will be flagged as [Not Evaluated]{style="color: #5A5A5A;"} because the $spike_{ref}$ cannot be calculated.
 
 As a simple example, consider several observations that increase linearly over time (Example 1: Figure). Here, the $spike_{ref}$ is always equal to the observed value, and so the $spike_{value}$ is zero, indicating no spike detected (Example 1: Table).
 
@@ -115,8 +115,7 @@ As a simple example, consider several observations that increase linearly over t
 
 ### Example 1: Figure 
 ```{r, fig.height=4}
-flag_colours <- c("chartreuse4", "#E6E1BC", "#EDA247", "#DB4325", "grey24")
-
+flag_colours <- c("chartreuse4", "grey24", "#EDA247", "#DB4325", "#E6E1BC")
 
 dat <- data.frame(time = 1:11, observation_value = seq(10, 20, 1)) %>% 
   mutate(
@@ -124,9 +123,9 @@ dat <- data.frame(time = 1:11, observation_value = seq(10, 20, 1)) %>%
     spike_value = abs(observation_value - spike_ref),
     flag = case_when(
       spike_value == 0 ~ 1,
-      spike_value == 5 ~ 3,
-      spike_value == 10 ~ 4,
-      is.na(spike_value) ~ 2
+      is.na(spike_value) ~ 2,
+      spike_value > 0 & spike_value <= 5 ~ 3,
+      spike_value > 5 ~ 4
     )) %>% 
   qc_assign_flag_labels()
 
@@ -142,7 +141,7 @@ datatable(dat, rownames = FALSE, options = dt_options1)
 ```
 :::
 
-Now consider that the value of one of these observations lies above or below the linear pattern (Example 2: Figure). This value will have a relatively high $spike_{value}$, and may be flagged, depending on the threshold values. Note that the observations on either side of the spike may also be flagged. 
+Now consider that the value of one of these observations lies above or below the linear pattern (Example 2). This value will have a relatively high $spike_{value}$, and may be flagged, depending on the threshold values. Note that the observations on either side of the spike may also be flagged, but multiple spike values may not be (Example 2, Example 3). 
 
 ::: panel-tabset
 
@@ -156,12 +155,11 @@ dat2 <- dat %>%
     spike_value = abs(observation_value - spike_ref),
     flag = case_when(
       spike_value == 0 ~ 1,
-      spike_value == 5 ~ 3,
-      spike_value == 10 ~ 4,
-      is.na(spike_value) ~ 2
+      is.na(spike_value) ~ 2,
+      spike_value > 0 & spike_value <= 5 ~ 3,
+      spike_value > 5 ~ 4
     )) %>% 
   qc_assign_flag_labels()
-
 
 ggplot(dat2, aes(time, observation_value, colour = flag)) +
     geom_point() +
@@ -173,6 +171,36 @@ ggplot(dat2, aes(time, observation_value, colour = flag)) +
 ### Example 2: Table
 ```{r}
 datatable(dat2, rownames = FALSE, options = dt_options1)
+```
+
+### Example 3: Figure 
+```{r, fig.height=4}
+dat[5, 2] <- 25
+dat[7, 2] <- 25
+dat[8, 2] <- 25
+
+dat3 <- dat %>% 
+  mutate(
+    spike_ref = (lag(observation_value) + lead(observation_value)) / 2,
+    spike_value = abs(observation_value - spike_ref),
+    flag = case_when(
+      spike_value == 0 ~ 1,
+      is.na(spike_value) ~ 2,
+      spike_value > 0 & spike_value <= 5 ~ 3,
+      spike_value > 5 ~ 4
+    )) %>% 
+  qc_assign_flag_labels()
+
+ggplot(dat3, aes(time, observation_value, colour = flag)) +
+    geom_point() +
+    scale_colour_manual("Flag Value", values = flag_colours, drop = FALSE) +
+    guides(color = guide_legend(override.aes = list(size = 4))) 
+
+```
+
+### Example 3: Table
+```{r}
+datatable(dat3, rownames = FALSE, options = dt_options1)
 ```
 
 :::
@@ -191,7 +219,7 @@ The rolling standard deviation, $sd_{roll}$, was calculated from a 24-hour cente
 
 Although this test was designed to identify suspected biofouling, it was also applied to the other Water Quality variables as a general test of the standard deviation. In particular, it is expected to flag rapid changes in temperature due to fall storms and upwelling. 
 
-The Rolling Standard Deviation Test threshold is called $rolling\_sd\_max$. Observations greater than this threshold are flagged as [Suspect/Of Interest]{style="color: #EDA247;"}. This test does not flag any observations as [fail]{style="color: #DB4325;"} because of the high natural variability in the Water Quality variables. Observations at the beginning and end of the deployment for which the rolling standard deviation cannot be calculated (i.e, observations less than 12 hours from the start or end of deployment) are flagged [Not evaluated]{style="color: #c4c1a5;"}.  
+The Rolling Standard Deviation Test threshold is called $rolling\_sd\_max$. Observations greater than this threshold are flagged as [Suspect/Of Interest]{style="color: #EDA247;"}. This test does not flag any observations as [Fail]{style="color: #DB4325;"} because of the high natural variability in the Water Quality variables. Observations at the beginning and end of the deployment for which the rolling standard deviation cannot be calculated (i.e, observations less than 12 hours from the start or end of deployment) are flagged [Not Evaluated]{style="color: #5A5A5A;"}.  
 
 Values for $rolling\_sd\_max$ were selected based on the mean and standard deviation or an upper quartile $sd_{roll}$, depending on the distribution of the variable observations.
 
@@ -228,6 +256,19 @@ $depth\_diff\_max$ was determined based on the 95th percentile of the $abs_{diff
 Note that all observations from a deployment will have the same depth crosscheck flag. If there is more than one sensor on the string that measures depth, the worst (highest) flag will be assigned to the deployment. 
 
 This is because a [Suspect/Of Interest]{style="color: #EDA247;"} flag for the Depth Crosscheck test is an indication that the sensor string was moored in an area deeper (or shallower) than expected. For example, if the string was moored in an area 10 m deeper than anticipated, all sensors will likely be 10 m deeper than recorded in the `sensor_depth_at_low_tide_m` column.
+
+## Human in the Loop
+
+Human experts reviewed the results of the automated QC tests to identify poor quality observations that were not adequately flagged. Results of the automated tests were not changed, but an additional human in the loop flag of [Fail]{style="color: #DB4325;"} was added to identify these observations. 
+
+The [Suspect/Of Interest]{style="color: #EDA247;"} flag was not used for this test because the goal was to flag observations that human experts were confident were poor quality.
+
+Situations where observations were flagged as [Fail]{style="color: #DB4325;"} by human experts include:
+
+- Spikes with multiple observations (e.g., Spike Test Example 3 above).
+- Known issue with the deployment or sensor (e.g., surface buoy cut during deployment, sensor malfunctioned for most of the deployment).
+- Temperature and measured depth observations that were flagged as [Suspect/Of Interest]{style="color: #EDA247;"} by one or more automated tests, and considered poor quality after review (e.g., evidence that sensor was exposed to air at low tide). Note that most [Suspect/Of Interest]{style="color: #EDA247;"} dissolved oxygen and salinity observations were already treated as poor quality.
+
 
 
 

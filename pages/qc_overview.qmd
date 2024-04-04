@@ -2,7 +2,7 @@
 title: "Quality Control Tests"
 ---
 
-CMAR applies automated Quality Control (QC) tests and "human in the loop" QC processes to the Coastal Monitoring Program Water Quality data. 
+CMAR applies automated Quality Control (QC) tests and "human in the loop" QC to the Coastal Monitoring Program Water Quality data. 
 
 An automated QC test is an algorithm that evaluates each data observation and assigns a flag to the observation indicating the test results. These flags are typically reviewed by human experts, which is referred to as "human in the loop" QC. End users can then filter the data set for records that meet their quality criteria [@RN26831].
 
@@ -12,7 +12,7 @@ Note that it is beyond the scope of the Program to produce analysis-ready data p
 
 ## QARTOD Guidance
 
-QARTOD stands for the ["Quality Assurance / Quality Control of Real-Time Oceanographic Data"](https://ioos.noaa.gov/project/qartod/). It is a project led by  U.S. Integrated Ocean Observing System (IOOS) that aims to develop guidelines for producing high-quality oceanographic data. QARTOD has developed Quality Control manuals for core ocean variables that outline best practices and describe Quality Control tests with codable instructions. QC manuals go through formal reviews by subject-matter experts, and are updated as needed to reflect new technology, additional knowledge, or growth of the Project [@RN25921].
+QARTOD stands for the ["Quality Assurance / Quality Control of Real-Time Oceanographic Data"](https://ioos.noaa.gov/project/qartod/). It is a project led by the  U.S. Integrated Ocean Observing System (IOOS) that aims to develop guidelines for producing high-quality oceanographic data. QARTOD has developed QC manuals for core ocean variables that outline best practices and describe QC tests with codable instructions. QC manuals are formally reviewed by subject-matter experts, and are updated as needed to reflect new technology, additional knowledge, or growth of the project [@RN25921].
 
 QARTOD manuals focus on QC of real-time data[^1], but acknowledge that other data types may also benefit from these flags and tests [@RN25922]. The CMAR Water Quality data is not processed in real-time[^2]. Instead, data is logged and offloaded from the sensors for processing every 6 - 12 months. Some QARTOD guidance was therefore not applicable to this data, and procedures were adapted to reflect the nature of CMAR data and processing.
 
@@ -27,21 +27,25 @@ CMAR has adopted the QARTOD flag scheme (@tbl-qartod-flags) with some adaptation
 | **Flag Label** | **Flag Value** | **Description** |
 |---------------------|:-----------------:|-----------------------------------------------------------|
 | [Pass]{style="color: #009200;"} | [1]{style="color: #009200;"} | [Data have passed critical real-time quality control tests and are deemed adequate for use as preliminary data.]{style="color: #009200;"} |
-| [Not Evaluated]{style="color: #c4c1a5;"} | [2]{style="color: #c4c1a5;"} | [Data have not been QC-tested, or the information on quality is not available.]{style="color: #c4c1a5;"} |
+| [Not Evaluated]{style="color: #5A5A5A;"} | [2]{style="color: #5A5A5A;"} | [Data have not been QC-tested, or the information on quality is not available.]{style="color: #5A5A5A;"} |
 | [Suspect/Of Interest]{style="color: #EDA247;"}  | [3]{style="color: #EDA247;"} | [Data are considered to be either suspect or of high interest to data providers and users. They are flagged suspect to draw further attention to them by operators.]{style="color: #EDA247;"}                     |
 | [Fail]{style="color: #DB4325;"} | [4]{style="color: #DB4325;"} | [Data are considered to have failed one or more critical real-time QC checks. If they are disseminated at all, it should be readily apparent that they are not of acceptable quality.]{style="color: #DB4325;"} |
-| [Missing Data]{style="color: #5A5A5A;"} | [9]{style="color: #5A5A5A;"} | [Data are missing; used as a placeholder.]{style="color: #5A5A5A;"}                                           
+| [Missing Data]{style="color: #c4c1a5;"} | [9]{style="color: #c4c1a5;"} | [Data are missing; used as a placeholder.]{style="color: #c4c1a5;"}                                  
+  
+
 : QARTOD flag scheme. Modified from @RN25922. {#tbl-qartod-flags}
 
-The main CMAR adaptation to this flag scheme is that the [Missing data]{style="color: #5A5A5A;"} flag is not used. This flag is meant to alert real-time operators that an expected observation was not received, and may trigger efforts to fix recording and transmission issues. Since CMAR does not receive real-time data, this placeholder flag was deemed unnecessary. Note that data gaps may still occur due to sensor failure, delays between retrieval and re-deployment, and vandalism. It is the responsibility of the data users to identify and address these data gaps if required.
+The main CMAR adaptation to this flag scheme is that the [Missing Data]{style="color: #c4c1a5;"} flag is not used. This flag is meant to alert real-time operators that an expected observation was not received, and may trigger efforts to fix recording and transmission issues. Since CMAR does not receive real-time data, this placeholder flag was deemed unnecessary. Note that data gaps may still occur due to sensor failure, delays between retrieval and re-deployment, and vandalism. It is the responsibility of the data users to identify and address these data gaps if required.
 
-Note that QARTOD uses a flag of [3]{style="color: #EDA247;"} to denote observations that are [Suspect]{style="color: #EDA247;"} (e.g., of dubious quality) **or** [Of High Interest]{style="color: #EDA247;"} (e.g., an unusual event). This is meant to encourage human in the loop decisions making [@RN25922]. Where possible, CMAR has defined when these test results are likely [Suspect]{style="color: #EDA247;"} vs. [Of High Interest]{style="color: #EDA247;"}, although data users should inspect these records carefully before deciding how to use (or discard) them.
+Note that QARTOD uses a flag of [3]{style="color: #EDA247;"} to denote observations that are [Suspect]{style="color: #EDA247;"} (e.g., of dubious quality) **or** [Of High Interest]{style="color: #EDA247;"} (e.g., an unusual event). This is meant to encourage human in the loop decision making [@RN25922]. Where possible, CMAR has defined when these test results are likely [Suspect]{style="color: #EDA247;"} vs. [Of Interest]{style="color: #EDA247;"}, although data users should inspect these records carefully before deciding how to use (or discard) them.
 
 # Tests
 
-As of February 2024, CMAR applies 5 QC tests to the Coastal Monitoring Program Water Quality data (@tbl-cmar_tests). Three are QARTOD tests (Gross Range, Climatological, and Spike), and the remaining two were developed by CMAR to address specific data quality concerns.
+CMAR applied 5 automated QC tests to the Coastal Monitoring Program Water Quality data (@tbl-cmar_tests). Three are QARTOD tests (Gross Range, Climatological, and Spike), and the remaining two were developed by CMAR to address specific data quality concerns. Finally, a manual Human in the Loop test was applied, where experts reviewed the results of the automated tests and flagged additional observations where necessary[^3]. 
 
 Click [here](../pages/qc_tests.qmd) for more detail on each test.
+
+[^3]: e.g., when there was a known issue with the deployment that was not flagged by the automated tests
 
 | Test | Description | Reference |
 |---|-----|---|
@@ -49,15 +53,17 @@ Click [here](../pages/qc_tests.qmd) for more detail on each test.
 | Climatological  | Flags observations that are statistical outliers for a given month. | @RN26562, @RN24432, @RN26877 |
 | Spike | Flags single-value spikes. | @RN26562, @RN24432 |
 | Rolling Standard Deviation | Flags observations with statistically high rolling standard deviation (e.g., multiple-value spikes). | CMAR |
-| Depth Crosscheck[^3] | Flags deployments where the sensor depth at low tide is different from the measured depth at low tide. | CMAR |
+| Depth Crosscheck[^4] | Flags deployments where the sensor depth at low tide is different from the measured depth at low tide. | CMAR |
+| Human in the Loop | Flags observations that human experts recognize as poor quality. | CMAR |
+
 
 : Automated Quality Control tests applied to Water Quality Data. {#tbl-cmar_tests}
 
-[^3]: note that this is a deployment-level test. See [here](../pages/qc_tests.qmd) for more information.
+[^4]: note that this is a deployment-level test. See [here](../pages/qc_tests.qmd) for more information.
 
 
 # Thresholds
 
-Each QC test requires threshold(s) that determine the results of the test. Choosing appropriate thresholds for each test and variable is a considerable part of the QC effort [@RN26562]. Following best practices, CMAR has developed thresholds based on historical data where possible [@RN25922; @RN15382; @RN26877]. The [QC Tests](../pages/qc_tests.qmd) page provides an overview of each QC test and how the associated thresholds were calculated. The Thresholds page under each variable in the menu above provides additional details on how the threshold(s) were determined.
+Each automated QC test requires threshold(s) that determine the results of the test. Choosing appropriate thresholds for each test and variable is a considerable part of the QC effort [@RN26562]. Following best practices, CMAR has developed thresholds based on historical data where possible [@RN25922; @RN15382; @RN26877]. The [QC Tests](../pages/qc_tests.qmd) page provides an overview of each QC test and how the associated thresholds were calculated. The Thresholds page under each variable in the menu above provides additional details on how the threshold(s) were determined.
 
 

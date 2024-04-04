@@ -40,7 +40,7 @@ Click [here](../pages/cmp_data_products.qmd) for more detail about the datasets 
 
 # Code
 
-CMAR has developed and maintains a suite of packages in R (free, open-source statistical software) to facilitate processing Coastal Monitoring Program data. Water Quality data is compiled using the [`sensorstrings`](https://github.com/dempsey-CMAR/sensorstrings) package. Quality Control flags were applied using the [`qaqcmar`](https://github.com/dempsey-CMAR/qaqcmar) package. Both packages can be viewed or installed from [GitHub](https://github.com/dempsey-CMAR).
+CMAR has developed and maintains a suite of packages in R (free, open-source statistical software) to facilitate processing Coastal Monitoring Program data. Water Quality data was compiled using the [`sensorstrings`](https://github.com/dempsey-CMAR/sensorstrings) package. Quality Control flags were applied using the [`qaqcmar`](https://github.com/dempsey-CMAR/qaqcmar) package. Both packages can be viewed or installed from [GitHub](https://github.com/dempsey-CMAR).
 
 
 ```{r}

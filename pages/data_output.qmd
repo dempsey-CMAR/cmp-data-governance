@@ -33,7 +33,7 @@ There is a measurement value column for each variable (and unit). The measuremen
 ## Summary Flag Columns
 The remaining columns are for summary quality control flags. These are named in the format `qc_flag_variable_unit`, e.g., `qc_flag_temperature_degree_c`. These columns hold the **worst** flag value assigned to the corresponding observation. Because measurements are recorded by row, there will be many `NA` values in these columns.
 
-The Spike Test and Rolling Standard Deviation Test inherently assign a flag of "Not Evaluated" to observations at the beginning and end of each deployment. Following QARTOD, this corresponds to a numeric value of 2, while "Pass" corresponds to a numeric value of 1. Therefore, many observations are expected to be assigned a flag of "Not Evaluated". These are typically safe to include in an analysis.
+The Spike Test and Rolling Standard Deviation Test inherently assign a flag of [Not Evaluated]{style="color: #5A5A5A;"} to observations at the beginning and end of each deployment. Following QARTOD, this corresponds to a numeric value of 2, while "Pass" corresponds to a numeric value of 1. Therefore, many observations are expected to be assigned a flag of [Not Evaluated]{style="color: #5A5A5A;"}. These are typically safe to include in an analysis.
 
 Note that it is beyond the scope of the Program to produce analysis-ready data products for all potential users, and some users may wish to apply additional QC.
 
