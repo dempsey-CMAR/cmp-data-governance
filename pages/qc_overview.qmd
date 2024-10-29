@@ -1,5 +1,5 @@
 ---
-title: "Quality Control Tests"
+title: "QC Overview"
 ---
 
 CMAR applies automated Quality Control (QC) tests and "human in the loop" QC to the Coastal Monitoring Program Water Quality data. 

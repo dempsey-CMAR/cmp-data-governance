@@ -4,6 +4,8 @@ title: "Data Products"
 
 CMAR Water Quality data is available through several data products. Summary reports are available on the [CMAR Website](https://cmar.ca/reports/). Full datasets can be downloaded from the [Nova Scotia Open Data Portal](https://data.novascotia.ca/browse?tags=coastal+monitoring+program) and [CIOOS Atlantic](https://catalogue.cioosatlantic.ca/organization/cmar).
 
+The reports and datasets can also be accessed through the CMAR [Station Locations Map](https://cmar.ca/coastal-monitoring-program/#station).
+
 This page describes the structure of the data that can be downloaded from the Nova Scotia Open Data Portal. 
 
 # County Datasets
