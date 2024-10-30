@@ -146,5 +146,5 @@ ggplotly(p)
 
 # Applications
 
-CMAR takes advantage of the opportunistic depth sampling to verify the estimated depth of sensors on the string in the Depth Crosscheck Test. Abrupt changes in measured depth can indicate that a sensor string was moved during or between deployments. Measured depth that increases over the deployment could indicate substantial biofouling causing the sensors to sink below the intended depth. Measured depth can also provide an estimate of the tidal range in an area.
+CMAR takes advantage of the opportunistic depth data for several applications, mostly related to quality control. For example, the measured depth is used to verify the estimated depth of sensors on the string in the Depth Crosscheck Test. Abrupt changes in depth can indicate that a sensor string moved during the deployment (e.g., due to a storm), while gradually increasing depth suggests the sensor sunk due to substantial biofouling. Human in the loop flags are added are added to deployments that are suspected to have moved or sunk. Measured depth can also provide an estimate of the tidal range in an area.
 

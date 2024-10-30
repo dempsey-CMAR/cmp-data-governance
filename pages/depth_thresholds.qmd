@@ -54,10 +54,6 @@ The thresholds were calculated and applied to different groups for each QC test,
 
 The sensor thresholds were determined based on the manual for the aquaMeasure and VR2AR sensors (Table 1).
 
-::: panel-tabset
-
-### Table 1
-
 Table 1: Depth sensor thresholds for the Gross Range Test.
 ```{r}
 sensors %>%
@@ -70,7 +66,7 @@ sensors %>%
   distinct() %>% 
   datatable(options = dt_options2, rownames = FALSE, escape = FALSE)
 ```
-:::
+
 
 ## User Thresholds
 
@@ -316,3 +312,83 @@ depth_roll_sd %>%
 :::
 
 # Depth Crosscheck
+
+@fig-depth-crosscheck shows the minimum measured depth vs. the estimated sensor depth at low tide. @fig-depth-crosscheck-hist shows a histogram of the absolute difference between these measurements.
+
+::: panel-tabset
+
+### Figure 6
+```{r}
+#| message: false
+#| fig-height: 5
+#| fig-cap: The minimum measured depth vs. the estimated sensor depth at low tide.
+#| label: fig-depth-crosscheck
+
+depth_stats <- dat_depth %>% 
+  filter(
+    !(station == "Madeline Point 1" &
+      deployment_range == "2020-Feb-26 to 2020-Oct-20")
+  ) %>% 
+  group_by(county, station, deployment_range, sensor_serial_number, depth_log) %>% 
+  summarise(min = min(sensor_depth_measured_m)) %>% 
+  mutate(
+    diff_min = depth_log - min,
+    abs_diff_min = abs(diff_min),
+    across(where(is.numeric), ~round(.x, digits = 2))) %>% 
+  ungroup() %>% 
+  mutate(`Depth (m)` = factor(depth_log))
+
+depth_crosscheck <- thresholds %>% 
+  filter( qc_test == "depth_crosscheck")
+
+p <- ggplot(
+  depth_stats, 
+  aes(
+    depth_log, min, 
+    col = `Depth (m)`,
+    text = paste0(
+      " depth_log: ",  `Depth (m)`, "\n",
+      "min_measured: ", min, "\n",
+      "station: ", station, "\n",
+      "depl: ", deployment_range))) +
+  geom_abline(slope = 1, intercept = 0, col = "grey30") +
+  geom_point() +
+  scale_y_continuous("Minimum Measured Depth (m)") +
+  scale_x_continuous("Estimated Depth at Low Tide (m)") 
+  
+ggplotly(p, tooltip = "text")
+```
+
+### Figure 7
+```{r}
+#| message: false
+#| warning: false
+#| fig-height: 5
+#| fig-cap: Distribution of the absolute difference between the minimum measured depth vs. the estimated sensor depth at low tide (binwidth = 1 m).
+#| label: fig-depth-crosscheck-hist
+
+p <- plot_histogram(depth_stats, hist_col = abs_diff_min, binwidth = 1) +
+   geom_vline(
+    xintercept = depth_crosscheck$threshold_value, 
+    linetype = 3, col = "#EDA247"
+  ) +
+  scale_x_continuous("Absolute difference between measured and estimated depth (m)")
+
+ggplotly(p)
+```
+
+### Table 6
+Table 6: Depth crosscheck threshold.
+```{r}
+depth_crosscheck %>% 
+  select(threshold, threshold_value) %>% 
+  pivot_wider(names_from = threshold, values_from = threshold_value) %>% 
+  datatable(options = dt_options2, rownames = FALSE)
+```
+:::
+
+The distribution of the $depth\_diff\_max$ is skewed right, and so several upper quartile values (90th, 95th, and 99.7th quartile) were evaluated to use as the threshold. The 90th quartile was considered too stringent, while the 99.7th quartile was too lenient. The 95th quartile was considered the most useful threshold.
+
+
+
+

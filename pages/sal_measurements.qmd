@@ -18,10 +18,6 @@ st_locations <- st_locations %>%
   
 ```
 
-
-- Inverness county
-- The lake is connected to the North Atlantic by two natural channels; the Great and Little Bras d'Or Channels which pass on either side of Boularderie Island.
-
 This page provides an overview of where and how dissolved oxygen is measured through the CMAR Coastal Monitoring Program.
 
 These figures and values include data collected up to the end of the 2022 field season and subjected to preliminary Quality Control.

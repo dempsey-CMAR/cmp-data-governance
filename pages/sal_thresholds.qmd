@@ -49,8 +49,7 @@ dat_sal <- readRDS(here("pages/data/sal_rolling_sd_prelim_qc.rds")) %>%
 
 QC test thresholds for salinity were based on historical Coastal Monitoring Program data. Preliminary quality control (QC) was applied to the historical data, when obvious outliers and observations impacted by suspected sensor drift (due to biofouling) were omitted.
 
-Separate thresholds were calculated for salinity measured in Inverness County, and salinity measured elsewhere. **add to this**
-
+Separate thresholds were calculated for salinity measured in Inverness County, and salinity measured elsewhere. The stations in Inverness county are in the Bras d'Or Lake, which is a brackish estuary. The salinity measured at these stations is expected to be substantially different from salinity measured at marine stations.
 
 # Gross Range Test
 
@@ -122,7 +121,7 @@ user_sal %>%
 
 # Climatological Test
 
-The Climatological Test was not applied to the salinity data because there were insufficient observations to calculate robust seasonal thresholds. Both data groups were missing observations for at least one month (@fig-sal-clim). Additionally, there is no substantial seasonal salinity cycle, and so the Gross Range Test is expected to identify any outlying observations.
+The Climatological Test was not applied to the salinity data because there were insufficient observations to calculate robust seasonal thresholds. Both data groups were missing observations for at least one month (@fig-sal-clim). The Gross Range Test user thresholds were used as placeholders until there is sufficient seasonal data to calculate salinity thresholds for the Climatological test.
 
 ::: panel-tabset
 
@@ -159,7 +158,7 @@ ggplotly(p)
 ```{r}
 #| warning: false
 #| fig-height: 10
-#| fig-cap:  Seasonal distribution of salinity observations in Inverness County (binwidth = 0.5 PSU). 
+#| fig-cap: Seasonal distribution of salinity observations in Inverness County (binwidth = 0.5 PSU). 
 #| label: fig-sal-hist-clim-a
 #| message: false
 
@@ -211,7 +210,7 @@ There were relatively few large single-value spikes in the salinity data, and so
 ```{r}
 #| warning: false
 #| fig-height: 6
-#| fig-cap: Distribution of the spike value of salinity observations (binwidth = 0.1 %). Dotted orange line indicates $spike_{low}$; dotted red line indicates $spike_{high}$.
+#| fig-cap: Distribution of the spike value of salinity observations (binwidth = 0.1 PSU). Dotted orange line indicates $spike_{low}$; dotted red line indicates $spike_{high}$.
 #| label: fig-sal-spike-dist
 
 spike_thresh <- thresholds %>% 

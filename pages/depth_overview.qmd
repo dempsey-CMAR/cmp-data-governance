@@ -17,7 +17,7 @@ and storm surges have more short-term impacts on depth. The tidal influence on
 depth varies by location. For example, the Bay of Fundy in Nova Scotia is home
 to the largest tides in the world, with a 14.5 metre depth difference between
 high and low tide at the head of the bay [@RN29156]. On the eastern shore of the
-Province, the tidal range is closer to 1-2 meters [@RN29156]. Storm surges and
+Province, the tidal range is closer to 1 - 2 metres [@RN29156]. Storm surges and
 wind-driven waves from extreme weather events in Nova Scotia can add an
 additional 2 meters or more of depth in the short term [@RN29157; @RN29158].
 
