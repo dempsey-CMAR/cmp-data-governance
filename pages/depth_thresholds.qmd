@@ -183,6 +183,8 @@ Because of the difference in precision between the types of sensors that record 
 
 For all groups, the distribution of the spike value is skewed right, and so several upper quartile values (90th, 95th, and 99.7th quartile) were evaluated to use as the $spike_{low}$. There were relatively few large single-value spikes in the depth data, and so the 99.7th quartile was selected to avoid false positives. $spike_{high}$ was defined as 3 * $spike_{low}$ to identify especially egregious spike values.
 
+In Digby and Pictou counties, the only depth observations have been from VR2AR sensors. In the future, depth may be measured with aquaMeasure DOT sensors in these counties. If this happens, the VR2AR thresholds will  be used to assess the spike test until the threshold calculation exercise is repeated.
+
 ::: panel-tabset
 
 ### Figure 4A
