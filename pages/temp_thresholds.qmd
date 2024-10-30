@@ -37,16 +37,13 @@ Temperature thresholds were calculated from the historical Coastal Monitoring Pr
 
 Separate thresholds were calculated for each county due to expected and observed spatial differences in temperature (@fig-temp-hist; @fig-temp-clim).
 
-In the future, it may be useful to resolve temperature thresholds by depth as well as county (or smaller spatial scales). However, the data become very patchy when grouped by depth, which could result in less useful thresholds values. Additionally, the same depth can represent a different part of the water column for different stations. For example, at the Barren Island station in Guysborough County, the 15 m sensor is near the bottom. In contrast, 15 m is in the top 20 % of the water column at Tickle Island, another station in Guysborough County.
+In the future, it may be useful to resolve temperature thresholds by depth as well as county (or smaller spatial scales). However, the data becomes very patchy when grouped by depth, which could result in less useful thresholds values. Additionally, the same depth can represent a different part of the water column for different stations. For example, at the Barren Island station in Guysborough County, the 15 m sensor is near the bottom. In contrast, 15 m is in the top 20 % of the water column at Tickle Island, another station in Guysborough County.
 
 # Gross Range Test
 
 ## Sensor Thresholds
 
 The sensor thresholds were determined based on the associated manual (Table 1).
-
-:::panel-tabset
-### Table 1
 
 Table 1: Temperature sensor thresholds for the Gross Range Test.
 ```{r}
@@ -67,10 +64,8 @@ sensors %>%
     rownames = FALSE, escape = FALSE
   )
 ```
-:::
 
 ## User Thresholds
-
 
 The mean and standard deviation were used to determine $user_{min}$ and $user_{max}$. This provided useful thresholds, although different statistics may be more representative based on the distribution of the observations for some counties (@fig-temp-hist). The statistics and threshold values are shown in Table 2.
 
@@ -125,7 +120,7 @@ user_temp %>%
 
 # Climatological Test
 
-@fig-temp-clim shows the monthly mean and standard deviation of temperature data for each county. Observations from all depths were pooled together. This resulted in high standard deviations for some counties, particularly in the summer months when temperature stratification is the strongest (@fig-temp-clim; Table 3). 
+@fig-temp-clim shows the monthly mean and standard deviation of temperature data for each county. Observations from all depths were pooled together. This resulted in high standard deviations for some counties, particularly in the summer months when temperature stratification is the strongest (@fig-temp-clim, Table 3). 
 
 The observations are normally distributed within each month (Figure 3), and so the mean and standard deviation were used to calculate the seasonal thresholds (Table 3).
 
@@ -217,13 +212,8 @@ for(i in seq_along(counties)) {
   cat("\n\n")
 }
 ```
-:::
-
-::: panel-tabset
 
 ### Table 3
-
-Table 3: Seasonal statistics and thresholds for temperature.
 ```{r}
 temp_clim %>% 
   mutate( 
@@ -231,15 +221,13 @@ temp_clim %>%
     season_stdev = round(stdev, digits = 3)
   ) %>% 
   select(county, month, season_mean, season_stdev, season_min, season_max) %>% 
-  datatable(options = dt_options2, rownames = FALSE)
+  datatable(options = dt_options, rownames = FALSE)
 ```
-
 :::
 
 # Spike Test
 
 For all counties, the distribution of the spike value is skewed right, and so several upper quartile values (90th, 95th, and 99.7th quartile) were evaluated to use as the $spike_{low}$. There were relatively few large single-value spikes in the temeprature data, and so the 99.7th quartile was selected to avoid false positives. $spike_{high}$ was defined as 3 * $spike_{low}$ to identify especially egregious spike values.
-
 
 Figure 4 shows the distribution of the spike value of temperature observations (binwidth = 0.1 °C). There is a separate tab for each county. Dotted orange line indicates $spike_{low}$; dotted red line indicates $spike_{high}$. Note difference in y-axis scale.
 
@@ -303,9 +291,6 @@ for(i in seq_along(counties)) {
 }
 
 ```
-:::
-
-::: panel-tabset
 
 ### Table 4
 
@@ -316,17 +301,15 @@ spike_thresh %>%
   datatable(options = dt_options, rownames = FALSE)
 ```
 :::
-  
-  
+
 # Rolling Standard Deviation Test
 
-The distribution of rolling standard deviation is skewed right (@fig-sal-roll-sd-dist), and so several upper quartile values were evaluated to use as the $rolling\_sd\_max$. 
+For all counties, the distribution of the rolling standard deviation is skewed right, and so several upper quartile values (90th, 95th, and 99.7th quartile) were evaluated to use as the $rolling\_sd\_max$. 
 
 The 90th, 95th, and 99.7th quartile values were each applied to the the raw data (no preliminary QC) and the results inspected. There were minimal suspect changes in rolling standard deviation for temperature, and so the 99.7th quartile was selected to avoid false positives.
 
 ::: panel-tabset
 
-### Figure 5
 ```{r}
 #| warning: false
 #| message: false
@@ -368,10 +351,6 @@ for(i in seq_along(counties)) {
 }
 ```
 
-:::
-
-::: panel-tabset
-
 ### Table 5
 
 Table 5: Rolling standard deviation threshold for temperature.
@@ -381,3 +360,4 @@ temp_roll_sd %>%
 ```
 
 :::
+
