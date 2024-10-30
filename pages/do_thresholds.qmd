@@ -61,7 +61,7 @@ sensors %>%
 
 ## User Thresholds
 
-The dissolved oxygen (percent saturation) observations are relatively normally distributed (@fig-do-hist), and so the mean and standard deviation were used to determine $user_{min}$ and $user_{max}$. The statistics and threshold values are shown in Table 2.
+The dissolved oxygen (percent saturation) observations are normally distributed (@fig-do-hist), and so the mean and standard deviation were used to determine $user_{min}$ and $user_{max}$. The statistics and threshold values are shown in Table 2.
 
 :::panel-tabset
 

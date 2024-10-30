@@ -56,7 +56,7 @@ These thresholds may be re-evaluated in several years, when more data is availab
 
 Three QARTOD tests, two CMAR-developed tests, and a human in the loop test were applied to the CMAR Water Quality data.
 
-Automated QC tests were applied to each sensor string deployment using CMAR-developed R package [`qaqcmar`](https://github.com/dempsey-CMAR/qaqcmar), which is available to view and install from GitHub. The human in the loop test was applied during data review using the [qc_tests_water_quality](https://github.com/dempsey-CMAR/qc_tests_water_quality) R project, which is also available on GitHub.
+Automated QC tests were applied to each sensor string deployment using CMAR-developed R package [`qaqcmar`](https://github.com/dempsey-CMAR/qaqcmar), which is available to view and install from GitHub. The human in the loop test was applied during data review using `qaqcmar` and the [qc_tests_water_quality](https://github.com/dempsey-CMAR/qc_tests_water_quality) R repository, which is also available on GitHub.
 
 ## Gross Range Test
 
@@ -78,7 +78,6 @@ $$ {#eq-user-max}
 
 where $avg_{var}$ is average of the variable of interest, and $stdev_{var}$ is the standard deviation of the variable of interest.
 
-
 ## Climatological Test
 
 The Climatological Test is a variation of the Gross Range Test that accounts for seasonal variability. Under QARTOD, there is no [Fail]{style="color: #DB4325;"} flag associated with this test for temperature, salinity, or dissolved oxygen due to the dynamic nature of these variables [@RN24432; @RN26562]. Following this guidance, CMAR chose to assign the flag [Suspect/Of Interest]{style="color: #EDA247;"} to seasonal outliers for all variables.
@@ -97,15 +96,15 @@ The $avg_{season}$ was calculated as the average of all observations for a given
 
 Note that OOI used a more complex method (harmonic analysis, as described [here](https://github.com/oceanobservatories/qc-lookup)) to estimate $avg_{season}$ to account for spurious values. This was beyond the current scope of the CMAR Coastal Monitoring Program, but could be applied in future iterations of this threshold analysis.
 
-
-## Spike Test     
+## Spike Test
 
 The Spike Test identifies single observations that are unexpectedly high (or low) based on the previous and following observations.
 
 For each observation, a $spike_{value}$ is calculated based on a spike reference ($spike_{ref}$). The $spike_{value}$ is compared to the Spike Test thresholds and the appropriate flag is assigned.
 
-$$spike_{value} = abs(value - spike_{ref})$$
 $$spike_{ref} = (lead_{value} - lag_{value}) / 2$$
+
+$$spike_{value} = abs(value - spike_{ref})$$
 
 Due to the dependence on $lead_{value}$ and $lag_{value}$, the first and last observations in each sensor deployment will be flagged as [Not Evaluated]{style="color: #5A5A5A;"} because the $spike_{ref}$ cannot be calculated.
 
@@ -115,7 +114,7 @@ As a simple example, consider several observations that increase linearly over t
 
 ### Example 1: Figure 
 ```{r, fig.height=4}
-flag_colours <- c("chartreuse4", "grey24", "#EDA247", "#DB4325", "#E6E1BC")
+flag_colours <- c("chartreuse4", "grey24", "#EDA247", "#DB4325")
 
 dat <- data.frame(time = 1:11, observation_value = seq(10, 20, 1)) %>% 
   mutate(
@@ -130,7 +129,7 @@ dat <- data.frame(time = 1:11, observation_value = seq(10, 20, 1)) %>%
   qc_assign_flag_labels()
 
 ggplot(dat, aes(time, observation_value, color = flag)) +
-  geom_point() +
+  geom_point(show.legend = TRUE) +
   scale_colour_manual("Flag Value", values = flag_colours, drop = FALSE) +
   guides(color = guide_legend(override.aes = list(size = 4))) 
 ```
@@ -162,7 +161,7 @@ dat2 <- dat %>%
   qc_assign_flag_labels()
 
 ggplot(dat2, aes(time, observation_value, colour = flag)) +
-    geom_point() +
+    geom_point(show.legend = TRUE) +
     scale_colour_manual("Flag Value", values = flag_colours, drop = FALSE) +
     guides(color = guide_legend(override.aes = list(size = 4))) 
 
@@ -192,7 +191,7 @@ dat3 <- dat %>%
   qc_assign_flag_labels()
 
 ggplot(dat3, aes(time, observation_value, colour = flag)) +
-    geom_point() +
+    geom_point(show.legend = TRUE) +
     scale_colour_manual("Flag Value", values = flag_colours, drop = FALSE) +
     guides(color = guide_legend(override.aes = list(size = 4))) 
 
@@ -234,13 +233,14 @@ path <- system.file("testdata", package = "qaqcmar")
 dat <- readRDS(paste0(path, "/test_data_rolling_sd.RDS")) %>%
   qc_test_rolling_sd()
 
-p <- qc_plot_flags(dat, qc_tests = "rolling_sd", plotly_friendly = TRUE)
-p <- p$dissolved_oxygen_percent_saturation$rolling_sd 
+p <- qc_plot_flags(
+  dat, qc_tests = "rolling_sd",
+  plotly_friendly = TRUE, flag_title = FALSE
+  )
 
-ggplotly(p) %>%
+ggplotly(p$dissolved_oxygen_percent_saturation$rolling_sd ) %>%
   layout(legend = list(x = 1.0, y = 0.6))
 ```
-
 
 ## Depth Crosscheck
 
@@ -252,31 +252,17 @@ $$abs_{diff} = abs(sensor\_depth\_at\_low\_tide\_m - min\_measured\_depth\_m) $$
 
 $depth\_diff\_max$ was determined based on the 95th percentile of the $abs_{diff}$ from all deployments with measured depth data.
 
-
-Note that all observations from a deployment will have the same depth crosscheck flag. If there is more than one sensor on the string that measures depth, the worst (highest) flag will be assigned to the deployment. 
-
-This is because a [Suspect/Of Interest]{style="color: #EDA247;"} flag for the Depth Crosscheck test is an indication that the sensor string was moored in an area deeper (or shallower) than expected. For example, if the string was moored in an area 10 m deeper than anticipated, all sensors will likely be 10 m deeper than recorded in the `sensor_depth_at_low_tide_m` column.
+Note that the Depth Crosscheck Test is a deployment-level test; all observations from a deployment will have the same depth crosscheck flag value. If there is more than one sensor on the string that measures depth, the worst (highest) flag will be assigned to the deployment. This is because a [Suspect/Of Interest]{style="color: #EDA247;"} flag for the Depth Crosscheck test is an indication that the sensor string was moored in an area deeper (or shallower) than expected. For example, if the string was moored in an area 10 m deeper than anticipated, all sensors will likely be 10 m deeper than recorded in the `sensor_depth_at_low_tide_m` column.
 
 ## Human in the Loop
 
 Human experts reviewed the results of the automated QC tests to identify poor quality observations that were not adequately flagged. Results of the automated tests were not changed, but an additional human in the loop flag of [Fail]{style="color: #DB4325;"} was added to identify these observations. 
 
-The [Suspect/Of Interest]{style="color: #EDA247;"} flag was not used for this test because the goal was to flag observations that human experts were confident were poor quality.
-
 Situations where observations were flagged as [Fail]{style="color: #DB4325;"} by human experts include:
 
 - Spikes with multiple observations (e.g., Spike Test Example 3 above).
-- Known issue with the deployment or sensor (e.g., surface buoy cut during deployment, sensor malfunctioned for most of the deployment).
+- Known issue with the deployment or sensor (e.g., sensor malfunctioned for most of the deployment, string sank due to biofouling).
 - Temperature and measured depth observations that were flagged as [Suspect/Of Interest]{style="color: #EDA247;"} by one or more automated tests, and considered poor quality after review (e.g., evidence that sensor was exposed to air at low tide). Note that most [Suspect/Of Interest]{style="color: #EDA247;"} dissolved oxygen and salinity observations were already treated as poor quality.
-
-
-
-
-
-
-
-
-
 
 
 

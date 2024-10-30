@@ -18,9 +18,9 @@ st_locations <- st_locations %>%
   
 ```
 
-This page provides an overview of where and how dissolved oxygen is measured through the CMAR's Coastal Monitoring Program.
+This page provides an overview of where and how dissolved oxygen is measured through CMAR's Coastal Monitoring Program.
 
-These figures and values include data collected up to the end of the 2022 field season and subjected to preliminary Quality Control.
+These figures and values include data collected up to the end of the 2022 field season and were subjected to preliminary Quality Control.
 
 # Locations
 
@@ -114,14 +114,14 @@ ggplotly(p, tooltip = "text")
 CMAR uses two types of sensors to measure dissolved oxygen: the [aquaMeasure DOT](https://rsaqua.co.uk/wp-content/uploads/2021/03/Innovasea_UserManual-2021_V1.5.pdf) [@RN25012] and [Onset HOBO U26](https://www.onsetcomp.com/sites/default/files/resources-documents/15603-K%20MAN-U26x.pdf) [@RN25011].  
 
 ### aquaMeasure DOT 
-CMAR has a large inventory of DOTs (71 in April 2023), which are used for most deployments with dissolved oxygen. The DOT measures temperature and partial pressure of oxygen, providing dissolved oxygen values in units of percent saturation. Partial pressure values are not affected by salinity [@RN13158], and so no correction factor is required for these measurements. For CMAR deployments, each DOT is programmed to measure and internally log at 10 minute intervals. CMAR typically retrieves sensors after ~1 year for data offload, cleaning, and calibration/validation.
+CMAR has a large inventory of DOTs (104 in October 2024), which are used for most deployments with dissolved oxygen. The DOT measures temperature and partial pressure of oxygen, providing dissolved oxygen values in units of percent saturation. Partial pressure values are not affected by salinity [@RN13158], and so no correction factor is required for these measurements. For CMAR deployments, each DOT is programmed to measure and internally log at 10 minute intervals. CMAR typically retrieves sensors after ~1 year for data offload, cleaning, and calibration/validation.
 
 ### HOBO U26
-CMAR added 13 HOBO U26 sensors to the inventory in 2021, and purchased an additional 10 in January 2023. The HOBO U26 measures temperature the concentration of dissolved oxygen (in units of mg / L). For CMAR deployments, each HOBO U26 is programmed to measure and internally log at 10 minute intervals. These sensors have a sensor cap that needs to be replaced every 6 months. They are deployed in St. Margaret's Bay and Mahone Bay rather than more remote locations so that they can be serviced twice a year with minimal travel requirements (@fig-do-station-locations).
+CMAR added 13 HOBO U26 sensors to the inventory in 2021, and has slowly increased the inventory to 20 in October 2024. The HOBO U26 measures temperature and the concentration of dissolved oxygen (in units of mg / L). For CMAR deployments, each HOBO U26 is programmed to measure and internally log at 10 minute intervals. These sensors have a sensor cap that needs to be replaced every 6 months. After this time, neither dissolved oxygen nor temperature are logged. These sensors are deployed in St. Margarets Bay and Mahone Bay rather than more remote locations so that they can be serviced twice a year with minimal travel requirements (@fig-do-station-locations).
 
-The HOBO U26 sensor does not account for salinity, so the measurements should be adjusted based on a salinity correction factor before analysis. The [HOBOware software](https://www.onsetcomp.com/products/software/hoboware) can apply this salinity correction if salinity conditions are provided. The software can also convert measured concentration values to percent saturation if salinity and pressure conditions are provided. CMAR does not have consistent salinity or pressure measurements, and so the uncorrected data are provided. 
+The HOBO U26 sensor does not account for salinity, so the measurements should be adjusted based on a salinity correction factor before analysis. The [HOBOware software](https://www.onsetcomp.com/products/software/hoboware) can apply this salinity correction if salinity conditions are provided. The software can also convert measured concentration values to percent saturation if salinity and pressure conditions are provided. CMAR does not have consistent salinity or pressure measurements, and so the uncorrected data are published. 
 
 ### Biofouling
 
-The DOT and HOBO U26 do not have any anti-fouling mechanisms, and so measurements are susceptible to biofouling. Ideally, sensors would be cleaned every 2 - 4 weeks to remove fouling, but this is not feasible due to logistical and financial constraints. Significant effort was made to flag possible biofouling signals, and CMAR is evaluating potential anti-fouling strategies.
+The DOT and HOBO U26 have minimal anti-fouling mechanisms, and so measurements are susceptible to biofouling. Ideally, sensors would be cleaned every 2 - 4 weeks to remove fouling, but this is not feasible due to logistical and financial constraints. Significant effort has been made to flag possible biofouling signals, and CMAR is evaluating potential anti-fouling strategies.
 
