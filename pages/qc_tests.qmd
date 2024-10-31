@@ -98,7 +98,7 @@ Note that OOI used a more complex method (harmonic analysis, as described [here]
 
 ## Spike Test
 
-The Spike Test identifies single observations that are unexpectedly high (or low) based on the previous and following observations.
+The QARTOD Spike Test identifies single observations that are unexpectedly high (or low) based on the previous and following observations.
 
 For each observation, a $spike_{value}$ is calculated based on a spike reference ($spike_{ref}$). The $spike_{value}$ is compared to the Spike Test thresholds and the appropriate flag is assigned.
 
@@ -258,11 +258,13 @@ Note that the Depth Crosscheck Test is a deployment-level test; all observations
 
 Human experts reviewed the results of the automated QC tests to identify poor quality observations that were not adequately flagged. Results of the automated tests were not changed, but an additional human in the loop flag of [Fail]{style="color: #DB4325;"} was added to identify these observations. 
 
-Situations where observations were flagged as [Fail]{style="color: #DB4325;"} by human experts include:
+Situations where observations were upgraded to [Suspect/Of Interest]{style="color: #EDA247;"} or [Fail]{style="color: #DB4325;"} by human experts include:
 
 - Spikes with multiple observations (e.g., Spike Test Example 3 above).
-- Known issue with the deployment or sensor (e.g., sensor malfunctioned for most of the deployment, string sank due to biofouling).
-- Temperature and measured depth observations that were flagged as [Suspect/Of Interest]{style="color: #EDA247;"} by one or more automated tests, and considered poor quality after review (e.g., evidence that sensor was exposed to air at low tide). Note that most [Suspect/Of Interest]{style="color: #EDA247;"} dissolved oxygen and salinity observations were already treated as poor quality.
+- Known issue with the deployment or sensor, for example:
+  - sensor malfunctioned for most of the deployment
+  - string sank due to biofouling
+  - evidence that sensor was exposed to air at low tide
 
 
 
