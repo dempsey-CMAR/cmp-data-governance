@@ -102,7 +102,7 @@ The QARTOD Spike Test identifies single observations that are unexpectedly high 
 
 For each observation, a $spike_{value}$ is calculated based on a spike reference ($spike_{ref}$). The $spike_{value}$ is compared to the Spike Test thresholds and the appropriate flag is assigned.
 
-$$spike_{ref} = (lead_{value} - lag_{value}) / 2$$
+$$spike_{ref} = (lead_{value} + lag_{value}) / 2$$
 
 $$spike_{value} = abs(value - spike_{ref})$$
 
